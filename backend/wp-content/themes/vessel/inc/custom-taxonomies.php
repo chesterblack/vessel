@@ -3,9 +3,7 @@
  * Set up custom taxonomies required for the site
  */
 
-add_action( 'init', 'on_init' );
-
-function on_init() {
+function setup_taxonomies() {
 	// Adds Chapters
 	register_taxonomy(
 		'chapters',
@@ -28,3 +26,4 @@ function on_init() {
 	register_taxonomy( 'category', [] );
 	register_taxonomy( 'post_tag', [] );
 }
+add_action( 'init', 'setup_taxonomies' );
