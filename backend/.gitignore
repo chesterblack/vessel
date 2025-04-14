@@ -1,0 +1,6 @@
+wp-config.php
+
+*.log
+
+wp-content/themes/twentytwenty*
+wp-content/uploads/*
