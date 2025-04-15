@@ -17,6 +17,8 @@ function setup_post_types() {
 			'show_ui' => true,
 			'show_in_rest' => true,
 			'menu_icon' => 'dashicons-book-alt',
+			'template' => [ [ 'core/image', [] ] ],
+			'template_lock' => 'all',
 		]
 	);
 }

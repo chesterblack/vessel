@@ -7,7 +7,7 @@ function setup_taxonomies() {
 	// Adds Chapters
 	register_taxonomy(
 		'chapters',
-		[ 'post' ],
+		[ 'comic_page' ],
 		[
 			'labels' => [
 				'name' => _x( 'Chapters', 'Taxonomy General Name', 'text_domain' ),
