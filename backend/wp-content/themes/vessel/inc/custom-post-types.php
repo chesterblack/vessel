@@ -4,12 +4,13 @@
  */
 
 function setup_post_types() {
+	// Comic page
 	register_post_type(
 		'comic_page',
 		[
 			'labels' => [
-				'name' => _x( 'Comic Pages', 'Taxonomy General Name', 'text_domain' ),
-				'singular_name' => _x( 'Comic Page', 'Taxonomy Singular Name', 'text_domain' ),
+				'name' => _x( 'Comic Pages', 'Post Type General Name', 'text_domain' ),
+				'singular_name' => _x( 'Comic Page', 'Post Type Singular Name', 'text_domain' ),
 				'menu_name' => __( 'Comic Pages', 'text_domain' ),
 				'add_new_item' => __( 'Add New Comic Page' ),
 			],
@@ -17,10 +18,11 @@ function setup_post_types() {
 			'show_ui' => true,
 			'show_in_rest' => true,
 			'menu_icon' => 'dashicons-book-alt',
-			'template' => [ [ 'core/image', [] ] ],
+			'template' => [ [ 'vessel/comic-page', [] ] ],
 			'template_lock' => 'all',
 		]
 	);
+
 }
 add_action( 'init', 'setup_post_types' );
 

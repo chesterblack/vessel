@@ -1,0 +1,22 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "vessel/comic-page",
+	"version": "0.1.0",
+	"title": "Comic Page",
+	"category": "widgets",
+	"icon": "welcome-add-page",
+	"description": "A comic page.",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "comic-page",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"attributes": {
+		"pageImage": {
+			"type": "object"
+		}
+	}
+}
