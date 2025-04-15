@@ -1,23 +1,25 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "vessel/comic-page",
+  "name": "vessel/character-bio",
   "version": "0.1.0",
-  "title": "Comic Page",
+  "title": "Character Bio",
   "category": "widgets",
-  "icon": "welcome-add-page",
-  "description": "A comic page.",
+  "icon": "universal-access",
+  "description": "Info panel for a character.",
   "example": {},
   "supports": {
     "html": false
   },
-  "textdomain": "comic-page",
+  "textdomain": "character-bio",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "attributes": {
-    "pageImage": {
-      "type": "object",
-      "default": {}
+    "portrait": {
+      "type": "object"
+    },
+    "descriptions": {
+      "type": "object"
     }
   }
 }

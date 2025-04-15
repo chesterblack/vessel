@@ -23,6 +23,24 @@ function setup_post_types() {
 		]
 	);
 
+	// Character
+	register_post_type(
+		'character',
+		[
+			'labels' => [
+				'name' => _x( 'Characters', 'Post Type General Name', 'text_domain' ),
+				'singular_name' => _x( 'Character', 'Post Type Singular Name', 'text_domain' ),
+				'menu_name' => __( 'Characters', 'text_domain' ),
+				'add_new_item' => __( 'Add New Character' ),
+			],
+			'public' => true,
+			'show_ui' => true,
+			'show_in_rest' => true,
+			'menu_icon' => 'dashicons-universal-access',
+			'template' => [ [ 'vessel/character-bio', [] ] ],
+			'template_lock' => 'all',
+		]
+	);
 }
 add_action( 'init', 'setup_post_types' );
 
