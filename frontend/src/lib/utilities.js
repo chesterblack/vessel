@@ -29,8 +29,6 @@ export async function sendApiRequest(
 
 	const url = `${process.env.NEXT_PUBLIC_BACKEND_API_BASE}/${ endpoint }?${ urlParams }`;
 
-	console.log( 'url: ', url );
-
 	return await fetch( url, options )
 		.then( res => res.json() )
 		.catch( e => console.error(e) )
@@ -66,4 +64,30 @@ export function getLatestDescription( chapters, currentChapter, descriptions ) {
 	}
 
 	return description;
+}
+
+/**
+ * Sort an array of objects or arrays by one of it's attributes
+ *
+ * @param { Array } array The array of objects to sort, a copy will be returned
+ * @param { string|int } attribute The attribute to sort by
+ * @param { boolean } ascending Sort in ascending or descending order
+ *
+ * @returns { Array }
+ */
+export function sortByAttribute( array, attribute, ascending = true ) {
+	const newArray = [ ...array ];
+	newArray.sort( ( a, b ) => {
+		if ( a?.[ attribute ] < b?.[ attribute ] ){
+			return ascending ? -1 : 1;
+		}
+
+		if ( a?.[ attribute ] > b?.[ attribute ] ){
+			return ascending ? 1 : -1;
+		}
+
+		return 0;
+	} );
+
+	return newArray;
 }

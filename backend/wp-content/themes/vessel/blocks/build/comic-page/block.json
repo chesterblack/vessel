@@ -16,8 +16,10 @@
   "editorStyle": "file:./index.css",
   "attributes": {
     "pageImage": {
-      "type": "object",
-      "default": {}
+      "type": "object"
+    },
+    "pageNumber": {
+      "type": "number"
     }
   }
 }

@@ -9,7 +9,7 @@ import PageReader from "@/components/PageReader";
 export default function HomePage( { pageNumber = 1 } ) {
 	const [ currentPage, setCurrentPage ] = useState();
 	const [ currentPageNumber, setCurrentPageNumber ] = useState( pageNumber );
-	const [ pages, setPages ] = useState( [] );
+	const [ pages, setPages ] = useState([]);
 
 	useEffect( () => {
 		( async () => {

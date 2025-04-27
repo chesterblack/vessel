@@ -1,9 +1,9 @@
 "use client"
 
-import "@/styles/characters.scss";
-import CharacterBio from "@/components/CharacterBio";
-import { getLatestDescription, sendApiRequest } from "@/lib/utilities";
 import { useEffect, useState } from "react";
+import "@/styles/characters.scss";
+import { getLatestDescription, sendApiRequest } from "@/lib/utilities";
+import CharacterBio from "@/components/CharacterBio";
 import ChapterSelector from "@/components/ChapterSelector";
 
 export default function CharactersPage() {

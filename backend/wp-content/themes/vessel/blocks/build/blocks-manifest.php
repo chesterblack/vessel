@@ -48,10 +48,10 @@ return array(
 		'editorStyle' => 'file:./index.css',
 		'attributes' => array(
 			'pageImage' => array(
-				'type' => 'object',
-				'default' => array(
-					
-				)
+				'type' => 'object'
+			),
+			'pageNumber' => array(
+				'type' => 'number'
 			)
 		)
 	)
