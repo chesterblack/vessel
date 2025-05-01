@@ -25,7 +25,7 @@ export default function HomePage( { pageNumber = 1 } ) {
 					'content_blocks',
 				]
 			}
-			const pageData = await sendApiRequest( 'GET', '/wp/v2/comic_page', urlParams );
+			const pageData = await sendApiRequest( 'GET', 'wp/v2/comic_page', urlParams );
 
 			if ( ! pageData ) {
 				return;
