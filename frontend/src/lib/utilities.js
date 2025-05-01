@@ -31,7 +31,7 @@ export async function sendApiRequest(
 
 	return await fetch( url, options )
 		.then( res => res.json() )
-		.catch( e => console.error(e) )
+		.catch( e => null );
 }
 
 /**

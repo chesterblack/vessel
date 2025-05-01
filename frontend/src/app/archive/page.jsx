@@ -9,7 +9,7 @@ export default function ArchivePage() {
 
 	useEffect( () => {
 		( async () => {
-			const chapters = await sendApiRequest( 'GET', 'wp/v2/chapters' );
+			const chapters = await sendApiRequest( 'GET', 'wp/v2/chapters' ) ?? [];
 
 			let pageData = [];
 			for ( let i = 0; i < chapters.length; i++ ) {

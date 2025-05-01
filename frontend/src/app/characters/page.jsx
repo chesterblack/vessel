@@ -14,6 +14,9 @@ export default function CharactersPage() {
 	useEffect( () => {
 		( async () => {
 			const chapterData = await sendApiRequest( 'GET', 'wp/v2/chapters' );
+			if ( ! chapterData ) {
+				return;
+			}
 			setChapters( chapterData );
 			setCurrentChapter( chapterData[0]?.slug );
 		} )();
@@ -22,6 +25,9 @@ export default function CharactersPage() {
 	useEffect( () => {
 		( async () => {
 			const characterData = await sendApiRequest( 'GET', 'wp/v2/character' );
+			if ( ! characterData ) {
+				return;
+			}
 			setCharacters( characterData );
 		} )();
 	}, [] );

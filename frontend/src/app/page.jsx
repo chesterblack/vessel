@@ -27,6 +27,10 @@ export default function HomePage( { pageNumber = 1 } ) {
 			}
 			const pageData = await sendApiRequest( 'GET', '/wp/v2/comic_page', urlParams );
 
+			if ( ! pageData ) {
+				return;
+			}
+
 			setPages( pageData );
 			setCurrentPage( pages[ parseInt( currentPageNumber ) - 1 ] );
 		} )();
