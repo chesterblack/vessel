@@ -41,7 +41,7 @@ export default function HomePage( { pageNumber = 1 } ) {
 			window.history.replaceState( null, '', `/page/${ currentPageNumber }` );
 			setCurrentPage( pages[ parseInt( currentPageNumber ) - 1 ] );
 		}
-	}, [ currentPageNumber, pages ] )
+	}, [ currentPageNumber, pages ] );
 
 	return (
 		<ComicContext.Provider value={ {
