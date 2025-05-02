@@ -5,3 +5,5 @@ wp-config.php
 wp-content/themes/twentytwenty*
 wp-content/uploads/*
 wp-content/languages/*
+
+.DS_Store
