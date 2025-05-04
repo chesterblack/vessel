@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import "@/styles/characters.scss";
 import { getLatestDescription, sendApiRequest } from "@/lib/utilities";
 import CharacterBio from "@/components/CharacterBio";
 import ChapterSelector from "@/components/ChapterSelector";
+import "./style.scss";
 
 export default function CharactersPage() {
 	const [ characters, setCharacters ] = useState([]);
@@ -45,8 +45,12 @@ export default function CharactersPage() {
 				character.description = getLatestDescription(
 					chapters,
 					currentChapter,
-					character?.content_blocks[0]?.attrs?.descriptions ?? []
+					character?.content_blocks?.[0]?.attrs?.descriptions ?? []
 				);
+
+				if ( ! character.description ) {
+					return;
+				}
 
 				return <CharacterBio characterData={ character } currentChapter={ currentChapter } key={ character.id } />
 			} ) }

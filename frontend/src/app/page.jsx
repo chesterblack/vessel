@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { useEffect } from "react";
-import { sendApiRequest } from "@/lib/utilities";
+import { sendApiRequest, sortByAttribute } from "@/lib/utilities";
 import { ComicContext } from "@/context/comic-context";
 import PageReader from "@/components/PageReader";
 
-export default function HomePage( { pageNumber = 1 } ) {
+export default function HomePage( { pageNumber = 'latest' } ) {
 	const [ currentPage, setCurrentPage ] = useState();
 	const [ currentPageNumber, setCurrentPageNumber ] = useState( pageNumber );
 	const [ pages, setPages ] = useState([]);
@@ -15,7 +15,9 @@ export default function HomePage( { pageNumber = 1 } ) {
 		( async () => {
 			const urlParams = {
 				status: 'publish',
-				order: 'asc',
+				order: 'desc',
+				orderby: 'comic_page_number',
+				per_page: 100,
 				_fields: [
 					'id',
 					'date',
@@ -23,25 +25,34 @@ export default function HomePage( { pageNumber = 1 } ) {
 					'slug',
 					'content',
 					'content_blocks',
-				]
-			}
-			const pageData = await sendApiRequest( 'GET', 'wp/v2/comic_page', urlParams );
+					'meta',
+				],
+			};
+			let pageData = await sendApiRequest( 'GET', 'wp/v2/comic_page', urlParams );
 
 			if ( ! pageData ) {
 				return;
 			}
 
+			if ( currentPageNumber === 'latest' ) {
+				setCurrentPageNumber( pageData[0].meta.comic_page_number );
+			}
+
+			const pageIndex = pageData.findIndex( page => page.meta.comic_page_number === currentPageNumber );
+
 			setPages( pageData );
-			setCurrentPage( pages[ parseInt( currentPageNumber ) - 1 ] );
+			setCurrentPage( pageData[ pageIndex ] );
 		} )();
 	}, [] );
 
 	useEffect( () => {
 		if ( pages ) {
 			window.history.replaceState( null, '', `/page/${ currentPageNumber }` );
-			setCurrentPage( pages[ parseInt( currentPageNumber ) - 1 ] );
+
+			const pageIndex = pages.findIndex( page => page.meta.comic_page_number === currentPageNumber );
+			setCurrentPage( pages[ pageIndex ] );
 		}
-	}, [ currentPageNumber, pages ] );
+	}, [ currentPageNumber ] );
 
 	return (
 		<ComicContext.Provider value={ {

@@ -193,9 +193,16 @@ function Edit({
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_2__["default"], {
           label: "Portrait",
           image: portrait,
-          callback: media => setAttributes({
-            portrait: media
-          })
+          callback: media => {
+            setAttributes({
+              portrait: {
+                url: media.url,
+                width: media.width,
+                height: media.height,
+                alt: media.alt
+              }
+            });
+          }
         })
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {

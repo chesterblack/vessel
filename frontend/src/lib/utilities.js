@@ -50,7 +50,7 @@ export function getLatestDescription( chapters, currentChapter, descriptions ) {
 	
 	const chapterSlugs = chapters.map( c => c.slug );
 
-	let description = 'More information about this character will be revealed in time...';
+	let description = null;
 
 	for (let i = 0; i < chapterSlugs.length; i++) {
 		const slug = chapterSlugs[i];

@@ -1,18 +1,12 @@
 import { TextControl } from '@wordpress/components'
 import { useBlockProps } from '@wordpress/block-editor';
-import { useSelect } from '@wordpress/data';
 import { useEntityProp } from '@wordpress/core-data';
 import ImageUpload from '../shared/components/ImageUpload';
 import './editor.scss';
 
 export default function Edit( { attributes, setAttributes, context } ) {
-	const postType = useSelect(
-		( select ) => select( 'core/editor' ).getCurrentPostType(), []
-	);
-
-	const [ meta, setMeta ] = useEntityProp( 'postType', 'comic_page', 'meta', 39 );
-
-	console.log( 'meta: ', meta );
+	const postId = wp.data.select('core/editor').getCurrentPostId();
+	const [ meta, setMeta ] = useEntityProp( 'postType', 'comic_page', 'meta', postId );
 
 	return (
 		<div { ...useBlockProps() }>
@@ -30,7 +24,14 @@ export default function Edit( { attributes, setAttributes, context } ) {
 			<ImageUpload
 				image={ attributes.pageImage }
 				callback={ ( media ) => {
-					setAttributes( { pageImage: media } );
+					setAttributes( {
+						pageImage: {
+							url: media.url,
+							width: media.width,
+							height: media.height,
+							alt: media.alt
+						}
+					} );
 				} }
 			/>
 		</div>

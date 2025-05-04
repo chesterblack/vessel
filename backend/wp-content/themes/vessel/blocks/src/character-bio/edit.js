@@ -25,7 +25,16 @@ export default function Edit( { attributes, setAttributes } ) {
 					<ImageUpload
 						label='Portrait'
 						image={ portrait }
-						callback={ media => setAttributes( { portrait: media } ) }
+						callback={ ( media ) => {
+							setAttributes( {
+								portrait: {
+									url: media.url,
+									width: media.width,
+									height: media.height,
+									alt: media.alt
+								}
+							} );
+						} }
 					/>
 				</div>
 			</div>

@@ -6,7 +6,7 @@ import PageReaderNav from "./PageReaderNav";
 
 export default function PageReader() {
 	const { currentPage } = useContext( ComicContext );
-	const image = currentPage?.content_blocks[0]?.attrs?.pageImage;
+	const image = currentPage?.content_blocks?.[0]?.attrs?.pageImage;
 
 	return (
 		<main className='page-reader'>

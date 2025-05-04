@@ -1,18 +1,29 @@
 <?php
 
-// Allows meta queries in rest api calls
-function post_meta_request_params( $args, $request ) {
-	$args += [
-		'meta_key'   => $request['meta_key'],
-		'meta_value' => $request['meta_value'],
-		'meta_query' => $request['meta_query'],
-	];
+// Allows comic_pages to be sorted by the comic_page_number meta
+add_filter(
+	'rest_comic_page_collection_params',
+	function( $params ) {
+			$params['orderby']['enum'][] = 'comic_page_number';
+			return $params;
+	},
+	10,
+	1
+);
 
-	return $args;
-}
-
-add_filter( 'rest_comic_page_query', 'post_meta_request_params', 99, 2 );
-
+add_filter(
+	'rest_comic_page_query',
+	function ( $args, $request ) {
+			$order_by = $request->get_param( 'orderby' );
+			if ( isset( $order_by ) && 'comic_page_number' === $order_by ) {
+					$args['meta_key'] = $order_by;
+					$args['orderby']  = 'meta_value_num';
+			}
+			return $args;
+	},
+	10,
+	2
+);
 
 function setup_endpoints() {
 	// Site icon

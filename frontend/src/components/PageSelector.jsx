@@ -7,8 +7,8 @@ export default function PageSelector() {
 	let options = <option>Loading...</option>;
 
 	if ( pages ) {
-		options = pages.map( ( { title, slug }, index ) => (
-			<option value={ index + 1 } key={ slug }>
+		options = pages.map( ( { title, slug, meta }, index ) => (
+			<option value={ meta.comic_page_number } key={ slug }>
 				{ title.rendered }
 			</option>
 		) );
