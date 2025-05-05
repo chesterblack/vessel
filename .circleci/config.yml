@@ -29,7 +29,7 @@ jobs:
       - run:
           name: Deploy to DigitalOcean Droplet
           command: |
-            rsync -az --delete -e "ssh -o StrictHostKeyChecking=no -o BatchMode=yes" . vessel@167.99.192.92:/var/www/admin.vesselcomic.com/
+            rsync -az --delete --force -e "ssh -o StrictHostKeyChecking=no -o BatchMode=yes" . vessel@167.99.192.92:/var/www/admin.vesselcomic.com/
 workflows:
   version: 2
   test_and_deploy:
