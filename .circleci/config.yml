@@ -23,9 +23,13 @@ jobs:
           name: Install rsync
           command: sudo apt-get update && sudo apt-get install -y rsync
       - run:
+          name: Test SSH connection (no password prompt)
+          command: |
+            ssh -o BatchMode=yes -o StrictHostKeyChecking=no vessel@167.99.192.92 'echo SSH connection successful'
+      - run:
           name: Deploy to DigitalOcean Droplet
           command: |
-            rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" . vessel@167.99.192.92:/var/www/admin.vesselcomic.com/
+            rsync -az --delete -e "ssh -o StrictHostKeyChecking=no -o BatchMode=yes" . vessel@167.99.192.92:/var/www/admin.vesselcomic.com/
 workflows:
   version: 2
   test_and_deploy:
