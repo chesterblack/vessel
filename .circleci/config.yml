@@ -20,6 +20,9 @@ jobs:
           fingerprints:
             - "cb:e6:02:50:ea:cf:12:3f:87:02:b2:bb:4d:c6:79:c9"
       - run:
+          name: Install rsync
+          command: sudo apt-get update && sudo apt-get install -y rsync
+      - run:
           name: Deploy to DigitalOcean Droplet
           command: |
             rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" . vessel@167.99.192.92:/var/www/admin.vesselcomic.com/
