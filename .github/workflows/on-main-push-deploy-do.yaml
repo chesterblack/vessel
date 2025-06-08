@@ -17,8 +17,8 @@ jobs:
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
-            rm -rf test
-            mkdir test
-            cd test
+            rm -rf /var/www/admin.vesselcomic.com/backend
+            mkdir /var/www/admin.vesselcomic.com/
+            cd /var/www/admin.vesselcomic.com/ backend
             git clone git@github.com:chesterblack/vessel
-            echo 'Deployment to digital ocean finished'
+            echo 'Deployment to digitalocean finished'
