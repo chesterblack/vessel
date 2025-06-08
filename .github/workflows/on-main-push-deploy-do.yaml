@@ -20,5 +20,5 @@ jobs:
             rm -rf /var/www/admin.vesselcomic.com/
             cd /var/www/
             git clone git@github.com:chesterblack/vessel admin.vesselcomic.com
-            rm -rf /var/www.admin.vesselcomic.com/frontend
+            rm -rf /var/www.admin.vesselcomic.com/frontend/
             echo 'Deployment to digitalocean finished'
