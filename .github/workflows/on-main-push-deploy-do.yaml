@@ -18,6 +18,6 @@ jobs:
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             rm -rf /var/www/admin.vesselcomic.com/backend
-            cd /var/www/admin.vesselcomic.com/ backend
-            git clone git@github.com:chesterblack/vessel
+            cd /var/www/admin.vesselcomic.com/
+            git clone git@github.com:chesterblack/vessel backend
             echo 'Deployment to digitalocean finished'
