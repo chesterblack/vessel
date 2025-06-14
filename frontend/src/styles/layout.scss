@@ -1,6 +1,4 @@
-$header-background: #000;
-$header-background-2: #b2e2f4;
-$header-text-color: #fff;
+@use './partials/colors.scss';
 
 $title-font: 'LEMON MILK', 'Comfortaa', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
@@ -8,8 +6,9 @@ $title-font: 'LEMON MILK', 'Comfortaa', 'Lucida Sans', 'Lucida Sans Regular', 'L
 header {
 	width: 100%;
 	display: flex;
-	background-color: $header-background;
+	background-color: colors.$deep-dark;
 	justify-content: space-between;
+	margin-bottom: 30px;
 
 	.header-logo {
 		display: flex;
@@ -33,17 +32,18 @@ header {
 			align-items: center;
 			justify-content: center;
 			width: 100%;
-			color: $header-text-color;
+			color: colors.$bright-light;
 			text-decoration: none;
 			font-family: $title-font;
-			color: #b2e2f4;
+			color: colors.$ice-blue;
 			text-transform: uppercase;
 			font-weight: bold;
 			font-size: 1.5rem;
+			padding-inline: 25px;
 
 			&:hover {
-				background: $header-background-2;
-				color: #000;
+				background: colors.$ice-blue;
+				color: colors.$deep-dark;
 			}
 		}
 	}

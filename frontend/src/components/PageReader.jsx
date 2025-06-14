@@ -1,5 +1,7 @@
 import { useContext } from "react";
 import Image from "next/image";
+
+import '../styles/page-reader.scss';
 import { ComicContext } from "@/context/comic-context";
 import PageReaderNav from "./PageReaderNav";
 
@@ -16,6 +18,7 @@ export default function PageReader() {
 				width={ image.width }
 				height={ image.height }
 				alt={ image.alt }
+				className="page-image"
 			/> }
 			<PageReaderNav />
 		</main>

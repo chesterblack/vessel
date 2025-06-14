@@ -1,0 +1,44 @@
+@use './partials/colors.scss';
+
+.page-reader {
+	max-width: 1200px;
+	width: fit-content;
+	margin: 0 auto;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0px 0px 20px -15px colors.$deep-dark;
+}
+
+.page-image {
+	max-width: 100%;
+	height: auto;
+	margin: 0 auto;
+	display: block;
+}
+
+.page-reader-nav {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: colors.$deep-dark;
+
+	button, select {
+		cursor: pointer;
+		font-size: 20px;
+		background: none;
+		border: none;
+		padding: 10px;
+		color: colors.$ice-blue;
+
+		&:hover:not( :disabled ) {
+			background: colors.$ice-blue;
+			color: colors.$deep-dark;
+		}
+
+		&:disabled {
+			background: none;
+			opacity: .5;
+			cursor: not-allowed;
+		}
+	}
+}

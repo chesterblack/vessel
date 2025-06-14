@@ -1,6 +1,8 @@
+@use './partials/colors.scss';
+
 body.coming-soon {
-	background-color: #000;
-	background: linear-gradient( #000, #001b2c );
+	background-color: colors.$deep-dark;
+	background: linear-gradient( colors.$deep-dark, colors.$med-dark );
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
@@ -10,7 +12,7 @@ body.coming-soon {
 
 	h1 {
 		font-family: 'LEMON MILK', 'Comfortaa', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-		color: #d3f9ff;
+		color: colors.$ice-blue;
 		text-transform: uppercase;
 	}
 }
