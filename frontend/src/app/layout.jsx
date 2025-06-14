@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default async function RootLayout( { children } ) {
-	const faviconUrl = await sendApiRequest( 'GET', 'vessel/v1/icon' );
+	const faviconUrl = await sendApiRequest( 'GET', 'vessel/v1/icon' ) ?? 'https://kipbite-assets.fra1.digitaloceanspaces.com/vessel/cropped-vessel-icon-round-150x150.png';
 
 	return (
 		<html lang="en">
