@@ -6,15 +6,26 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
 
+html {
+	font-size: 18px;
+
+	@media screen and ( max-width: 900px ) {
+		font-size: 16px;
+	}
+}
+
 body {
 	margin: 0;
-	background-color: colors.$med-dark;
+	background-color: colors.$shallow-dark;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 
 main {
 	max-width: 1200px;
 	width: 100%;
-	margin: 0 auto;
+	margin: 5vw auto;
 	background-color: colors.$bright-light;
 	border-radius: 10px;
 	padding: 10px 30px;
@@ -31,10 +42,14 @@ h1, h2 {
 	font-family: fonts.$titles;
 }
 
-html {
-	font-size: 18px;
+p {
+	a {
+		color: colors.$powder-pink;
+		font-weight: bold;
+		text-decoration: none;
 
-	@media screen and ( max-width: 900px ) {
-		font-size: 16px;
+		&:hover {
+			text-decoration: underline;
+		}
 	}
 }

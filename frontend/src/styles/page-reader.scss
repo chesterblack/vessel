@@ -4,7 +4,7 @@ main.page-reader {
 	width: fit-content;
 	overflow: hidden;
 	padding: 0;
-	background-color: colors.$deep-dark;
+	background-color: colors.$med-dark;
 }
 
 .placeholder-page {
@@ -23,7 +23,6 @@ main.page-reader {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: colors.$deep-dark;
 
 	button, select {
 		cursor: pointer;
@@ -42,14 +41,6 @@ main.page-reader {
 			background: none;
 			opacity: .5;
 			cursor: not-allowed;
-		}
-	}
-
-	select {
-		border-right: solid 5px colors.$deep-dark;
-
-		&:hover {
-			border-right-color: colors.$ice-blue;
 		}
 	}
 }

@@ -1,0 +1,58 @@
+@use '@/styles/partials/colors.scss';
+
+.hamburger {
+	--bar-height: 3px;
+
+	cursor: pointer;
+	position: relative;
+	background: colors.$med-dark;
+	border-radius: 100%;
+	border: 5px solid colors.$med-dark;
+	width: 35px;
+	height: 35px;
+
+	div {
+		width: 100%;
+		height: var( --bar-height );
+		background-color: colors.$ice-blue;
+		transition: ease-in-out .2s;
+		position: absolute;
+		right: 0;
+
+		&:nth-child( 1 ) {
+			top: 0;
+		}
+	
+		&:nth-child( 2 ) {
+			top: calc( 50% - ( var( --bar-height ) / 2 ) );
+		}
+	
+		&:nth-child( 3 ) {
+			bottom: 0;
+		}
+	}
+
+	&.active {
+		div {
+			&:nth-child( 1 ) {
+				top: calc( 50% - ( var( --bar-height ) / 2 ) );
+				transform: rotate( 45deg );
+			}
+
+			&:nth-child( 2 ) {
+				opacity: 0;
+			}
+
+			&:nth-child( 3 ) {
+				bottom: calc( 50% - ( var( --bar-height ) / 2 ) );
+				transform: rotate( -45deg );
+			}
+		}
+	}
+
+	&:hover {
+		div {
+			background-color: colors.$bright-light;
+		}
+	}
+}
