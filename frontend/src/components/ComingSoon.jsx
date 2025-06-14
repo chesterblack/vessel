@@ -1,3 +1,6 @@
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from "@vercel/speed-insights/next"
+
 import Image from "next/image";
 
 export default function ComingSoon({}) {
@@ -14,6 +17,9 @@ export default function ComingSoon({}) {
 					alt="The Vessel"
 				/>
 				<h1>Coming soon...</h1>
+
+				<Analytics />
+				<SpeedInsights />
 			</body>
 		</html>
 	);

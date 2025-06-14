@@ -1,12 +1,13 @@
 import Link from "next/link";
+import TextLogo from "./TextLogo";
 
 export default function Header() {
 	return (
 		<header>
-			<Link href='/'>
-				VESSEL
+			<Link href='/' className="header-logo">
+				<TextLogo color='#fff' />
 			</Link>
-			<nav>
+			<nav className="main-nav">
 				<Link href='/'>
 					Read
 				</Link>

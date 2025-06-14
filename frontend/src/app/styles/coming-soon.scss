@@ -1,0 +1,16 @@
+body.coming-soon {
+	background-color: #000;
+	background: linear-gradient( #000, #001b2c );
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	flex-direction: column;
+	height: 100vh;
+	padding-top: 20px;
+
+	h1 {
+		font-family: 'LEMON MILK', 'Comfortaa', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		color: #d3f9ff;
+		text-transform: uppercase;
+	}
+}
