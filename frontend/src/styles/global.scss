@@ -4,8 +4,6 @@
 
 @use '@/styles/layout.scss';
 
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
-
 html {
 	font-size: 18px;
 
@@ -16,7 +14,7 @@ html {
 
 body {
 	margin: 0;
-	background-color: colors.$shallow-dark;
+	background: linear-gradient( colors.$shallow-dark, colors.$ice-blue );
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
@@ -38,11 +36,21 @@ main {
 	box-sizing: border-box;
 }
 
-h1, h2 {
+h1 {
 	font-family: fonts.$titles;
+	font-weight: bold;
+	margin-bottom: 0;
+}
+
+h2 {
+	font-family: fonts.$titles;
+	font-weight: 200;
+	margin-bottom: 0;
 }
 
 p {
+	margin-top: 10px;
+
 	a {
 		color: colors.$powder-pink;
 		font-weight: bold;
