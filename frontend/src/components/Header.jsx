@@ -1,25 +1,15 @@
 import Link from "next/link";
 
+import MainNav from "./MainNav";
+import TextLogo from "./TextLogo";
+
 export default function Header() {
 	return (
 		<header>
-			<Link href='/'>
-				VESSEL
+			<Link href='/' className="header-logo">
+				<TextLogo color='#fff' />
 			</Link>
-			<nav>
-				<Link href='/'>
-					Read
-				</Link>
-				<Link href='/archive'>
-					Archive
-				</Link>
-				<Link href='/characters'>
-					Characters
-				</Link>
-				<Link href='/about'>
-					About
-				</Link>
-			</nav>
+			<MainNav />
 		</header>
 	);
 }

@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import HomePage from "@/app/page";
+import PageReader from '@/components/PageReader';
 
 export default async function NumberedPage( { params } ) {
 	let { number } = await params;
@@ -12,8 +12,6 @@ export default async function NumberedPage( { params } ) {
 	if ( ! isNaN( number ) ) {
 		number = parseInt( number );
 	}
-	
-	console.log( 'number: ', number );
 
-	return <HomePage pageNumber={ number } />;
+	return <PageReader pageNumber={ number } />;
 }

@@ -1,0 +1,140 @@
+@use '@/styles/partials/colors.scss';
+@use '@/styles/partials/fonts.scss';
+
+header {
+	width: 100%;
+	display: flex;
+	background-color: colors.$med-dark;
+	justify-content: space-between;
+
+	.header-logo {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 10px 20px;
+
+		.text-logo {
+			height: 5vw;
+			max-height: 100%;
+			max-width: 400px;
+			width: 100%;
+		}
+	}
+
+	.main-nav {
+		width: 100%;
+		display: flex;
+		justify-content: space-around;
+
+		a {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			color: colors.$bright-light;
+			text-decoration: none;
+			font-family: fonts.$titles;
+			color: colors.$ice-blue;
+			text-transform: uppercase;
+			font-weight: 600;
+			letter-spacing: 1px;
+			font-size: 1.2rem;
+			padding-inline: 25px;
+
+			&:hover {
+				background: colors.$ice-blue;
+				color: colors.$deep-dark;
+			}
+		}
+	}
+
+	button.hamburger {
+		display: none;
+		margin-right: 10px;
+
+		&.active {
+			position: fixed;
+			right: 0;
+		}
+	}
+}
+
+footer {
+	width: 100%;
+	padding: 30px;
+	background-color: colors.$med-dark;
+	color: colors.$bright-light;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 20px;
+	margin-top: auto;
+
+	h4 {
+		border-right: 2px solid colors.$bright-light;
+		padding-right: 20px;
+	}
+
+	nav {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 20px;
+		flex-wrap: wrap;
+	}
+
+	a {
+		color: colors.$ice-blue;
+		text-decoration: none;
+
+		&:hover {
+			color: colors.$bright-light;
+		}
+	}
+}
+
+@media screen and ( max-width: 650px ) {
+	header {
+		align-items: center;
+		justify-content: space-between;
+
+		.header-logo {
+			padding: 10px;
+		}
+
+		button.hamburger {
+			display: block;
+			z-index: 105;
+		}
+
+		.main-nav {
+			display: none;
+			flex-direction: column;
+			justify-content: space-between;
+			position: fixed;
+			background-color: colors.$med-dark;
+			top: 0;
+			z-index: 100;
+			height: 100%;
+			padding-top: 50px;
+
+			a {
+				height: 100%;
+			}
+
+			&.show {
+				display: flex;
+			}
+		}
+	}
+
+	footer {
+		flex-direction: column;
+		gap: 10px;
+
+		h4 {
+			border-right: none;
+			margin: 0;
+		}
+	}
+}

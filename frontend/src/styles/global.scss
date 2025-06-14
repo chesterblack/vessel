@@ -1,0 +1,63 @@
+@use '@/styles/partials/mixins.scss';
+@use '@/styles/partials/colors.scss';
+@use '@/styles/partials/fonts.scss';
+
+@use '@/styles/layout.scss';
+
+html {
+	font-size: 18px;
+
+	@media screen and ( max-width: 900px ) {
+		font-size: 16px;
+	}
+}
+
+body {
+	margin: 0;
+	background: linear-gradient( colors.$shallow-dark, colors.$ice-blue );
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+main {
+	max-width: 1200px;
+	width: 100%;
+	margin: 5vw auto;
+	background-color: colors.$bright-light;
+	border-radius: 10px;
+	padding: 10px 30px;
+	box-sizing: border-box;
+	box-shadow: 0px 0px 20px -15px colors.$deep-dark;
+}
+
+* {
+	font-family: fonts.$body;
+	box-sizing: border-box;
+}
+
+h1 {
+	font-family: fonts.$titles;
+	font-weight: bold;
+	margin-bottom: 0;
+}
+
+h2 {
+	font-family: fonts.$titles;
+	font-weight: 200;
+	margin-bottom: 0;
+}
+
+p {
+	margin-top: 10px;
+
+	a {
+		color: colors.$powder-pink;
+		font-weight: bold;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}

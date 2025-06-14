@@ -37,9 +37,9 @@ export async function sendApiRequest(
 /**
  * Returns the latest description up to a certain chapter
  *
- * @param { [ Object ] } chapters Array of chapter objects as from the API
+ * @param { Object[] } chapters Array of chapter objects as from the API
  * @param { string } currentChapter Current chapter slug
- * @param { [ string ] } descriptions Array of strings
+ * @param { string[] } descriptions Array of strings
  *
  * @returns { string }
  */

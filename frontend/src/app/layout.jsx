@@ -1,7 +1,11 @@
-import Header from "@/components/Header";
-import "./globals.scss";
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from "@vercel/speed-insights/next"
+
+import "@/styles/global.scss";
 import { sendApiRequest } from "@/lib/utilities";
-import Image from "next/image";
+import ComingSoon from "@/components/ComingSoon";
+import Header from "@/components/Header";
+import Footer from '@/components/Footer';
 
 export const metadata = {
   title: "Vessel",
@@ -9,6 +13,10 @@ export const metadata = {
 };
 
 export default async function RootLayout( { children } ) {
+	if ( process.env.COMING_SOON !== 'false' ) {
+		return <ComingSoon />;
+	}
+
 	const faviconUrl = await sendApiRequest( 'GET', 'vessel/v1/icon' ) ?? 'https://kipbite-assets.fra1.digitaloceanspaces.com/vessel/cropped-vessel-icon-round-150x150.png';
 
 	return (
@@ -17,15 +25,12 @@ export default async function RootLayout( { children } ) {
 				<link rel="icon" href={ faviconUrl } sizes="any" />
 			</head>
 			<body>
-				<Image
-					src='https://kipbite-assets.fra1.digitaloceanspaces.com/vessel/temp-banner.png'
-					width={150}
-					height={239}
-					alt="The Vessel"
-				/>
-				<h1>Coming soon...</h1>
-				{/* <Header />
-				{ children } */}
+				<Header />
+				{ children }
+				<Footer />
+
+				<Analytics />
+				<SpeedInsights />
 			</body>
 		</html>
 	);

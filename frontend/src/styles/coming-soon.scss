@@ -1,0 +1,18 @@
+@use '@/styles/partials/colors.scss';
+
+body.coming-soon {
+	background-color: colors.$deep-dark;
+	background: linear-gradient( colors.$deep-dark, colors.$med-dark );
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	flex-direction: column;
+	height: 100vh;
+	padding-top: 20px;
+
+	h1 {
+		font-family: 'LEMON MILK', 'Comfortaa', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		color: colors.$ice-blue;
+		text-transform: uppercase;
+	}
+}
