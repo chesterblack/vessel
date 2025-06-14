@@ -1,31 +1,86 @@
-import { useContext } from "react";
-import Image from "next/image";
+'use client'
 
 import '@/styles/page-reader.scss';
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
+
+import { sendApiRequest } from "@/lib/utilities";
 import { ComicContext } from "@/context/comic-context";
-import PageReaderNav from "./PageReaderNav";
-import PlaceholderPage from "./PlaceholderPage";
+import PageReaderNav from "@/components/PageReaderNav";
+import PlaceholderPage from "@/components/PlaceholderPage";
 
+export default function PageReader( { pageNumber = 'latest' } ) {
+	const [ currentPage, setCurrentPage ] = useState();
+	const [ currentPageNumber, setCurrentPageNumber ] = useState( pageNumber );
+	const [ pages, setPages ] = useState([]);
 
-export default function PageReader() {
-	const { currentPage } = useContext( ComicContext );
+	useEffect( () => {
+		( async () => {
+			const urlParams = {
+				status: 'publish',
+				order: 'desc',
+				orderby: 'comic_page_number',
+				per_page: 100,
+				_fields: [
+					'id',
+					'date',
+					'title',
+					'slug',
+					'content',
+					'content_blocks',
+					'meta',
+				],
+			};
+			let pageData = await sendApiRequest( 'GET', 'wp/v2/comic_page', urlParams );
+
+			if ( ! pageData ) {
+				return;
+			}
+
+			if ( currentPageNumber === 'latest' ) {
+				setCurrentPageNumber( pageData[0].meta.comic_page_number );
+			}
+
+			const pageIndex = pageData.findIndex( page => page.meta.comic_page_number === currentPageNumber );
+
+			setPages( pageData );
+			setCurrentPage( pageData[ pageIndex ] );
+		} )();
+	}, [] );
+
+	useEffect( () => {
+		if ( pages ) {
+			window.history.replaceState( null, '', `/page/${ currentPageNumber }` );
+
+			const pageIndex = pages.findIndex( page => page.meta.comic_page_number === currentPageNumber );
+			setCurrentPage( pages[ pageIndex ] );
+		}
+	}, [ currentPageNumber ] );
+
 	const image = currentPage?.content_blocks?.[0]?.attrs?.pageImage;
 
 	return (
-		<main className='page-reader'>
-			<PageReaderNav />
-			{
-				image ?
-					<Image
-						src={ image.url }
-						width={ image.width }
-						height={ image.height }
-						alt={ image.alt }
-						className="page-image"
-					/> :
-					<PlaceholderPage />
-				}
-			<PageReaderNav />
-		</main>
-	);
+		<ComicContext.Provider value={ {
+			pages, setPages,
+			currentPage, setCurrentPage,
+			currentPageNumber, setCurrentPageNumber
+		} }>
+			<main className='page-reader'>
+				<PageReaderNav />
+				{
+					image ?
+						<Image
+							src={ image.url }
+							width={ image.width }
+							height={ image.height }
+							alt={ image.alt }
+							className="page-image"
+						/> :
+						<PlaceholderPage />
+					}
+				<PageReaderNav />
+			</main>
+		</ComicContext.Provider>
+	)
 }

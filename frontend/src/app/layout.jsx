@@ -1,9 +1,7 @@
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
-import { Comfortaa } from 'next/font/google';
 import "@/styles/global.scss";
-
 import { sendApiRequest } from "@/lib/utilities";
 import ComingSoon from "@/components/ComingSoon";
 import Header from "@/components/Header";
