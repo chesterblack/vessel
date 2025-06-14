@@ -18,8 +18,9 @@ jobs:
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             echo "Deploying themes folder..."
+            cd /var/www/
             git clone -n --depth=1 --filter=tree:0 \
-              https://github.com/chesterblack/vessel temp-vessel
+              git@github.com:chesterblack/vessel temp-vessel
             cd temp-vessel
             git sparse-checkout set --no-cone /backend/wp-content/themes/vessel
             git checkout
