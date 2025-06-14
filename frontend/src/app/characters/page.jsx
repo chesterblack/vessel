@@ -1,10 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react";
+
+import '@/styles/characters.scss';
 import { getLatestDescription, sendApiRequest } from "@/lib/utilities";
 import CharacterBio from "@/components/CharacterBio";
 import ChapterSelector from "@/components/ChapterSelector";
-import "./style.scss";
 
 export default function CharactersPage() {
 	const [ characters, setCharacters ] = useState([]);
@@ -35,12 +36,17 @@ export default function CharactersPage() {
 	return (
 		<main className="characters">
 			<h1>Characters</h1>
-			<h3>How far have you read?</h3>
-			<ChapterSelector
-				chapters={ chapters }
-				currentChapter={ currentChapter }
-				setCurrentChapter={ setCurrentChapter }
-			/>
+			<p>
+				Meet the characters that Percy has met along his journey!
+			</p>
+			<div className="how-far">
+				<h2>How far have you read?</h2>
+				<ChapterSelector
+					chapters={ chapters }
+					currentChapter={ currentChapter }
+					setCurrentChapter={ setCurrentChapter }
+				/>
+			</div>
 			{ characters.map( ( character ) => {
 				character.description = getLatestDescription(
 					chapters,

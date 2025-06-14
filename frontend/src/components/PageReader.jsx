@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import Image from "next/image";
 
-import '../styles/page-reader.scss';
+import '@/styles/page-reader.scss';
 import { ComicContext } from "@/context/comic-context";
 import PageReaderNav from "./PageReaderNav";
 import PlaceholderPage from "./PlaceholderPage";

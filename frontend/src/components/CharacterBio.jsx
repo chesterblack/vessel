@@ -20,9 +20,9 @@ export default function CharacterBio( { characterData } ) {
 
 	return (
 		<div className="character-bio">
-			<h2>{ characterName }</h2>
-			<div className="character-bio__inner">
-				{ portraitImage }
+			{ portraitImage }
+			<div>
+				<h2>{ characterName }</h2>
 				<p dangerouslySetInnerHTML={ { __html: description } } />
 			</div>
 		</div>
