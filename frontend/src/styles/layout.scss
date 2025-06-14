@@ -6,7 +6,7 @@ header {
 	display: flex;
 	background-color: colors.$deep-dark;
 	justify-content: space-between;
-	margin-bottom: 30px;
+	margin-bottom: 60px;
 
 	.header-logo {
 		display: flex;
@@ -50,6 +50,34 @@ header {
 	}
 }
 
+footer {
+	width: 100%;
+	padding: 30px;
+	background-color: colors.$deep-dark;
+	margin-top: 60px;
+	color: colors.$bright-light;
+
+	h4 {
+		border-right: 2px solid colors.$bright-light;
+		padding-right: 20px;
+	}
+
+	nav {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 20px;
+	}
+
+	a {
+		color: colors.$ice-blue;
+		text-decoration: none;
+
+		&:hover {
+			color: colors.$bright-light;
+		}
+	}
+}
 
 @media screen and ( max-width: 600px ) {
 	header {

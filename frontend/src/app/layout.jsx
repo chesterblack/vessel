@@ -6,6 +6,7 @@ import "../styles/global.scss";
 import { sendApiRequest } from "@/lib/utilities";
 import ComingSoon from "@/components/ComingSoon";
 import Header from "@/components/Header";
+import Footer from '@/components/Footer';
 
 export const metadata = {
   title: "Vessel",
@@ -27,6 +28,8 @@ export default async function RootLayout( { children } ) {
 			<body>
 				<Header />
 				{ children }
+				<Footer />
+
 				<Analytics />
 				<SpeedInsights />
 			</body>
