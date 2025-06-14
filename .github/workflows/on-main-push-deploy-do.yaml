@@ -15,10 +15,14 @@ jobs:
           username: ${{secrets.USERNAME}}
           key: ${{secrets.KEY}}
           script: |
-            export NVM_DIR=~/.nvm
-            source ~/.nvm/nvm.sh
-            cd /var/www/
-            git clone git@github.com:chesterblack/vessel admin.vesselcomic.com
-            echo 'Removing frontend folder...'
-            rm -rf /var/www.admin.vesselcomic.com/frontend/
-            echo 'Deployment to digitalocean finished'
+            echo "Deploying themes folder..."
+            git clone -n --depth=1 --filter=tree:0 \
+              https://github.com/chesterblack/vessel temp-vessel
+            cd temp-vessel
+            git sparse-checkout set --no-cone /backend/wp-content/themes/vessel
+            git checkout
+            cd ../
+            rm -rf admin.vesselcomic.com/backend/wp-content/themes/vessel
+            mv temp-vessel/backend/wp-content/themes/vessel admin.vesselcomic.com/backend/wp-content/themes
+            rm -rf temp-vessel
+            echo "Done"
