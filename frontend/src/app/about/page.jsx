@@ -1,10 +1,14 @@
 import { sendApiRequest } from "@/lib/utilities";
 
 export default async function AboutPage() {
-	const pageData = await sendApiRequest( 'GET', 'wp/v2/pages', { title: 'about' } );
+	const pageData = await sendApiRequest( 'GET', 'wp/v2/pages', { slug: 'about' } );
 
 	if ( ! pageData ) {
-		return 'No content found';
+		return (
+			<main className="about">
+				No content found
+			</main>
+		);
 	}
 
 	const content = pageData[0].content.rendered;

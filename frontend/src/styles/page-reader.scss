@@ -1,12 +1,15 @@
 @use './partials/colors.scss';
 
-.page-reader {
-	max-width: 1200px;
+main.page-reader {
 	width: fit-content;
-	margin: 0 auto;
-	border-radius: 10px;
 	overflow: hidden;
-	box-shadow: 0px 0px 20px -15px colors.$deep-dark;
+	padding: 0;
+	background-color: colors.$deep-dark;
+}
+
+.placeholder-page {
+	width: 1200px;
+	height: 2000px;
 }
 
 .page-image {
@@ -39,6 +42,14 @@
 			background: none;
 			opacity: .5;
 			cursor: not-allowed;
+		}
+	}
+
+	select {
+		border-right: solid 5px colors.$deep-dark;
+
+		&:hover {
+			border-right-color: colors.$ice-blue;
 		}
 	}
 }

@@ -1,7 +1,5 @@
 @use './partials/colors.scss';
-
-$title-font: 'LEMON MILK', 'Comfortaa', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
+@use './partials/fonts.scss';
 
 header {
 	width: 100%;
@@ -17,6 +15,9 @@ header {
 		padding: 25px 20px;
 
 		.text-logo {
+			height: 4vw;
+			max-height: 50px;
+			max-height: 100%;
 			max-width: 400px;
 			width: 100%;
 		}
@@ -34,16 +35,33 @@ header {
 			width: 100%;
 			color: colors.$bright-light;
 			text-decoration: none;
-			font-family: $title-font;
+			font-family: fonts.$titles;
 			color: colors.$ice-blue;
 			text-transform: uppercase;
 			font-weight: bold;
-			font-size: 1.5rem;
+			font-size: 1.3rem;
 			padding-inline: 25px;
 
 			&:hover {
 				background: colors.$ice-blue;
 				color: colors.$deep-dark;
+			}
+		}
+	}
+}
+
+
+@media screen and ( max-width: 600px ) {
+	header {
+		flex-direction: column;
+
+		.header-logo {
+			padding: 10px;
+		}
+
+		.main-nav {
+			a {
+				padding: 15px 0;
 			}
 		}
 	}
