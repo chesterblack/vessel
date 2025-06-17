@@ -52,7 +52,7 @@ export function getLatestDescription( chapters, currentChapter, descriptions ) {
 
 	let description = null;
 
-	for (let i = 0; i < chapterSlugs.length; i++) {
+	for ( let i = 0; i < chapterSlugs.length; i++ ) {
 		const slug = chapterSlugs[i];
 		if ( slug === currentChapter ) {
 			break;
