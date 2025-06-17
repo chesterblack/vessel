@@ -5,6 +5,7 @@ export default function HamburgerButton({ active, callback }) {
 		<button
 			className={ `hamburger ${ active ? 'active' : '' }` }
 			onClick={ () => { callback( ! active ) } }
+			aria-label='Menu'
 		>
 			<div></div>
 			<div></div>

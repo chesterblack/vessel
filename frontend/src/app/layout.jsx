@@ -17,12 +17,13 @@ export default async function RootLayout( { children } ) {
 		return <ComingSoon />;
 	}
 
-	const faviconUrl = await sendApiRequest( 'GET', 'vessel/v1/icon' ) ?? 'https://kipbite-assets.fra1.digitaloceanspaces.com/vessel/cropped-vessel-icon-round-150x150.png';
+	const faviconUrl = 'https://kipbite-assets.fra1.digitaloceanspaces.com/vessel/cropped-vessel-icon-round-150x150.png';
 
 	return (
 		<html lang="en">
 			<head>
 				<link rel="icon" href={ faviconUrl } sizes="any" />
+				<link rel="preconnect" href={ process.env.BACKEND_URL } />
 			</head>
 			<body>
 				<Header />

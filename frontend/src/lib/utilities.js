@@ -27,7 +27,7 @@ export async function sendApiRequest(
 		options.body = JSON.stringify( body );
 	}
 
-	const url = `${process.env.NEXT_PUBLIC_BACKEND_API_BASE}/${ endpoint }?${ urlParams }`;
+	const url = `${ process.env.NEXT_PUBLIC_BACKEND_API_BASE }/${ endpoint }?${ urlParams }`;
 
 	return await fetch( url, options )
 		.then( res => res.json() )

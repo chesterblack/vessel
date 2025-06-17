@@ -58,7 +58,13 @@ export default function PageReader( { pageNumber = 'latest' } ) {
 		}
 	}, [ currentPageNumber ] );
 
-	const image = currentPage?.content_blocks?.[0]?.attrs?.pageImage;
+	const attrs = currentPage?.content_blocks?.[0]?.attrs;
+	let alt = '';
+	let image;
+	if ( attrs ) {
+		alt = attrs.pageImage?.alt ?? '';
+		image = attrs.pageImage?.sizes?.comic_page_desktop ?? attrs.pageImage;
+	}
 
 	return (
 		<ComicContext.Provider value={ {
@@ -76,6 +82,7 @@ export default function PageReader( { pageNumber = 'latest' } ) {
 							height={ image.height }
 							alt={ image.alt }
 							className="page-image"
+							priority={ true }
 						/> :
 						<PlaceholderPage />
 					}

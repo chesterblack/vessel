@@ -20,6 +20,7 @@ export default function PageSelector() {
 			onChange={ ( e ) => {
 				setCurrentPageNumber( parseInt( e.target.value ) );
 			} }
+			aria-label='Page select'
 		>
 			{ options }
 		</select>

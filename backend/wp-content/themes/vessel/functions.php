@@ -2,30 +2,22 @@
 
 require_once( __DIR__ . '/inc/custom-taxonomies.php' );
 require_once( __DIR__ . '/inc/custom-post-types.php' );
-require_once( __DIR__ . '/inc/custom-endpoints.php' );
+require_once( __DIR__ . '/inc/custom-rest-api.php' );
 require_once( __DIR__ . '/inc/custom-meta-fields.php' );
 require_once( __DIR__ . '/blocks/custom-blocks.php' );
 require_once( __DIR__ . '/inc/remove-comments.php' );
 
-// Add block data to REST API
-function add_custom_fields() {
-	register_rest_field(
-		[ 'comic_page', 'character' ],
-		'content_blocks',
-		[ 'get_callback' => 'get_custom_fields' ]
-	);
+
+function register_image_sizes() {
+	add_image_size( 'comic_page_desktop', 1600, 9999 );
+	add_image_size( 'comic_page_mobile', 800, 9999 );
 }
+add_action( 'after_setup_theme', 'register_image_sizes' );
 
-function get_custom_fields( $post, $attr, $request, $object_type ) {
-	if ( ! isset( $post['content']['raw'] ) ) {
-		return [];
-	}
-
-	$content = $post['content']['raw'];
-	$blocks = parse_blocks( $content );
-	$blocks = array_filter( $blocks, fn( $block ) => $block[ 'blockName' ] );
-	return $blocks;
+function register_image_size_nicenames( $sizes ) {
+	return array_merge( $sizes, [
+		'comic_page_desktop' => __( 'Desktop Comic Page' ),
+		'comic_page_mobile' => __( 'Mobile Comic Page' ),
+	] );
 }
-
-add_action( 'rest_api_init', 'add_custom_fields' );
-// ---
+add_filter( 'image_size_names_choose', 'register_image_size_nicenames' );
