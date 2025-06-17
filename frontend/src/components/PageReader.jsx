@@ -1,53 +1,22 @@
 'use client'
 
-import '@/styles/page-reader.scss';
-
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-import { sendApiRequest } from "@/lib/utilities";
+import '@/styles/page-reader.scss';
 import { ComicContext } from "@/context/comic-context";
 import PageReaderNav from "@/components/PageReaderNav";
 import PlaceholderPage from "@/components/PlaceholderPage";
 
-export default function PageReader( { pageNumber = 'latest' } ) {
-	const [ currentPage, setCurrentPage ] = useState();
-	const [ currentPageNumber, setCurrentPageNumber ] = useState( pageNumber );
-	const [ pages, setPages ] = useState([]);
 
-	useEffect( () => {
-		( async () => {
-			const urlParams = {
-				status: 'publish',
-				order: 'desc',
-				orderby: 'comic_page_number',
-				per_page: 100,
-				_fields: [
-					'id',
-					'date',
-					'title',
-					'slug',
-					'content',
-					'content_blocks',
-					'meta',
-				],
-			};
-			let pageData = await sendApiRequest( 'GET', 'wp/v2/comic_page', urlParams );
+export default function PageReader( { pages, startingPage = 'latest' } ) {
+	startingPage = startingPage === 'latest' ? pages.length : startingPage;
+	const pageIndex = pages.findIndex( page => page.meta.comic_page_number === startingPage );
 
-			if ( ! pageData ) {
-				return;
-			}
+	const [ currentPage, setCurrentPage ] = useState( pages[ pageIndex ] );
+	const [ currentPageNumber, setCurrentPageNumber ] = useState( startingPage );
 
-			if ( currentPageNumber === 'latest' ) {
-				setCurrentPageNumber( pageData[0].meta.comic_page_number );
-			}
-
-			const pageIndex = pageData.findIndex( page => page.meta.comic_page_number === currentPageNumber );
-
-			setPages( pageData );
-			setCurrentPage( pageData[ pageIndex ] );
-		} )();
-	}, [] );
+	console.log( 'currentPage: ', currentPage );
 
 	useEffect( () => {
 		if ( pages ) {
@@ -68,7 +37,7 @@ export default function PageReader( { pageNumber = 'latest' } ) {
 
 	return (
 		<ComicContext.Provider value={ {
-			pages, setPages,
+			pages,
 			currentPage, setCurrentPage,
 			currentPageNumber, setCurrentPageNumber
 		} }>

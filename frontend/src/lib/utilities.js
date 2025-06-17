@@ -1,5 +1,5 @@
 /**
- * Send a request to this site's API
+ * Send a request to the backend API
  * 
  * @param { string } method
  * @param { string } endpoint
@@ -13,12 +13,11 @@ export async function sendApiRequest(
 	endpoint,
 	urlParams = null,
 	body = null,
-	options = {}
+	options = {},
 ) {
 	urlParams = urlParams ? new URLSearchParams( urlParams ) : '';
 
 	options = {
-		cache: "no-store",
 		method,
 		...options
 	};
@@ -31,7 +30,7 @@ export async function sendApiRequest(
 
 	return await fetch( url, options )
 		.then( res => res.json() )
-		.catch( e => null );
+		.catch( e => console.error( e ) );
 }
 
 /**

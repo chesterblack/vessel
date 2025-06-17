@@ -1,5 +1,5 @@
-import PageReader from '@/components/PageReader';
+import PageProvider from '@/components/PageProvider';
 
 export default function HomePage() {
-	return <PageReader pageNumber='latest' />
+	return <PageProvider />
 }

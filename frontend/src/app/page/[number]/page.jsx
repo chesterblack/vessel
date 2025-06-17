@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import PageReader from '@/components/PageReader';
+import PageProvider from '@/components/PageProvider';
 
 export default async function NumberedPage( { params } ) {
 	let { number } = await params;
@@ -13,5 +13,5 @@ export default async function NumberedPage( { params } ) {
 		number = parseInt( number );
 	}
 
-	return <PageReader pageNumber={ number } />;
+	return <PageProvider startingPage={ number } />;
 }

@@ -18,6 +18,7 @@ export default function PageSelector() {
 		<select
 			value={ currentPageNumber }
 			onChange={ ( e ) => {
+				console.log('change');
 				setCurrentPageNumber( parseInt( e.target.value ) );
 			} }
 			aria-label='Page select'

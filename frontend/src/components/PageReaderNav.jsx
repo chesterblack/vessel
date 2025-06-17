@@ -1,6 +1,7 @@
 import { useContext } from "react";
-import Button from "./Button";
+
 import { ComicContext } from "@/context/comic-context";
+import Button from "./Button";
 import PageSelector from "./PageSelector";
 
 export default function PageReaderNav() {
@@ -15,14 +16,14 @@ export default function PageReaderNav() {
 				disabled={ currentPageNumber === 1 }
 				onClick={ () => setCurrentPageNumber( 1 ) }
 			>
-				First
+				&lt;&lt; <span>First</span>
 			</Button>
 
 			<Button
 				disabled={ !canGoBack }
 				onClick={ () => setCurrentPageNumber( currentPageNumber - 1 ) }
 			>
-				Back
+				&lt; <span>Back</span>
 			</Button>
 
 			<PageSelector />
@@ -31,14 +32,14 @@ export default function PageReaderNav() {
 				disabled={ !canGoForward }
 				onClick={ () => setCurrentPageNumber( currentPageNumber + 1 ) }
 			>
-				Next
+				<span>Next</span> &gt;
 			</Button>
 
 			<Button
 				disabled={ currentPageNumber === pages.length }
 				onClick={ () => setCurrentPageNumber( pages.length ) }
 			>
-				Last
+				<span>Last</span> &gt;&gt;
 			</Button>
 		</nav>
 	);
