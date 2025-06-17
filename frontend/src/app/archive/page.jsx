@@ -3,6 +3,12 @@ import Link from "next/link";
 import '@/styles/archive.scss';
 import { sendApiRequest, sortByAttribute } from "@/lib/utilities";
 
+
+export const metadata = {
+	title: 'View all comic pages here',
+	description: '...'
+}
+
 export default async function ArchivePage() {
 	const chapters = await sendApiRequest( 'GET', 'wp/v2/chapters' ) ?? [];
 

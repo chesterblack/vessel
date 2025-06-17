@@ -1,5 +1,11 @@
 import { sendApiRequest } from "@/lib/utilities";
 
+
+export const metadata = {
+	title: 'All about Vessel',
+	description: '...'
+}
+
 export default async function AboutPage() {
 	const pageData = await sendApiRequest( 'GET', 'wp/v2/pages', { slug: 'about' } );
 
