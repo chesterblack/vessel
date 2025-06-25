@@ -1,5 +1,5 @@
-import PageProvider from "@/components/PageProvider";
+import PageReader from "@/components/PageReader";
 
 export default function HomePage() {
-	return <PageProvider />
+	return <PageReader />
 }

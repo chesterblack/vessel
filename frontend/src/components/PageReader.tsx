@@ -1,17 +1,26 @@
-import { WP_REST_API_ComicPage } from "@/types/wp-post-types";
+import { PageNumber } from "@/types/types";
 
+import { notFound } from "next/navigation";
 import Image from "next/image";
 import '@/styles/page-reader.scss';
-import { getImageProps } from "@/lib/utilities";
+import { getImageProps, getPages } from "@/lib/utilities";
 import PageReaderNav from "@/components/PageReaderNav";
 import PlaceholderPage from "@/components/PlaceholderPage";
 
 interface Props {
-	pages: WP_REST_API_ComicPage[]
-	page: number
+	page?: PageNumber
 }
 
-export default function PageReader( { pages, page }: Props ) {
+export default async function PageReader( { page = 'latest' }: Props ) {
+	const pages = await getPages();
+
+	page = page === 'latest' ? pages.length : page;
+	page = typeof page !== 'number' ? parseInt( page ) : page;
+
+	if ( ! pages[ page - 1 ] ) {
+		notFound();
+	}
+
 	const imageProps = {
 		...getImageProps( pages[ page - 1 ] ),
 		className: 'page-image',

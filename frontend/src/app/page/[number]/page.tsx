@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { PageNumber } from '@/types/types';
 
 import { notFound } from 'next/navigation'
-import PageProvider from '@/components/PageProvider';
+import PageReader from '@/components/PageReader';
 
 
 interface Props {
@@ -28,9 +28,5 @@ export default async function NumberedPage( { params }: Props ) {
 		notFound();
 	}
 
-	if ( typeof number !== 'number' ) {
-		number = parseInt( number );
-	}
-
-	return <PageProvider page={ number } />;
+	return <PageReader page={ number } />;
 }
