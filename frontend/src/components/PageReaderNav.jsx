@@ -1,13 +1,7 @@
-import { useContext } from "react";
-
-import { ComicContext } from "@/context/comic-context";
 import Button from "./Button";
 import PageSelector from "./PageSelector";
-import Link from "next/link";
 
-export default function PageReaderNav() {
-	const { pages, page } = useContext( ComicContext );
-
+export default function PageReaderNav( { pages, page } ) {
 	const canGoBack = page > 1;
 	const canGoForward = page < pages?.length;
 
@@ -21,7 +15,7 @@ export default function PageReaderNav() {
 				&lt; <span>Back</span>
 			</Button>
 
-			<PageSelector />
+			<PageSelector pages={ pages } page={ page } />
 
 			<Button disabled={ !canGoForward } href={ `/page/${ page + 1 }` }>
 				<span>Next</span> &gt;

@@ -1,10 +1,10 @@
+'use client'
+
 import { useContext } from "react";
 import { redirect } from 'next/navigation'
 import { ComicContext } from "@/context/comic-context";
 
-export default function PageSelector() {
-	const { pages, page } = useContext( ComicContext );
-
+export default function PageSelector( { pages, page } ) {
 	let options = <option>Loading...</option>;
 
 	if ( pages ) {
