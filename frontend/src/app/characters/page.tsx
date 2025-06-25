@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
+import { WP_REST_API_Chapter } from '@/types/wp-taxonomies';
+import { WP_REST_API_Character } from '@/types/wp-post-types';
 
 import '@/styles/characters.scss';
 import CharacterList from "@/components/CharacterList";
 import { sendApiRequest } from '@/lib/utilities';
-import { WP_REST_API_Chapter } from '@/types/wp-taxonomies';
-import { WP_REST_API_Character } from '@/types/wp-post-types';
 
 export const metadata: Metadata = {
 	title: 'Meet the characters of Vessel',

@@ -1,4 +1,5 @@
 import { WP_REST_API_Character } from "@/types/wp-post-types";
+
 import Image from "next/image";
 
 interface Props {

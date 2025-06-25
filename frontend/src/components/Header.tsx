@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 import MainNav from "./MainNav";
 import TextLogo from "./TextLogo";
 

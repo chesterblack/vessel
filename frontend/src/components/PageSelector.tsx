@@ -1,8 +1,9 @@
 'use client'
 
 import { WP_REST_API_ComicPage } from '@/types/wp-post-types';
-import { redirect } from 'next/navigation'
 import { ReactElement } from 'react';
+
+import { redirect } from 'next/navigation'
 
 interface Props {
 	pages: WP_REST_API_ComicPage[]

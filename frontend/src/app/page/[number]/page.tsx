@@ -1,7 +1,9 @@
+import { Metadata } from 'next';
+import { PageNumber } from '@/types/types';
+
 import { notFound } from 'next/navigation'
 import PageProvider from '@/components/PageProvider';
-import { PageNumber } from '@/types/types';
-import { Metadata } from 'next';
+
 
 interface Props {
 	params: Promise<{ number: PageNumber }>

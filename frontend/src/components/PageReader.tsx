@@ -2,9 +2,9 @@ import { WP_REST_API_ComicPage } from "@/types/wp-post-types";
 
 import Image from "next/image";
 import '@/styles/page-reader.scss';
+import { getImageProps } from "@/lib/utilities";
 import PageReaderNav from "@/components/PageReaderNav";
 import PlaceholderPage from "@/components/PlaceholderPage";
-import { getImageProps } from "@/lib/utilities";
 
 interface Props {
 	pages: WP_REST_API_ComicPage[]

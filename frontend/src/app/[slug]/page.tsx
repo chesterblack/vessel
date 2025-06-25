@@ -1,7 +1,8 @@
-import { sendApiRequest } from "@/lib/utilities";
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { WP_REST_API_Page } from "wp-types";
+
+import { notFound } from "next/navigation";
+import { sendApiRequest } from "@/lib/utilities";
 
 
 interface Props {

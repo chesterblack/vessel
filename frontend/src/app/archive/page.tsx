@@ -1,11 +1,11 @@
 import { Metadata } from "next";
+import { WP_REST_API_Chapter } from "@/types/wp-taxonomies";
+import { WP_REST_API_ComicPage } from "@/types/wp-post-types";
 
 import Link from "next/link";
 
 import '@/styles/archive.scss';
 import { sendApiRequest, sortByAttribute } from "@/lib/utilities";
-import { WP_REST_API_Chapter } from "@/types/wp-taxonomies";
-import { WP_REST_API_ComicPage } from "@/types/wp-post-types";
 
 
 export const metadata: Metadata = {

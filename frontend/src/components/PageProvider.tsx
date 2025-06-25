@@ -1,7 +1,8 @@
+import { PageNumber } from '@/types/types';
+
 import { notFound } from 'next/navigation'
 import { getPages } from '@/lib/utilities';
 import PageReader from './PageReader';
-import { PageNumber } from '@/types/types';
 
 interface Props {
 	page?: PageNumber
