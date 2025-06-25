@@ -1,4 +1,8 @@
-export default function TextLogo( { color = '#000' } ) {
+interface Props {
+	color: string
+}
+
+export default function TextLogo( { color = '#000' }: Props ) {
 	return (
 		<svg width="60.00" height="23.76" viewBox="0.00 0.00 250.00 105.00" className="text-logo">
 			<title>Vessel</title>

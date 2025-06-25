@@ -1,14 +1,19 @@
 'use client'
 
-import { useContext } from "react";
+import { WP_REST_API_ComicPage } from '@/types/wp-post-types';
 import { redirect } from 'next/navigation'
-import { ComicContext } from "@/context/comic-context";
+import { ReactElement } from 'react';
 
-export default function PageSelector( { pages, page } ) {
-	let options = <option>Loading...</option>;
+interface Props {
+	pages: WP_REST_API_ComicPage[]
+	page: number
+}
+
+export default function PageSelector( { pages, page }: Props ) {
+	let options: ReactElement | ReactElement[] = <option>Loading...</option>;
 
 	if ( pages ) {
-		options = pages.map( ( { title, slug, meta }, index ) => (
+		options = pages.map( ( { title, slug, meta } ) => (
 			<option value={ meta.comic_page_number } key={ slug }>
 				{ title.rendered }
 			</option>

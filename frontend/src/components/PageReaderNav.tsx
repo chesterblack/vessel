@@ -1,9 +1,15 @@
+import { WP_REST_API_ComicPage } from "@/types/wp-post-types";
 import Button from "./Button";
 import PageSelector from "./PageSelector";
 
-export default function PageReaderNav( { pages, page } ) {
+interface Props {
+	pages: WP_REST_API_ComicPage[]
+	page: number
+}
+
+export default function PageReaderNav( { pages, page }: Props ) {
 	const canGoBack = page > 1;
-	const canGoForward = page < pages?.length;
+	const canGoForward = page < pages.length;
 
 	return (
 		<nav className="page-reader-nav">

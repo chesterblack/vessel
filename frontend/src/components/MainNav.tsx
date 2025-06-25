@@ -11,17 +11,17 @@ export default function MainNav() {
 
 	return (
 		<>
-			<nav className={`main-nav ${ showNav ? 'show' : '' }`}>
-				<Link href='/' onClick={ () => { setShowNav( false ) } }>
+			<nav className={ `main-nav ${ showNav ? 'show' : '' }` }>
+				<Link href='/' onClick={ () => setShowNav( false ) }>
 					Read
 				</Link>
-				<Link href='/archive' onClick={ () => { setShowNav( false ) } }>
+				<Link href='/archive' onClick={ () => setShowNav( false ) }>
 					Archive
 				</Link>
-				<Link href='/characters' onClick={ () => { setShowNav( false ) } }>
+				<Link href='/characters' onClick={ () => setShowNav( false ) }>
 					Characters
 				</Link>
-				<Link href='/about' onClick={ () => { setShowNav( false ) } }>
+				<Link href='/about' onClick={ () => setShowNav( false ) }>
 					About
 				</Link>
 			</nav>

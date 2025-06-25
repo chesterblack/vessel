@@ -1,23 +1,18 @@
-import { ComicContext } from "@/context/comic-context";
+import { WP_REST_API_ComicPage } from "@/types/wp-post-types";
+import { WP_REST_API_Chapter } from "@/types/wp-taxonomies";
+
 import { cache } from "react";
 
 /**
  * Send a request to the backend API
- * 
- * @param { string } method
- * @param { string } endpoint
- * @param { Object } [ urlParams ]
- * @param { Object } [ body ]
- * @param { Object } [ options ]
- * @returns { NextResponse }
  */
 export async function sendApiRequest(
-	method,
-	endpoint,
-	urlParams = null,
-	body = null,
-	options = {},
-) {
+	method: string,
+	endpoint: string,
+	urlParams: any = null,
+	body: any = null,
+	options: any = {},
+): Promise<any | void> {
 	urlParams = urlParams ? new URLSearchParams( urlParams ) : '';
 
 	options = {
@@ -38,19 +33,17 @@ export async function sendApiRequest(
 
 /**
  * Returns the latest description up to a certain chapter
- *
- * @param { Object[] } chapters Array of chapter objects as from the API
- * @param { string } currentChapter Current chapter slug
- * @param { string[] } descriptions Array of strings
- *
- * @returns { string }
  */
-export function getLatestDescription( chapters, currentChapter, descriptions ) {
-	if ( descriptions?.[ currentChapter ] ) {
+export function getLatestDescription(
+	chapters: WP_REST_API_Chapter[],
+	currentChapter: string,
+	descriptions: Record<string, string>
+): string {
+	if ( descriptions[ currentChapter ] ) {
 		return descriptions[ currentChapter ];
 	}
 	
-	const chapterSlugs = chapters.map( c => c.slug );
+	const chapterSlugs = chapters.map( ( c: { slug: string } ) => c.slug );
 
 	let description = null;
 
@@ -60,7 +53,7 @@ export function getLatestDescription( chapters, currentChapter, descriptions ) {
 			break;
 		}
 
-		if ( descriptions?.[ slug ] ) {
+		if ( descriptions[ slug ] ) {
 			description = descriptions[ slug ];
 		}
 	}
@@ -70,14 +63,12 @@ export function getLatestDescription( chapters, currentChapter, descriptions ) {
 
 /**
  * Sort an array of objects or arrays by one of it's attributes
- *
- * @param { Array } array The array of objects to sort, a copy will be returned
- * @param { string|int } attribute The attribute to sort by
- * @param { boolean } ascending Sort in ascending or descending order
- *
- * @returns { Array }
  */
-export function sortByAttribute( array, attribute, ascending = true ) {
+export function sortByAttribute<T>(
+	array: T[],
+	attribute: string | number,
+	ascending: boolean = true
+): T[] {
 	const newArray = [ ...array ];
 	newArray.sort( ( a, b ) => {
 		if ( a?.[ attribute ] < b?.[ attribute ] ){
@@ -117,14 +108,21 @@ export const getPages = cache( () => (
 				'meta',
 			],
 		}
-	)
+	) as Promise<WP_REST_API_ComicPage[]>
 ) );
 
-
-export function getImageProps( page ) {
+/**
+ * Extract the image props needed from a comic page API object
+ */
+export function getImageProps( page: WP_REST_API_ComicPage ): {
+	src: string
+	width: number
+	height: number
+	alt: string
+} {
 	const attrs = page?.content_blocks?.[0]?.attrs;
 	let alt = '';
-	let image;
+	let image: { url: any; width: any; height: any; };
 	if ( attrs ) {
 		alt = attrs.pageImage?.alt ?? '';
 		image = attrs.pageImage?.sizes?.comic_page_desktop ?? attrs.pageImage;

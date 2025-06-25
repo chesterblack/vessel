@@ -1,6 +1,14 @@
+import { MouseEventHandler, ReactNode } from "react";
 import Link from "next/link";
 
-export default function Button( { href, onClick, disabled, children } ) {
+interface Props {
+	disabled: boolean
+	children: ReactNode[]
+	href?: string
+	onClick?: MouseEventHandler
+}
+
+export default function Button( { href, onClick, disabled, children }: Props ) {
 	if ( disabled ) {
 		href = null;
 		onClick = null;
