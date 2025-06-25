@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 /**
  * Send a request to the backend API
  * 
@@ -90,3 +92,29 @@ export function sortByAttribute( array, attribute, ascending = true ) {
 
 	return newArray;
 }
+
+/**
+ * Cached fetch for all pages so we're not spamming the back-end for the same content
+ * when someone is reading the comic
+ */
+export const getPages = cache( () => (
+	sendApiRequest(
+		'GET',
+		'wp/v2/comic_page',
+		{
+			status: 'publish',
+			order: 'desc',
+			orderby: 'comic_page_number',
+			per_page: 100,
+			_fields: [
+				'id',
+				'date',
+				'title',
+				'slug',
+				'content',
+				'content_blocks',
+				'meta',
+			],
+		}
+	)
+) );

@@ -9,8 +9,7 @@ import PageReaderNav from "@/components/PageReaderNav";
 import PlaceholderPage from "@/components/PlaceholderPage";
 
 
-export default function PageReader( { pages, startingPage = 'latest' } ) {
-	startingPage = startingPage === 'latest' ? pages.length : startingPage;
+export default function PageReader( { pages, startingPage } ) {
 	const pageIndex = pages.findIndex( page => page.meta.comic_page_number === startingPage );
 
 	const [ currentPage, setCurrentPage ] = useState( pages[ pageIndex ] );
