@@ -1,3 +1,4 @@
+import { ComicContext } from "@/context/comic-context";
 import { cache } from "react";
 
 /**
@@ -118,3 +119,25 @@ export const getPages = cache( () => (
 		}
 	)
 ) );
+
+
+export function getImageProps( page ) {
+	const attrs = page?.content_blocks?.[0]?.attrs;
+	let alt = '';
+	let image;
+	if ( attrs ) {
+		alt = attrs.pageImage?.alt ?? '';
+		image = attrs.pageImage?.sizes?.comic_page_desktop ?? attrs.pageImage;
+	}
+
+	if ( ! image ) {
+		return;
+	}
+
+	return {
+		src: image.url,
+		width: image.width,
+		height: image.height,
+		alt: alt
+	};
+}
