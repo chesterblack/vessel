@@ -50,12 +50,15 @@ export default async function Page( { params }: Props ) {
 	const { title, content } = pageData[0];
 
 	return (
-		<main className={ slug }>
-			<h1>{ title.rendered }</h1>
-			<div
-				className="content"
-				dangerouslySetInnerHTML={ { __html: content.rendered } }
-			/>
-		</main>
+		<>
+			<link rel='stylesheet' type='text/css' href={`${ process.env.BACKEND_URL }/wp-includes/css/dist/block-library/style.min.css`} precedence='low' />
+			<main className={ slug }>
+				<h1>{ title.rendered }</h1>
+				<div
+					className="content"
+					dangerouslySetInnerHTML={ { __html: content.rendered } }
+				/>
+			</main>
+		</>
 	)
 }
