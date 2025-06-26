@@ -35,6 +35,18 @@ export async function generateMetadata( { params }: Props ): Promise<Metadata> {
 export default async function Page( { params }: Props ) {
 	const { slug } = await params;
 
+	if ( ! pageData ) {
+		pageData = await sendApiRequest( 
+			'GET',
+			'wp/v2/pages',
+			{ slug: slug }
+		) as WP_REST_API_Page[];
+
+		if ( ! pageData ) {
+			notFound();
+		}
+	}
+
 	const { title, content } = pageData[0];
 
 	return (

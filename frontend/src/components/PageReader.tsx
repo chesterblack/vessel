@@ -21,16 +21,19 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 		notFound();
 	}
 
-	const imageProps = {
-		...getImageProps( pages[ page - 1 ] ),
-		className: 'page-image',
-		priority: true
-	};
+	const { src, width, height, alt } = getImageProps( pages[ page - 1 ] );
 
 	return (
 		<main className='page-reader'>
 			<PageReaderNav pages={ pages } page={ page } />
-			{ imageProps ? <Image { ...imageProps } /> : <PlaceholderPage /> }
+			<Image
+				className='page-image'
+				src={ src }
+				width={ width }
+				height={ height }
+				alt={ alt }
+				priority={ true }
+			/>
 			<PageReaderNav pages={ pages } page={ page } />
 		</main>
 	)

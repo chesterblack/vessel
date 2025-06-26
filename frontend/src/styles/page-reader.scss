@@ -21,7 +21,6 @@ main.page-reader {
 
 .page-reader-nav {
 	display: flex;
-	align-items: center;
 	justify-content: center;
 
 	.button, select {
@@ -55,9 +54,18 @@ main.page-reader {
 }
 
 @media screen and ( max-width: 500px ) {
-	button {
-		span {
-			display: none;
+	.page-reader-nav {
+		select {
+			padding-inline: 25px;
+		}
+	
+		.button {
+			width: 100%;
+			text-align: center;
+	
+			span {
+				display: none;
+			}
 		}
 	}
 }

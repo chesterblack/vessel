@@ -8,8 +8,6 @@ interface Props {
 }
 
 export default function ChapterSelector( { chapters, currentChapter, setCurrentChapter }: Props ) {
-	console.log( 'chapters: ', chapters );
-
 	return (
 		<div className="chapter-selector">
 			<select value={ currentChapter } onChange={ ( e ) => {

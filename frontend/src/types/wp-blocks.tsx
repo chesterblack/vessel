@@ -22,7 +22,12 @@ export interface CharacterBioBlock extends Block {
 
 export interface ComicPageBlock {
 	attrs: {
-		pageImage: ImageAttributes,
+		pageImage: ImageAttributes & {
+			sizes?: {
+				comic_page_desktop: ImageAttributes
+				comic_page_mobile: ImageAttributes
+			}
+		}
 		pageNumber: number
 	}
 }
