@@ -114,19 +114,25 @@ export const getPages = cache( () => (
 /**
  * Extract the image props needed from a comic page API object
  */
-export function getImageProps( page: WP_REST_API_ComicPage ): {
+export function getImageProps(
+	page: WP_REST_API_ComicPage,
+	size: string = 'full'
+): {
 	src: string
 	width: number
 	height: number
 	alt: string
 } {
-	const attrs = page?.content_blocks?.[0]?.attrs;
+	const attrs = page.content_blocks[0].attrs;
 	let alt = '';
 	let image: { url: any; width: any; height: any; };
-	if ( attrs ) {
-		alt = attrs.pageImage?.alt ?? '';
-		image = attrs.pageImage?.sizes?.comic_page_desktop ?? attrs.pageImage;
+
+	if ( ! attrs ) {
+		return;
 	}
+
+	alt = attrs.pageImage?.alt ?? '';
+	image = attrs.pageImage?.sizes?.[ size ] ?? attrs.pageImage;
 
 	if ( ! image ) {
 		return;
@@ -138,4 +144,11 @@ export function getImageProps( page: WP_REST_API_ComicPage ): {
 		height: image.height,
 		alt: alt
 	};
+}
+
+export function findPage(
+	pages: WP_REST_API_ComicPage[],
+	pageNumber: number
+) {
+	return pages.find( page => page.content_blocks[0].attrs.pageNumber === pageNumber );
 }
