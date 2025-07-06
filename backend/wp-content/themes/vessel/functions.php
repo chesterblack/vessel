@@ -1,11 +1,12 @@
 <?php
 
+require_once( __DIR__ . '/inc/custom-schema.php' );
 require_once( __DIR__ . '/inc/custom-taxonomies.php' );
 require_once( __DIR__ . '/inc/custom-post-types.php' );
 require_once( __DIR__ . '/inc/custom-rest-api.php' );
 require_once( __DIR__ . '/inc/custom-meta-fields.php' );
-require_once( __DIR__ . '/blocks/custom-blocks.php' );
 require_once( __DIR__ . '/inc/remove-comments.php' );
+require_once( __DIR__ . '/blocks/custom-blocks.php' );
 
 
 function register_image_sizes() {
@@ -32,8 +33,8 @@ add_action( 'after_setup_theme', 'add_styles' );
 
 
 // Change WordPress API to use backend URL
-add_filter('rest_url', 'home_url_as_api_url');
 function home_url_as_api_url( $url ) {
 	$url = str_replace( home_url(), site_url() , $url );
 	return $url;
 }
+add_filter('rest_url', 'home_url_as_api_url');

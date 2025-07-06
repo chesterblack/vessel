@@ -1,5 +1,6 @@
 import { WP_REST_API_Character } from "@/types/wp-post-types";
 
+import parse from 'html-react-parser';
 import Image from "next/image";
 
 interface Props {
@@ -15,7 +16,7 @@ export default function CharacterBio( { characterData }: Props ) {
 
 	const characterName = characterData?.title?.rendered;
 	const portrait = characterData?.content_blocks[0]?.attrs?.portrait;
-	const description = characterData.description;
+	const description = parse( characterData.description );
 
 	let portraitImage = <Image src={ '/fallback-image-500.png' } width={ imageSize } height={ imageSize } alt={ characterName } />;
 
@@ -33,7 +34,9 @@ export default function CharacterBio( { characterData }: Props ) {
 			{ portraitImage }
 			<div>
 				<h2>{ characterName }</h2>
-				<p dangerouslySetInnerHTML={ { __html: description } } />
+				<p>
+					{ description }
+				</p>
 			</div>
 		</div>
 	);

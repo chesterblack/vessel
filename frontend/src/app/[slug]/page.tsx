@@ -1,63 +1,62 @@
 import { Metadata } from "next";
-import { WP_REST_API_Page } from "wp-types";
+import { WP_REST_API_Page_Vessel } from "@/types/wp-post-types";
 
 import { notFound } from "next/navigation";
+import parse from 'html-react-parser';
 import { sendApiRequest } from "@/lib/utilities";
+import { getYoastMetadata } from "@/lib/seo";
+import JsonLdSchema from "@/components/JsonLdSchema";
 
 
-interface Props {
+export interface Props {
 	params: Promise<{ slug: string }>
 }
-
-let pageData: WP_REST_API_Page[];
 
 export async function generateMetadata( { params }: Props ): Promise<Metadata> {
 	let { slug } = await params;
 
-	pageData = await sendApiRequest( 
+	const pageData = await sendApiRequest( 
 		'GET',
 		'wp/v2/pages',
-		{ slug: slug }
-	) as WP_REST_API_Page[];
+		{
+			slug: slug,
+			_fields: [ 'title', 'excerpt', 'yoast_head_json' ]
+		}
+	) as WP_REST_API_Page_Vessel[];
 
 	if ( ! pageData ) {
 		notFound();
 	}
 
-	const { title, excerpt } = pageData[0];
-
-	return {
-		title: `${ title.rendered } | Vessel`,
-		description: excerpt.rendered
-	}
+	return getYoastMetadata( pageData[0] );
 }
 
 export default async function Page( { params }: Props ) {
 	const { slug } = await params;
 
-	if ( ! pageData ) {
-		pageData = await sendApiRequest( 
-			'GET',
-			'wp/v2/pages',
-			{ slug: slug }
-		) as WP_REST_API_Page[];
+	const pageData = await sendApiRequest( 
+		'GET',
+		'wp/v2/pages',
+		{ slug: slug }
+	) as WP_REST_API_Page_Vessel[];
 
-		if ( ! pageData ) {
-			notFound();
-		}
+	if ( ! pageData ) {
+		notFound();
 	}
 
-	const { title, content } = pageData[0];
+	const title = pageData[0].title;
+	const content = parse( pageData[0].content.rendered );
+	const schema = pageData[0].yoast_head_json.schema;
 
 	return (
 		<>
+			<JsonLdSchema schema={ schema } />
 			<link rel='stylesheet' type='text/css' href={`${ process.env.BACKEND_URL }/wp-includes/css/dist/block-library/style.min.css`} precedence='low' />
 			<main className={ slug }>
 				<h1>{ title.rendered }</h1>
-				<div
-					className="content"
-					dangerouslySetInnerHTML={ { __html: content.rendered } }
-				/>
+				<div className="content">
+					{ content }
+				</div>
 			</main>
 		</>
 	)
