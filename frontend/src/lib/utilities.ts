@@ -1,7 +1,5 @@
-import { Props, pageData } from "@/app/[slug]/page";
-import { WP_REST_API_ComicPage, WP_REST_API_Page_Vessel } from "@/types/wp-post-types";
+import { WP_REST_API_ComicPage } from "@/types/wp-post-types";
 import { WP_REST_API_Chapter } from "@/types/wp-taxonomies";
-import { Metadata } from "next";
 
 import { cache } from "react";
 
