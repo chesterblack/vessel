@@ -39,14 +39,14 @@
 /* // LEMON MILK */
 @font-face {
 	font-family: 'LEMON MILK';
-	src: url( 'https://kipbite-assets.fra1.digitaloceanspaces.com/fonts/LEMONMILK-Light.woff' );
+	src: url( '/wp-content/themes/vessel/fonts/LEMONMILK-Light.woff' );
 	font-display: swap;
 	font-style: normal;
 	font-weight: 200;
 }
 @font-face {
 	font-family: 'LEMON MILK';
-	src: url( 'https://kipbite-assets.fra1.digitaloceanspaces.com/fonts/LEMONMILK-LightItalic.woff' );
+	src: url( '/wp-content/themes/vessel/fonts/LEMONMILK-LightItalic.woff' );
 	font-display: swap;
 	font-style: italic;
 	font-weight: 200;
@@ -54,14 +54,14 @@
 
 @font-face {
 	font-family: 'LEMON MILK';
-	src: url( 'https://kipbite-assets.fra1.digitaloceanspaces.com/fonts/LEMONMILK-Regular.woff' );
+	src: url( '/wp-content/themes/vessel/fonts/LEMONMILK-Regular.woff' );
 	font-display: swap;
 	font-style: normal;
 	font-weight: 400;
 }
 @font-face {
 	font-family: 'LEMON MILK';
-	src: url( 'https://kipbite-assets.fra1.digitaloceanspaces.com/fonts/LEMONMILK-RegularItalic.woff' );
+	src: url( '/wp-content/themes/vessel/fonts/LEMONMILK-RegularItalic.woff' );
 	font-display: swap;
 	font-style: italic;
 	font-weight: 400;
@@ -69,14 +69,14 @@
 
 @font-face {
 	font-family: 'LEMON MILK';
-	src: url( 'https://kipbite-assets.fra1.digitaloceanspaces.com/fonts/LEMONMILK-Medium.woff' );
+	src: url( '/wp-content/themes/vessel/fonts/LEMONMILK-Medium.woff' );
 	font-display: swap;
 	font-style: normal;
 	font-weight: 600;
 }
 @font-face {
 	font-family: 'LEMON MILK';
-	src: url( 'https://kipbite-assets.fra1.digitaloceanspaces.com/fonts/LEMONMILK-MediumItalic.woff' );
+	src: url( '/wp-content/themes/vessel/fonts/LEMONMILK-MediumItalic.woff' );
 	font-display: swap;
 	font-style: italic;
 	font-weight: 600;
@@ -84,14 +84,14 @@
 
 @font-face {
 	font-family: 'LEMON MILK';
-	src: url( 'https://kipbite-assets.fra1.digitaloceanspaces.com/fonts/LEMONMILK-Bold.woff' );
+	src: url( '/wp-content/themes/vessel/fonts/LEMONMILK-Bold.woff' );
 	font-display: swap;
 	font-style: normal;
 	font-weight: 800;
 }
 @font-face {
 	font-family: 'LEMON MILK';
-	src: url( 'https://kipbite-assets.fra1.digitaloceanspaces.com/fonts/LEMONMILK-BoldItalic.woff' );
+	src: url( '/wp-content/themes/vessel/fonts/LEMONMILK-BoldItalic.woff' );
 	font-display: swap;
 	font-style: italic;
 	font-weight: 800;
