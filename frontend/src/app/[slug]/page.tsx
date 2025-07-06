@@ -12,15 +12,16 @@ export interface Props {
 	params: Promise<{ slug: string }>
 }
 
-export let pageData: WP_REST_API_Page_Vessel[];
-
 export async function generateMetadata( { params }: Props ): Promise<Metadata> {
 	let { slug } = await params;
 
-	pageData = await sendApiRequest( 
+	const pageData = await sendApiRequest( 
 		'GET',
 		'wp/v2/pages',
-		{ slug: slug }
+		{
+			slug: slug,
+			_fields: [ 'title', 'excerpt', 'yoast_head_json' ]
+		}
 	) as WP_REST_API_Page_Vessel[];
 
 	if ( ! pageData ) {
@@ -33,16 +34,14 @@ export async function generateMetadata( { params }: Props ): Promise<Metadata> {
 export default async function Page( { params }: Props ) {
 	const { slug } = await params;
 
-	if ( ! pageData ) {
-		pageData = await sendApiRequest( 
-			'GET',
-			'wp/v2/pages',
-			{ slug: slug }
-		) as WP_REST_API_Page_Vessel[];
+	const pageData = await sendApiRequest( 
+		'GET',
+		'wp/v2/pages',
+		{ slug: slug }
+	) as WP_REST_API_Page_Vessel[];
 
-		if ( ! pageData ) {
-			notFound();
-		}
+	if ( ! pageData ) {
+		notFound();
 	}
 
 	const title = pageData[0].title;
