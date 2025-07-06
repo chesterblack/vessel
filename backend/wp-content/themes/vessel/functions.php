@@ -32,8 +32,8 @@ add_action( 'after_setup_theme', 'add_styles' );
 
 
 // Change WordPress API to use backend URL
-add_filter('rest_url', 'home_url_as_api_url');
 function home_url_as_api_url( $url ) {
 	$url = str_replace( home_url(), site_url() , $url );
 	return $url;
 }
+add_filter('rest_url', 'home_url_as_api_url');
