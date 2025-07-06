@@ -7,7 +7,6 @@ interface Props {
 export default function JsonLdSchema( { schema }: Props ) {
 	return (
 		<script
-			className="yoast-schema-graph"
 			type="application/json"
 			dangerouslySetInnerHTML={ {
 				__html: JSON.stringify( schema ).replace( /</g, '\\u003c' )

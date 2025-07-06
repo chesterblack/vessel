@@ -108,6 +108,7 @@ export const getPages = cache( () => (
 				'content',
 				'content_blocks',
 				'meta',
+				'yoast_head_json'
 			],
 		}
 	) as Promise<WP_REST_API_ComicPage[]>

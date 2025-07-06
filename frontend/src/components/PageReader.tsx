@@ -5,7 +5,8 @@ import Image from "next/image";
 import '@/styles/page-reader.scss';
 import { findPage, getImageProps, getPages } from "@/lib/utilities";
 import PageReaderNav from "@/components/PageReaderNav";
-import PlaceholderPage from "@/components/PlaceholderPage";
+import JsonLdSchema from "./JsonLdSchema";
+
 
 interface Props {
 	page?: PageNumber
@@ -25,18 +26,23 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 
 	const { src, width, height, alt } = getImageProps( pageData );
 
+	const schema = pageData.yoast_head_json.schema;
+
 	return (
-		<main className='page-reader'>
-			<PageReaderNav pages={ pages } page={ pageNumber } />
-			<Image
-				className='page-image'
-				src={ src }
-				width={ width }
-				height={ height }
-				alt={ alt }
-				priority={ true }
-			/>
-			<PageReaderNav pages={ pages } page={ pageNumber } />
-		</main>
+		<>
+			<JsonLdSchema schema={ schema } />
+			<main className='page-reader'>
+				<PageReaderNav pages={ pages } page={ pageNumber } />
+				<Image
+					className='page-image'
+					src={ src }
+					width={ width }
+					height={ height }
+					alt={ alt }
+					priority={ true }
+				/>
+				<PageReaderNav pages={ pages } page={ pageNumber } />
+			</main>
+		</>
 	)
 }

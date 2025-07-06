@@ -1,11 +1,12 @@
 <?php
 
+require_once( __DIR__ . '/inc/custom-schema.php' );
 require_once( __DIR__ . '/inc/custom-taxonomies.php' );
 require_once( __DIR__ . '/inc/custom-post-types.php' );
 require_once( __DIR__ . '/inc/custom-rest-api.php' );
 require_once( __DIR__ . '/inc/custom-meta-fields.php' );
-require_once( __DIR__ . '/blocks/custom-blocks.php' );
 require_once( __DIR__ . '/inc/remove-comments.php' );
+require_once( __DIR__ . '/blocks/custom-blocks.php' );
 
 
 function register_image_sizes() {
