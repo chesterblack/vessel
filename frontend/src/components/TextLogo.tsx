@@ -1,6 +1,11 @@
-export default function TextLogo( { color = '#000' } ) {
+interface Props {
+	color: string
+}
+
+export default function TextLogo( { color = '#000' }: Props ) {
 	return (
 		<svg width="60.00" height="23.76" viewBox="0.00 0.00 250.00 105.00" className="text-logo">
+			<title>Vessel</title>
 			<g strokeLinecap="round" transform="translate(0.00, -54.00)" id="text_logo_black">
 				<path d="M215.37,96.68 C215.35,98.28 215.30,101.74 215.28,103.60 C215.28,104.52 215.47,107.34 215.42,109.73 C215.38,112.28 215.54,113.52 215.54,115.00 C215.53,115.75 215.52,116.52 215.51,117.30 C215.46,122.12 215.40,127.36 215.37,130.75 C215.35,132.28 215.34,133.43 215.33,134.01 C215.33,134.01 214.96,133.43 214.96,133.43" fill="none" stroke={ color } strokeWidth="3.90" strokeOpacity="1.00" strokeLinejoin="round"/>
 				<path d="M215.49,134.46 C216.31,134.46 218.10,134.37 219.55,134.41 C221.59,134.43 224.13,134.41 226.29,134.40 C227.91,134.39 229.32,134.39 230.17,134.39 C231.20,134.41 232.00,134.44 233.55,134.41 C234.34,134.40 235.33,134.37 236.64,134.31 C237.17,134.29 238.10,134.28 239.13,134.28 C241.40,134.28 244.17,134.31 244.37,134.30" fill="none" stroke={ color } strokeWidth="3.90" strokeOpacity="1.00" strokeLinejoin="round"/>

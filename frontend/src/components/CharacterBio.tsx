@@ -1,7 +1,17 @@
+import { WP_REST_API_Character } from "@/types/wp-post-types";
+
 import Image from "next/image";
 
-export default function CharacterBio( { characterData } ) {
+interface Props {
+	characterData: WP_REST_API_Character
+}
+
+export default function CharacterBio( { characterData }: Props ) {
 	const imageSize = 150;
+
+	if ( ! characterData ) {
+		return;
+	}
 
 	const characterName = characterData?.title?.rendered;
 	const portrait = characterData?.content_blocks[0]?.attrs?.portrait;
@@ -14,7 +24,7 @@ export default function CharacterBio( { characterData } ) {
 			src={ portrait.url }
 			width={ imageSize }
 			height={ imageSize }
-			alt={ portrait.alt ?? portrait.title ?? characterName }
+			alt={ portrait.alt ?? characterName }
 		/>
 	}
 

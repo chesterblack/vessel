@@ -1,3 +1,4 @@
+@use '@/styles/partials/fonts.scss';
 @use '@/styles/partials/colors.scss';
 
 body.coming-soon {
@@ -11,7 +12,7 @@ body.coming-soon {
 	padding-top: 20px;
 
 	h1 {
-		font-family: 'LEMON MILK', 'Comfortaa', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		font-family: fonts.$titles;
 		color: colors.$ice-blue;
 		text-transform: uppercase;
 	}

@@ -24,9 +24,11 @@ export default function Edit( { attributes, setAttributes, context } ) {
 			<ImageUpload
 				image={ attributes.pageImage }
 				callback={ ( media ) => {
+					console.log( 'media: ', media );
 					setAttributes( {
 						pageImage: {
 							url: media.url,
+							sizes: media.sizes,
 							width: media.width,
 							height: media.height,
 							alt: media.alt

@@ -1,7 +1,6 @@
 @use '@/styles/partials/mixins.scss';
 @use '@/styles/partials/colors.scss';
 @use '@/styles/partials/fonts.scss';
-
 @use '@/styles/layout.scss';
 
 html {
@@ -12,7 +11,8 @@ html {
 	}
 }
 
-body {
+body,
+body:has( .next-error-h1 ) {
 	margin: 0;
 	background: linear-gradient( colors.$shallow-dark, colors.$ice-blue );
 	display: flex;
@@ -26,9 +26,14 @@ main {
 	margin: 5vw auto;
 	background-color: colors.$bright-light;
 	border-radius: 10px;
+	overflow: hidden;
 	padding: 10px 30px;
 	box-sizing: border-box;
 	box-shadow: 0px 0px 20px -15px colors.$deep-dark;
+
+	&.loading {
+		min-height: 500px;
+	}
 }
 
 * {
@@ -59,5 +64,12 @@ p {
 		&:hover {
 			text-decoration: underline;
 		}
+	}
+}
+
+@media screen and ( max-width: 600px ) {
+	main {
+		margin-block: 0;
+		border-radius: 0;
 	}
 }
