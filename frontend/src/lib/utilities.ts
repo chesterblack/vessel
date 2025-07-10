@@ -1,4 +1,4 @@
-import { ComicPage } from "@/types/wp-post-types";
+import { Character, ComicPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 
 import { cache } from "react";
@@ -62,21 +62,11 @@ export function getLatestDescription(
 }
 
 
-export function isChapterSafe(
-	chapters: Chapter[],
-	checkingChapter: string|Chapter,
-): boolean {
-	if ( typeof checkingChapter === 'object' ) {
-		checkingChapter = checkingChapter.slug
-	}
-
-	for ( let i = 0; i < chapters.length; i++ ) {
-		if ( chapters[i].slug === checkingChapter ) {
-			return true;
-		}
-	}
-
-	return false;
+/**
+ * Get the first available description for a character
+ */
+export function getFirstDescription( character: Character ) {
+	return character.content_blocks[0].attrs.descriptions[0] ?? '';
 }
 
 
@@ -105,8 +95,7 @@ export function sortByAttribute<T>(
 }
 
 /**
- * Cached fetch for all pages so we're not spamming the back-end for the same content
- * when someone is reading the comic
+ * Cached fetch for all pages so we're not spamming the back-end for the same content when someone is reading the comic
  */
 export const getPages = cache( () => (
 	sendApiRequest(
@@ -166,9 +155,15 @@ export function getImageProps(
 	};
 }
 
+
+/**
+ * Find a comic page based on it's page number
+ */
 export function findPage(
 	pages: ComicPage[],
 	pageNumber: number
-) {
-	return pages.find( page => page.content_blocks[0].attrs.pageNumber === pageNumber );
+): ComicPage {
+	return pages.find(
+		page => page.content_blocks[0].attrs.pageNumber === pageNumber
+	);
 }

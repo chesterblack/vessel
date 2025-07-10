@@ -17,12 +17,18 @@ export default function CharacterBio( { characterData, characterDescription }: P
 	const description = parse( characterDescription );
 
 	return (
-		<Link href={ `/characters/${ characterData.slug }` } className="character-bio">
-			<CharacterPortrait character={ characterData } />
+		<div className="character-bio">
+			<Link href={ `/characters/${ characterData.slug }` }>
+				<CharacterPortrait character={ characterData } />
+			</Link>
 			<div>
-				<h2>{ characterData.title.rendered }</h2>
+				<h2>
+					<Link href={ `/characters/${ characterData.slug }` }>
+						{ characterData.title.rendered }
+					</Link>
+				</h2>
 				<p>{ description }</p>
 			</div>
-		</Link>
+		</div>
 	);
 }
