@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import { WP_REST_API_Chapter } from "@/types/wp-taxonomies";
-import { WP_REST_API_ComicPage } from "@/types/wp-post-types";
+import { Chapter } from "@/types/wp-taxonomies";
+import { ComicPage } from "@/types/wp-post-types";
 
 import Link from "next/link";
 
@@ -14,11 +14,11 @@ export const metadata: Metadata = {
 }
 
 export default async function ArchivePage() {
-	const chapters = await sendApiRequest( 'GET', 'wp/v2/chapters' ) as WP_REST_API_Chapter[] ?? [];
+	const chapters = await sendApiRequest( 'GET', 'wp/v2/chapters' ) as Chapter[] ?? [];
 
 	let pageData: {
-		chapter: WP_REST_API_Chapter,
-		pages: WP_REST_API_ComicPage[]
+		chapter: Chapter,
+		pages: ComicPage[]
 	}[] = [];
 
 	for ( let i = 0; i < chapters.length; i++ ) {
@@ -28,7 +28,7 @@ export default async function ArchivePage() {
 			'GET',
 			'wp/v2/comic_page',
 			{ chapters: chapter.id }
-		) as WP_REST_API_ComicPage[];
+		) as ComicPage[];
 
 		chapterPages = chapterPages.map( chapterPage => ( {
 			...chapterPage,

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import { WP_REST_API_Chapter } from '@/types/wp-taxonomies';
-import { WP_REST_API_Character } from '@/types/wp-post-types';
+import { Chapter } from '@/types/wp-taxonomies';
+import { Character } from '@/types/wp-post-types';
 
 import '@/styles/characters.scss';
 import CharacterList from "@/components/CharacterList";
@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 }
 
 export default async function CharactersPage() {
-	const chapterData = await sendApiRequest( 'GET', 'wp/v2/chapters' ) as WP_REST_API_Chapter[];
-	const characterData = await sendApiRequest( 'GET', 'wp/v2/character' ) as WP_REST_API_Character[];
+	const chapterData = await sendApiRequest( 'GET', 'wp/v2/chapters' ) as Chapter[];
+	const characterData = await sendApiRequest( 'GET', 'wp/v2/character' ) as Character[];
 
 	return (
 		<main className="characters">

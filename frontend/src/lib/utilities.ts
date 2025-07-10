@@ -1,5 +1,5 @@
-import { WP_REST_API_ComicPage } from "@/types/wp-post-types";
-import { WP_REST_API_Chapter } from "@/types/wp-taxonomies";
+import { ComicPage } from "@/types/wp-post-types";
+import { Chapter } from "@/types/wp-taxonomies";
 
 import { cache } from "react";
 
@@ -35,7 +35,7 @@ export async function sendApiRequest(
  * Returns the latest description up to a certain chapter
  */
 export function getLatestDescription(
-	chapters: WP_REST_API_Chapter[],
+	chapters: Chapter[],
 	currentChapter: string,
 	descriptions: Record<string, string>
 ): string {
@@ -60,6 +60,25 @@ export function getLatestDescription(
 
 	return description;
 }
+
+
+export function isChapterSafe(
+	chapters: Chapter[],
+	checkingChapter: string|Chapter,
+): boolean {
+	if ( typeof checkingChapter === 'object' ) {
+		checkingChapter = checkingChapter.slug
+	}
+
+	for ( let i = 0; i < chapters.length; i++ ) {
+		if ( chapters[i].slug === checkingChapter ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 
 /**
  * Sort an array of objects or arrays by one of it's attributes
@@ -109,14 +128,14 @@ export const getPages = cache( () => (
 				'yoast_head_json'
 			],
 		}
-	) as Promise<WP_REST_API_ComicPage[]>
+	) as Promise<ComicPage[]>
 ) );
 
 /**
  * Extract the image props needed from a comic page API object
  */
 export function getImageProps(
-	page: WP_REST_API_ComicPage,
+	page: ComicPage,
 	size: string = 'full'
 ): {
 	src: string
@@ -148,7 +167,7 @@ export function getImageProps(
 }
 
 export function findPage(
-	pages: WP_REST_API_ComicPage[],
+	pages: ComicPage[],
 	pageNumber: number
 ) {
 	return pages.find( page => page.content_blocks[0].attrs.pageNumber === pageNumber );

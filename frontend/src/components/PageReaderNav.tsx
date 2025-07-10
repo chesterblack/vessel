@@ -1,10 +1,10 @@
-import { WP_REST_API_ComicPage } from "@/types/wp-post-types";
+import { ComicPage } from "@/types/wp-post-types";
 
 import Button from "./Button";
 import PageSelector from "./PageSelector";
 
 interface Props {
-	pages: WP_REST_API_ComicPage[]
+	pages: ComicPage[]
 	page: number
 }
 

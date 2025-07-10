@@ -1,8 +1,8 @@
-import { WP_REST_API_Page_Vessel } from "@/types/wp-post-types";
+import { WebPage } from "@/types/wp-post-types";
 import { Metadata } from "next";
 
 
-export function getYoastMetadata( pageData: WP_REST_API_Page_Vessel ): Metadata {
+export function getYoastMetadata( pageData: WebPage ): Metadata {
 	if ( ! pageData ) {
 		return {};
 	}
