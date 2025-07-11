@@ -65,7 +65,9 @@ export function getLatestDescription(
 /**
  * Get the first available description for a character
  */
-export function getFirstDescription( character: Character ) {
+export function getFirstDescription(
+	character: Character
+): string {
 	return character.content_blocks[0].attrs.descriptions[0] ?? '';
 }
 
@@ -166,4 +168,27 @@ export function findPage(
 	return pages.find(
 		page => page.content_blocks[0].attrs.pageNumber === pageNumber
 	);
+}
+
+
+/**
+ * Get all pages associated with a chapter
+ */
+export async function getChapterPages(
+	chapter: Chapter
+): Promise<ComicPage[]> {
+	let chapterPages = await sendApiRequest(
+		'GET',
+		'wp/v2/comic_page',
+		{ chapters: chapter.id }
+	) as ComicPage[];
+
+	chapterPages = chapterPages.map( chapterPage => ( {
+		...chapterPage,
+		pageNumber: chapterPage.content_blocks[0].attrs.pageNumber
+	} ) );
+
+	chapterPages = sortByAttribute( chapterPages, 'pageNumber' );
+
+	return chapterPages;
 }

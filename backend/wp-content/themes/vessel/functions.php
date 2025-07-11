@@ -1,12 +1,13 @@
 <?php
 
-require_once( __DIR__ . '/inc/custom-schema.php' );
-require_once( __DIR__ . '/inc/custom-taxonomies.php' );
-require_once( __DIR__ . '/inc/custom-post-types.php' );
-require_once( __DIR__ . '/inc/custom-rest-api.php' );
-require_once( __DIR__ . '/inc/custom-meta-fields.php' );
+require_once( __DIR__ . '/inc/schema.php' );
+require_once( __DIR__ . '/inc/taxonomies.php' );
+require_once( __DIR__ . '/inc/post-types.php' );
+require_once( __DIR__ . '/inc/rest-api.php' );
+require_once( __DIR__ . '/inc/meta-fields.php' );
 require_once( __DIR__ . '/inc/remove-comments.php' );
-require_once( __DIR__ . '/blocks/custom-blocks.php' );
+require_once( __DIR__ . '/inc/rewrites.php' );
+require_once( __DIR__ . '/blocks/blocks.php' );
 
 
 function register_image_sizes() {
@@ -37,4 +38,4 @@ function home_url_as_api_url( $url ) {
 	$url = str_replace( home_url(), site_url() , $url );
 	return $url;
 }
-add_filter('rest_url', 'home_url_as_api_url');
+add_filter( 'rest_url', 'home_url_as_api_url' );

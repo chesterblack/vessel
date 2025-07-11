@@ -1,18 +1,16 @@
 @use '@/styles/partials/colors.scss';
 
-main.archive {
-	.page-link {
-		display: inline-block;
-		text-decoration: none;
-		color: colors.$deep-dark;
-		background-color: colors.$med-light;
-		padding: 10px 20px;
-		border-radius: 10px;
-		margin-right: 10px;
-		transition: ease-in-out .1s;
+.page-link {
+	display: inline-block;
+	text-decoration: none;
+	color: colors.$deep-dark;
+	background-color: colors.$med-light;
+	padding: 10px 20px;
+	border-radius: 10px;
+	margin-right: 10px;
+	transition: ease-in-out .1s;
 
-		&:hover {
-			background-color: colors.$ice-blue
-		}
+	&:hover {
+		background-color: colors.$ice-blue
 	}
 }

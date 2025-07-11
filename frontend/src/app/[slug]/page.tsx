@@ -40,7 +40,7 @@ export default async function Page( { params }: Props ) {
 		{ slug: slug }
 	) as WebPage[];
 
-	if ( ! pageData ) {
+	if ( ! pageData || pageData.length < 1 ) {
 		notFound();
 	}
 
