@@ -1,42 +1,33 @@
-import { WP_REST_API_Character } from "@/types/wp-post-types";
+import { Character } from "@/types/wp-post-types";
 
+import Link from "next/link";
 import parse from 'html-react-parser';
-import Image from "next/image";
+import CharacterPortrait from "./CharacterPortrait";
 
 interface Props {
-	characterData: WP_REST_API_Character
+	characterData: Character
+	characterDescription: string
 }
 
-export default function CharacterBio( { characterData }: Props ) {
-	const imageSize = 150;
-
+export default function CharacterBio( { characterData, characterDescription }: Props ) {
 	if ( ! characterData ) {
 		return;
 	}
 
-	const characterName = characterData?.title?.rendered;
-	const portrait = characterData?.content_blocks[0]?.attrs?.portrait;
-	const description = parse( characterData.description );
-
-	let portraitImage = <Image src={ '/fallback-image-500.png' } width={ imageSize } height={ imageSize } alt={ characterName } />;
-
-	if ( portrait?.url ) {
-		portraitImage = <Image
-			src={ portrait.url }
-			width={ imageSize }
-			height={ imageSize }
-			alt={ portrait.alt ?? characterName }
-		/>
-	}
+	const description = parse( characterDescription );
 
 	return (
 		<div className="character-bio">
-			{ portraitImage }
+			<Link href={ `/characters/${ characterData.slug }` }>
+				<CharacterPortrait character={ characterData } />
+			</Link>
 			<div>
-				<h2>{ characterName }</h2>
-				<p>
-					{ description }
-				</p>
+				<h2>
+					<Link href={ `/characters/${ characterData.slug }` }>
+						{ characterData.title.rendered }
+					</Link>
+				</h2>
+				<p>{ description }</p>
 			</div>
 		</div>
 	);

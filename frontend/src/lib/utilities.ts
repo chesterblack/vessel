@@ -1,5 +1,5 @@
-import { WP_REST_API_ComicPage } from "@/types/wp-post-types";
-import { WP_REST_API_Chapter } from "@/types/wp-taxonomies";
+import { Character, ComicPage } from "@/types/wp-post-types";
+import { Chapter } from "@/types/wp-taxonomies";
 
 import { cache } from "react";
 
@@ -35,7 +35,7 @@ export async function sendApiRequest(
  * Returns the latest description up to a certain chapter
  */
 export function getLatestDescription(
-	chapters: WP_REST_API_Chapter[],
+	chapters: Chapter[],
 	currentChapter: string,
 	descriptions: Record<string, string>
 ): string {
@@ -60,6 +60,17 @@ export function getLatestDescription(
 
 	return description;
 }
+
+
+/**
+ * Get the first available description for a character
+ */
+export function getFirstDescription(
+	character: Character
+): string {
+	return character.content_blocks[0].attrs.descriptions[0] ?? '';
+}
+
 
 /**
  * Sort an array of objects or arrays by one of it's attributes
@@ -86,8 +97,7 @@ export function sortByAttribute<T>(
 }
 
 /**
- * Cached fetch for all pages so we're not spamming the back-end for the same content
- * when someone is reading the comic
+ * Cached fetch for all pages so we're not spamming the back-end for the same content when someone is reading the comic
  */
 export const getPages = cache( () => (
 	sendApiRequest(
@@ -109,14 +119,14 @@ export const getPages = cache( () => (
 				'yoast_head_json'
 			],
 		}
-	) as Promise<WP_REST_API_ComicPage[]>
+	) as Promise<ComicPage[]>
 ) );
 
 /**
  * Extract the image props needed from a comic page API object
  */
 export function getImageProps(
-	page: WP_REST_API_ComicPage,
+	page: ComicPage,
 	size: string = 'full'
 ): {
 	src: string
@@ -147,9 +157,38 @@ export function getImageProps(
 	};
 }
 
+
+/**
+ * Find a comic page based on it's page number
+ */
 export function findPage(
-	pages: WP_REST_API_ComicPage[],
+	pages: ComicPage[],
 	pageNumber: number
-) {
-	return pages.find( page => page.content_blocks[0].attrs.pageNumber === pageNumber );
+): ComicPage {
+	return pages.find(
+		page => page.content_blocks[0].attrs.pageNumber === pageNumber
+	);
+}
+
+
+/**
+ * Get all pages associated with a chapter
+ */
+export async function getChapterPages(
+	chapter: Chapter
+): Promise<ComicPage[]> {
+	let chapterPages = await sendApiRequest(
+		'GET',
+		'wp/v2/comic_page',
+		{ chapters: chapter.id }
+	) as ComicPage[];
+
+	chapterPages = chapterPages.map( chapterPage => ( {
+		...chapterPage,
+		pageNumber: chapterPage.content_blocks[0].attrs.pageNumber
+	} ) );
+
+	chapterPages = sortByAttribute( chapterPages, 'pageNumber' );
+
+	return chapterPages;
 }

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { WP_REST_API_Page_Vessel } from "@/types/wp-post-types";
+import { WebPage } from "@/types/wp-post-types";
 
 import { notFound } from "next/navigation";
 import parse from 'html-react-parser';
@@ -13,7 +13,7 @@ export interface Props {
 }
 
 export async function generateMetadata( { params }: Props ): Promise<Metadata> {
-	let { slug } = await params;
+	const { slug } = await params;
 
 	const pageData = await sendApiRequest( 
 		'GET',
@@ -22,7 +22,7 @@ export async function generateMetadata( { params }: Props ): Promise<Metadata> {
 			slug: slug,
 			_fields: [ 'title', 'excerpt', 'yoast_head_json' ]
 		}
-	) as WP_REST_API_Page_Vessel[];
+	) as WebPage[];
 
 	if ( ! pageData ) {
 		notFound();
@@ -38,9 +38,9 @@ export default async function Page( { params }: Props ) {
 		'GET',
 		'wp/v2/pages',
 		{ slug: slug }
-	) as WP_REST_API_Page_Vessel[];
+	) as WebPage[];
 
-	if ( ! pageData ) {
+	if ( ! pageData || pageData.length < 1 ) {
 		notFound();
 	}
 

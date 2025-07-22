@@ -1,11 +1,10 @@
 import { Metadata } from "next";
-import { WP_REST_API_Chapter } from "@/types/wp-taxonomies";
-import { WP_REST_API_ComicPage } from "@/types/wp-post-types";
-
-import Link from "next/link";
+import { Chapter } from "@/types/wp-taxonomies";
+import { ComicPage } from "@/types/wp-post-types";
 
 import '@/styles/archive.scss';
-import { sendApiRequest, sortByAttribute } from "@/lib/utilities";
+import { getChapterPages, sendApiRequest } from "@/lib/utilities";
+import ChapterPages from "@/components/ChapterPages";
 
 
 export const metadata: Metadata = {
@@ -14,28 +13,17 @@ export const metadata: Metadata = {
 }
 
 export default async function ArchivePage() {
-	const chapters = await sendApiRequest( 'GET', 'wp/v2/chapters' ) as WP_REST_API_Chapter[] ?? [];
+	const chapters = await sendApiRequest( 'GET', 'wp/v2/chapters' ) as Chapter[] ?? [];
 
 	let pageData: {
-		chapter: WP_REST_API_Chapter,
-		pages: WP_REST_API_ComicPage[]
+		chapter: Chapter,
+		pages: ComicPage[]
 	}[] = [];
 
 	for ( let i = 0; i < chapters.length; i++ ) {
 		const chapter = chapters[i];
 
-		let chapterPages = await sendApiRequest(
-			'GET',
-			'wp/v2/comic_page',
-			{ chapters: chapter.id }
-		) as WP_REST_API_ComicPage[];
-
-		chapterPages = chapterPages.map( chapterPage => ( {
-			...chapterPage,
-			pageNumber: chapterPage.content_blocks[0].attrs.pageNumber
-		} ) );
-
-		chapterPages = sortByAttribute( chapterPages, 'pageNumber' );
+		const chapterPages = await getChapterPages( chapter );
 
 		pageData.push( {
 			chapter: chapter,
@@ -46,26 +34,12 @@ export default async function ArchivePage() {
 	return (
 		<main className="archive">
 			<h1>Archive</h1>
-			{ pageData.map( section => {
-				if ( section.pages.length < 1 ) {
+			{ pageData.map( ( { pages, chapter } ) => {
+				if ( pages.length < 1 ) {
 					return;
 				}
 
-				return (
-					<div className="chapter" key={ section.chapter.id }>
-						<h2>{ section.chapter.name }</h2>
-						<p>{ section.chapter.description }</p>
-						{ section.pages.map( page => (
-							<Link
-								href={ `/page/${ page.content_blocks[0].attrs.pageNumber }` }
-								key={ page.id }
-								className='page-link'
-							>
-								{ page.title.rendered }
-							</Link>
-						) ) }
-					</div>
-				);
+				return <ChapterPages pages={ pages } chapter={ chapter } key={ chapter.id } />;
 			} ) }
 		</main>
 	);

@@ -6,7 +6,7 @@ interface Block {
 	attrs: any
 }
 
-interface ImageAttributes {
+export interface ImageAttributes {
 	url: string
 	width: number
 	height: number

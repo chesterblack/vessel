@@ -19,7 +19,7 @@ function setup_taxonomies() {
 			'public' => true,
 			'show_in_rest' => true,
 			'show_admin_column' => true,
-		]
+		],
 	);
 
 	// Removes default taxonomies

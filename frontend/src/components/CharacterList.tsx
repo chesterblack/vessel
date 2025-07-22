@@ -1,7 +1,7 @@
 "use client"
 
-import { WP_REST_API_Character } from "@/types/wp-post-types";
-import { WP_REST_API_Chapter } from "@/types/wp-taxonomies";
+import { Character } from "@/types/wp-post-types";
+import { Chapter } from "@/types/wp-taxonomies";
 
 import { useState } from "react";
 import { getLatestDescription } from "@/lib/utilities";
@@ -9,8 +9,8 @@ import CharacterBio from "@/components/CharacterBio";
 import ChapterSelector from "@/components/ChapterSelector";
 
 interface Props {
-	chapters: WP_REST_API_Chapter[]
-	characters: WP_REST_API_Character[]
+	chapters: Chapter[]
+	characters: Character[]
 }
 
 export default function CharacterList( { chapters, characters }: Props ) {
@@ -18,27 +18,30 @@ export default function CharacterList( { chapters, characters }: Props ) {
 
 	return (
 		<>
-			<div className="how-far">
-				<h2>How far have you read?</h2>
-				<ChapterSelector
-					chapters={ chapters }
-					currentChapter={ currentChapter }
-					setCurrentChapter={ setCurrentChapter }
-				/>
-			</div>
+			<ChapterSelector
+				chapters={ chapters }
+				currentChapter={ currentChapter }
+				setCurrentChapter={ setCurrentChapter }
+			/>
 
 			{ characters.map( ( character ) => {
-				character.description = getLatestDescription(
+				const description = getLatestDescription(
 					chapters,
 					currentChapter,
 					character.content_blocks[0].attrs.descriptions
 				);
 
-				if ( ! character.description ) {
+				if ( ! description ) {
 					return;
 				}
 
-				return <CharacterBio characterData={ character } key={ character.id } />
+				return (
+					<CharacterBio
+						characterData={ character }
+						characterDescription={ description }
+						key={ character.id }
+					/>
+				);
 			} ) }
 		</>
 	)
