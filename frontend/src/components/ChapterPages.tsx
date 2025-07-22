@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 interface Props {
 	chapter: Chapter
 	pages: ComicPage[]
-	headingLevel: 1|2|3|4|5|6
+	headingLevel?: 1|2|3|4|5|6
 }
 
 export default function ChapterPages( { chapter, pages, headingLevel = 2 }: Props ) {
