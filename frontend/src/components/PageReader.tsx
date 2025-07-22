@@ -6,6 +6,7 @@ import '@/styles/page-reader.scss';
 import { findPage, getImageProps, getPages } from "@/lib/utilities";
 import PageReaderNav from "@/components/PageReaderNav";
 import JsonLdSchema from "./JsonLdSchema";
+import JumpToTop from "./JumpToTop";
 
 
 interface Props {
@@ -32,6 +33,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 		<>
 			<JsonLdSchema schema={ schema } />
 			<main className='page-reader'>
+				<JumpToTop />
 				<PageReaderNav pages={ pages } page={ pageNumber } />
 				<Image
 					className='page-image'
