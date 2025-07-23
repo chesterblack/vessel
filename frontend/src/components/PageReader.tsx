@@ -7,6 +7,7 @@ import { findPage, getImageProps, getPages } from "@/lib/utilities";
 import PageReaderNav from "@/components/PageReaderNav";
 import JsonLdSchema from "./JsonLdSchema";
 import JumpToTop from "./JumpToTop";
+import AuthorsNote from "./AuthorsNote";
 
 
 interface Props {
@@ -44,6 +45,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 					priority={ true }
 				/>
 				<PageReaderNav pages={ pages } page={ pageNumber } />
+				<AuthorsNote page={ pageData } />
 			</main>
 		</>
 	)

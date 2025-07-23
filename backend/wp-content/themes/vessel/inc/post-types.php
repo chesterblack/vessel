@@ -18,7 +18,10 @@ function setup_post_types() {
 			'show_ui' => true,
 			'show_in_rest' => true,
 			'menu_icon' => 'dashicons-book-alt',
-			'template' => [ [ 'vessel/comic-page', [] ] ],
+			'template' => [
+				[ 'vessel/comic-page', [] ],
+				[ 'core/paragraph', [] ],
+			],
 			'template_lock' => 'all',
 			'supports' => [ 'title', 'editor', 'custom-fields' ],
 		]

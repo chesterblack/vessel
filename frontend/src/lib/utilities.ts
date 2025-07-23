@@ -109,18 +109,6 @@ export const getPages = cache( () => (
 			orderby: 'comic_page_number',
 			per_page: 100,
 			_embed: 'wp:term',
-			_fields: [
-				'id',
-				'date',
-				'title',
-				'slug',
-				'content',
-				'content_blocks',
-				'meta',
-				'yoast_head_json',
-				'_links',
-				'_embedded',
-			],
 		}
 	) as Promise<ComicPage[]>
 ) );
