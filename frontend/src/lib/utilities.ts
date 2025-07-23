@@ -108,6 +108,7 @@ export const getPages = cache( () => (
 			order: 'desc',
 			orderby: 'comic_page_number',
 			per_page: 100,
+			_embed: 'wp:term',
 			_fields: [
 				'id',
 				'date',
@@ -116,7 +117,9 @@ export const getPages = cache( () => (
 				'content',
 				'content_blocks',
 				'meta',
-				'yoast_head_json'
+				'yoast_head_json',
+				'_links',
+				'_embedded',
 			],
 		}
 	) as Promise<ComicPage[]>
@@ -189,6 +192,38 @@ export async function getChapterPages(
 	} ) );
 
 	chapterPages = sortByAttribute( chapterPages, 'pageNumber' );
+
+	return chapterPages;
+}
+
+/**
+ * Takes an array of pages and sorts them into child arrays by chapter
+ */
+export function groupPagesByChapter(
+	pages: ComicPage[]
+): [ string, { id: number, pages: ComicPage[] } ][]
+{
+	let chapters: Record<string, { id: number, pages: ComicPage[] }> = {};
+
+	pages.forEach( page => {
+		if ( ! page._embedded['wp:term'] ) {
+			return;
+		}
+
+		page._embedded['wp:term'][0].forEach( ( chapter: Chapter ) => {
+			console.log( 'chapter: ', chapter );
+			if ( chapters[ chapter.name ] ) {
+				chapters[ chapter.name ].pages.push( page );
+			} else {
+				chapters[ chapter.name ] = {
+					id: chapter.id,
+					pages: [ page ],
+				};
+			}
+		} );
+	} );
+
+	const chapterPages = Object.entries( chapters );
 
 	return chapterPages;
 }
