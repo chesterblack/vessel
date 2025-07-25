@@ -196,11 +196,13 @@ export function groupPagesByChapter(
 	let chapters: Record<string, { id: number, pages: ComicPage[] }> = {};
 
 	pages.forEach( page => {
-		if ( ! page._embedded['wp:term'] ) {
+		if ( ! page._embedded['wp:term'][0] ) {
 			return;
 		}
 
-		page._embedded['wp:term'][0].forEach( ( chapter: Chapter ) => {
+		const embeddedChapters = page._embedded['wp:term'][0] as Chapter[];
+
+		embeddedChapters.forEach( chapter => {
 			if ( chapters[ chapter.name ] ) {
 				chapters[ chapter.name ].pages.push( page );
 			} else {
