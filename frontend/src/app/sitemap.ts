@@ -8,7 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const comicPages = await getPages();
 	const comicPagesSitemap = comicPages.map( page => ( {
 		url: `${ baseUrl }/page/${ page.meta.comic_page_number }`,
-		lastModified: page.modified,
+		lastModified: new Date( page.modified ).toISOString(),
 		changeFrequency: 'weekly',
 		priority: 1
 	} ) ) as MetadataRoute.Sitemap;
@@ -20,7 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	) as WebPage[];
 	const webPagesSitemap = webPages.map( page => ( {
 		url: `${ baseUrl }/${ page.slug }`,
-		lastModified: page.modified,
+		lastModified: new Date( page.modified ).toISOString(),
 		changeFrequency: 'monthly',
 		priority: 0.5
 	} ) ) as MetadataRoute.Sitemap;
