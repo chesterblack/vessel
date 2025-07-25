@@ -3,7 +3,7 @@ import { PageNumber } from '@/types/types';
 
 import { notFound } from 'next/navigation'
 import PageReader from '@/components/PageReader';
-import { findPage, getComicPageMetadata, getImageProps, getPages, numeralisePageNumber } from '@/lib/utilities';
+import { getComicPageMetadata } from '@/lib/utilities';
 
 
 interface Props {

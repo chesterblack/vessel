@@ -17,7 +17,7 @@ interface Props {
 export default async function PageReader( { page = 'latest' }: Props ) {
 	const pages = await getPages();
 
-	let pageNumber = numeralisePageNumber( pages, page );
+	let pageNumber = await numeralisePageNumber( page );
 
 	const pageData = findPage( pages, pageNumber );
 
