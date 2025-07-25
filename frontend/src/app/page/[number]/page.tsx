@@ -3,6 +3,7 @@ import { PageNumber } from '@/types/types';
 
 import { notFound } from 'next/navigation'
 import PageReader from '@/components/PageReader';
+import { findPage, getComicPageMetadata, getImageProps, getPages, numeralisePageNumber } from '@/lib/utilities';
 
 
 interface Props {
@@ -12,12 +13,7 @@ interface Props {
 export async function generateMetadata( { params }: Props ): Promise<Metadata> {
 	let { number } = await params;
 
-	let title = `Page ${ number } | Vessel`;
-	if ( number === 'latest' ) {
-		title = `Latest | Vessel`;
-	}
-
-	return { title, description: '...' }
+	return await getComicPageMetadata( number );
 }
 
 export default async function NumberedPage( { params }: Props ) {

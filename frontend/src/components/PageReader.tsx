@@ -3,10 +3,11 @@ import { PageNumber } from "@/types/types";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import '@/styles/page-reader.scss';
-import { findPage, getImageProps, getPages } from "@/lib/utilities";
+import { findPage, getImageProps, getPages, numeralisePageNumber } from "@/lib/utilities";
 import PageReaderNav from "@/components/PageReaderNav";
 import JsonLdSchema from "./JsonLdSchema";
 import JumpToTop from "./JumpToTop";
+import AuthorsNote from "./AuthorsNote";
 
 
 interface Props {
@@ -16,8 +17,7 @@ interface Props {
 export default async function PageReader( { page = 'latest' }: Props ) {
 	const pages = await getPages();
 
-	let pageNumber = page === 'latest' ? pages.length : page;
-	pageNumber = typeof pageNumber !== 'number' ? parseInt( pageNumber ) : pageNumber;
+	let pageNumber = numeralisePageNumber( pages, page );
 
 	const pageData = findPage( pages, pageNumber );
 
@@ -44,6 +44,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 					priority={ true }
 				/>
 				<PageReaderNav pages={ pages } page={ pageNumber } />
+				<AuthorsNote page={ pageData } />
 			</main>
 		</>
 	)

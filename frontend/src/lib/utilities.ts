@@ -1,5 +1,7 @@
+import { PageNumber } from "@/types/types";
 import { Character, ComicPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
+import { Metadata } from "next";
 
 import { cache } from "react";
 
@@ -108,16 +110,7 @@ export const getPages = cache( () => (
 			order: 'desc',
 			orderby: 'comic_page_number',
 			per_page: 100,
-			_fields: [
-				'id',
-				'date',
-				'title',
-				'slug',
-				'content',
-				'content_blocks',
-				'meta',
-				'yoast_head_json'
-			],
+			_embed: 'wp:term',
 		}
 	) as Promise<ComicPage[]>
 ) );
@@ -191,4 +184,73 @@ export async function getChapterPages(
 	chapterPages = sortByAttribute( chapterPages, 'pageNumber' );
 
 	return chapterPages;
+}
+
+/**
+ * Takes an array of pages and sorts them into child arrays by chapter
+ */
+export function groupPagesByChapter(
+	pages: ComicPage[]
+): [ string, { id: number, pages: ComicPage[] } ][]
+{
+	let chapters: Record<string, { id: number, pages: ComicPage[] }> = {};
+
+	pages.forEach( page => {
+		if ( ! page._embedded['wp:term'][0] ) {
+			return;
+		}
+
+		const embeddedChapters = page._embedded['wp:term'][0] as Chapter[];
+
+		embeddedChapters.forEach( chapter => {
+			if ( chapters[ chapter.name ] ) {
+				chapters[ chapter.name ].pages.push( page );
+			} else {
+				chapters[ chapter.name ] = {
+					id: chapter.id,
+					pages: [ page ],
+				};
+			}
+		} );
+	} );
+
+	const chapterPages = Object.entries( chapters );
+
+	return chapterPages;
+}
+
+/**
+ * Turns a PageNumber into a number
+ */
+export function numeralisePageNumber(
+	pages: ComicPage[],
+	pageNumber: PageNumber
+): number {
+	let number = pageNumber === 'latest' ? pages.length : pageNumber;
+	number = typeof number !== 'number' ? parseInt( number ) : number;
+
+	return number;
+}
+
+export async function getComicPageMetadata(
+	page: PageNumber
+): Promise<Metadata> {
+	let title = `Page ${ page } | Vessel`;
+	if ( page === 'latest' ) {
+		title = `Latest | Vessel`;
+	}
+
+	const pages = await getPages();
+	const pageNumber = numeralisePageNumber( pages, page );
+	const pageData = findPage( pages, pageNumber );
+
+	let description = `Read page ${ pageNumber } of Vessel here!`;
+
+	if ( pageData?.yoast_head_json?.og_description ) {
+		description = pageData.yoast_head_json.og_description;
+	} else if ( getImageProps( pageData ).alt !== '' ) {
+		description = getImageProps( pageData ).alt;
+	}
+
+	return { title, description };
 }

@@ -32,6 +32,7 @@ main.page-reader {
 		color: colors.$ice-blue;
 		display: block;
 		text-decoration: none;
+		text-align: center;
 
 		&:hover:not( :disabled ) {
 			background: colors.$ice-blue;
@@ -43,6 +44,21 @@ main.page-reader {
 			opacity: .5;
 			cursor: not-allowed;
 		}
+	}
+}
+
+.authors-note {
+	margin: 0 20px 20px;
+	background: colors.$med-light;
+	border-radius: 5px;
+	display: flex;
+	padding: 20px;
+	gap: 15px;
+
+	.date {
+		font-size: 0.8em;
+		font-style: italic;
+		color: colors.$shallow-dark;
 	}
 }
 
@@ -67,5 +83,12 @@ main.page-reader {
 				display: none;
 			}
 		}
+	}
+
+	.authors-note {
+		flex-direction: column-reverse;
+		align-items: center;
+		text-align: center;
+		gap: 0;
 	}
 }
