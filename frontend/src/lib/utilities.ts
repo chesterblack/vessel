@@ -6,7 +6,7 @@ import { Metadata } from "next";
 import { cache } from "react";
 
 /**
- * Send a request to the backend API
+ * Send a request to the backend API, include the wp/v2/
  */
 export async function sendApiRequest(
 	method: string,
@@ -27,6 +27,8 @@ export async function sendApiRequest(
 	}
 
 	const url = `${ process.env.NEXT_PUBLIC_BACKEND_API_BASE }/${ endpoint }?${ urlParams }`;
+
+	console.log( 'url: ', url );
 
 	return await fetch( url, options )
 		.then( res => res.json() )
