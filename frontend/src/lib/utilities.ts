@@ -28,8 +28,6 @@ export async function sendApiRequest(
 
 	const url = `${ process.env.NEXT_PUBLIC_BACKEND_API_BASE }/${ endpoint }?${ urlParams }`;
 
-	console.log( 'url: ', url );
-
 	return await fetch( url, options )
 		.then( res => res.json() )
 		.catch( e => console.error( e ) );
