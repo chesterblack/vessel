@@ -1,0 +1,28 @@
+# Prevent all crawlers from accessing specific parts of the site
+User-agent: *
+
+# Allow all crawlers to access everything else
+Allow: /
+
+# Disallow OpenAI crawler
+User-agent: GPTBot
+Disallow: /
+
+# Block Anthropic's ClaudeBot
+User-agent: ClaudeBot
+Disallow: /
+
+# Block Google's AI crawler (Bard / Gemini)
+User-agent: Google-Extended
+Disallow: /
+
+# Block Perplexity AI
+User-agent: PerplexityBot
+Disallow: /
+
+# Block CCBot (used by Common Crawl, which some AI models train on)
+User-agent: CCBot
+Disallow: /
+
+# Sitemap URL
+Sitemap: https://www.vesselcomic.com/sitemap.xml
