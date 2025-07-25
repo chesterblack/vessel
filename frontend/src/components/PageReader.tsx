@@ -42,6 +42,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 					height={ height }
 					alt={ alt }
 					priority={ true }
+					fetchPriority='high'
 				/>
 				<PageReaderNav pages={ pages } page={ pageNumber } />
 				<AuthorsNote page={ pageData } />
