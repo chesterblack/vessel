@@ -32,7 +32,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 	return (
 		<>
 			<JsonLdSchema schema={ schema } />
-			<main className='page-reader'>
+			<main className={`page-reader ${ pageData.class_list.join(' ') }`}>
 				<JumpToTop />
 				<PageReaderNav pages={ pages } page={ pageNumber } />
 				<Image

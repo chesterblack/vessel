@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function AuthorsNote( { page }: Props ) {
-	if ( ! page.content || page.content.rendered === '' ) {
+	if ( ! page.content || page.content.rendered.trim() === '<p></p>' ) {
 		return <></>;
 	}
 

@@ -252,7 +252,7 @@ export async function getComicPageMetadata(
 	const pageData = findPage( pages, pageNumber );
 
 	metadata.title = `Page ${ pageNumber } | Vessel`;
-	if ( isLatestPage( pageData ) ) {
+	if ( await isLatestPage( pageData ) ) {
 		metadata.title = `Latest | Vessel`;
 		metadata.alternates = {
 			canonical: `${ process.env.NEXT_PUBLIC_FRONTEND_URL }`

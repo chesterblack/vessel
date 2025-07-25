@@ -46,7 +46,7 @@ export default async function CharacterPage( { params }: Props ): Promise<ReactN
 	const chapterData = await sendApiRequest( 'GET', 'wp/v2/chapters' ) as Chapter[];
 
 	return (
-		<main className="character">
+		<main className={`character ${ characterData.class_list.join(' ') }`}>
 			<h1>{ characterData.title.rendered }</h1>
 			<CharacterInfo chapters={ chapterData } character={ characterData } />
 		</main>
