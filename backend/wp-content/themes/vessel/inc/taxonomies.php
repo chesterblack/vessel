@@ -23,6 +23,30 @@ function setup_taxonomies() {
 		],
 	);
 
+	// Adds Backgrounds
+	register_taxonomy(
+		'backgrounds',
+		[ 'comic_page', 'character' ],
+		[
+			'description' => 'Set the background that should be used for this page',
+			'labels' => [
+				'name' => _x( 'Backgrounds', 'Taxonomy General Name', 'text_domain' ),
+				'singular_name' => _x( 'Background', 'Taxonomy Singular Name', 'text_domain' ),
+				'menu_name' => __( 'Backgrounds', 'text_domain' ),
+				'add_new_item' => __( 'Add New Background' ),
+			],
+			'hierarchical' => true,
+			'public' => true,
+			'show_in_rest' => true,
+			'show_admin_column' => false,
+			'default_term' => [
+				'Percy',
+				'percy',
+				'',
+			],
+		],
+	);
+
 	// Removes default taxonomies
 	register_taxonomy( 'category', [] );
 	register_taxonomy( 'post_tag', [] );

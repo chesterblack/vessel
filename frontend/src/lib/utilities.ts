@@ -150,7 +150,6 @@ export function getImageProps(
 	};
 }
 
-
 /**
  * Find a comic page based on it's page number
  */
@@ -162,7 +161,6 @@ export function findPage(
 		page => page.content_blocks[0].attrs.pageNumber === pageNumber
 	);
 }
-
 
 /**
  * Get all pages associated with a chapter
@@ -222,35 +220,51 @@ export function groupPagesByChapter(
 /**
  * Turns a PageNumber into a number
  */
-export function numeralisePageNumber(
-	pages: ComicPage[],
+export async function numeralisePageNumber(
 	pageNumber: PageNumber
-): number {
+): Promise<number> {
+	const pages = await getPages();
+
 	let number = pageNumber === 'latest' ? pages.length : pageNumber;
 	number = typeof number !== 'number' ? parseInt( number ) : number;
 
 	return number;
 }
 
+/**
+ * Is the page the most recent
+ */
+export async function isLatestPage( page: ComicPage ): Promise<boolean> {
+	const pages = await getPages();
+	return pages.length === page.meta.comic_page_number;
+}
+
+/**
+ * Generate the metadata required for a read page
+ */
 export async function getComicPageMetadata(
 	page: PageNumber
 ): Promise<Metadata> {
-	let title = `Page ${ page } | Vessel`;
-	if ( page === 'latest' ) {
-		title = `Latest | Vessel`;
-	}
+	const metadata: Metadata = {};
 
 	const pages = await getPages();
-	const pageNumber = numeralisePageNumber( pages, page );
+	const pageNumber = await numeralisePageNumber( page );
 	const pageData = findPage( pages, pageNumber );
 
-	let description = `Read page ${ pageNumber } of Vessel here!`;
-
-	if ( pageData?.yoast_head_json?.og_description ) {
-		description = pageData.yoast_head_json.og_description;
-	} else if ( getImageProps( pageData ).alt !== '' ) {
-		description = getImageProps( pageData ).alt;
+	metadata.title = `Page ${ pageNumber } | Vessel`;
+	if ( await isLatestPage( pageData ) ) {
+		metadata.title = `Latest | Vessel`;
+		metadata.alternates = {
+			canonical: `${ process.env.NEXT_PUBLIC_FRONTEND_URL }`
+		};
 	}
 
-	return { title, description };
+	metadata.description = `Read page ${ pageNumber } of Vessel here!`;
+	if ( pageData?.yoast_head_json?.og_description ) {
+		metadata.description = pageData.yoast_head_json.og_description;
+	} else if ( getImageProps( pageData ).alt !== '' ) {
+		metadata.description = getImageProps( pageData ).alt;
+	}
+
+	return metadata;
 }

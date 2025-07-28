@@ -17,7 +17,7 @@ interface Props {
 export default async function PageReader( { page = 'latest' }: Props ) {
 	const pages = await getPages();
 
-	let pageNumber = numeralisePageNumber( pages, page );
+	let pageNumber = await numeralisePageNumber( page );
 
 	const pageData = findPage( pages, pageNumber );
 
@@ -32,7 +32,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 	return (
 		<>
 			<JsonLdSchema schema={ schema } />
-			<main className='page-reader'>
+			<main className={`page-reader ${ pageData.class_list.join(' ') }`}>
 				<JumpToTop />
 				<PageReaderNav pages={ pages } page={ pageNumber } />
 				<Image
@@ -42,6 +42,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 					height={ height }
 					alt={ alt }
 					priority={ true }
+					fetchPriority='high'
 				/>
 				<PageReaderNav pages={ pages } page={ pageNumber } />
 				<AuthorsNote page={ pageData } />
