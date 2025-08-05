@@ -44,7 +44,8 @@ export default async function BlogPostPage( { params }: Props ) {
 		<>
 			<JsonLdSchema schema={ schema } />
 			<link rel='stylesheet' type='text/css' href={`${ process.env.BACKEND_URL }/wp-includes/css/dist/block-library/style.min.css`} precedence='low' />
-			<main className='blog'>
+
+			<main className='blog-single'>
 				<h1>{ title.rendered }</h1>
 				<div className="content">
 					{ content }
