@@ -20,6 +20,9 @@ export default function MainNav() {
 				{/* <Link href='/characters' onClick={ () => setShowNav( false ) }>
 					Characters
 				</Link> */}
+				<Link href='/blog' onClick={ () => setShowNav( false ) }>
+					Blog
+				</Link>
 				<Link href='/about' onClick={ () => setShowNav( false ) }>
 					About
 				</Link>

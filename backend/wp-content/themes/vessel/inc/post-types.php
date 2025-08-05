@@ -49,9 +49,9 @@ function setup_post_types() {
 }
 add_action( 'init', 'setup_post_types' );
 
-// Hides default post type
-function remove_default_post_type( $args, $post_type ) {
-	if ( in_array( $post_type, [ 'post', 'comment' ] ) ) {
+// Hides comments
+function remove_comments( $args, $post_type ) {
+	if ( in_array( $post_type, [ 'comment' ] ) ) {
 		$args['public']              = false;
 		$args['show_ui']             = false;
 		$args['show_in_menu']        = false;
@@ -66,4 +66,4 @@ function remove_default_post_type( $args, $post_type ) {
 
 	return $args;
 }
-add_filter( 'register_post_type_args', 'remove_default_post_type', 0, 2 );
+add_filter( 'register_post_type_args', 'remove_comments', 0, 2 );
