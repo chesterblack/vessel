@@ -1,5 +1,5 @@
 import { getPages, sendApiRequest } from '@/lib/utilities';
-import { WebPage } from '@/types/wp-post-types';
+import { Post, WebPage } from '@/types/wp-post-types';
 import type { MetadataRoute } from 'next'
  
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -11,6 +11,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		lastModified: new Date( page.modified ).toISOString(),
 		changeFrequency: 'weekly',
 		priority: 1
+	} ) ) as MetadataRoute.Sitemap;
+
+	const blogPosts = await sendApiRequest(
+		'GET',
+		'wp/v2/posts'
+	) as Post[];
+	const blogPostsSitemap = blogPosts.map( post => ( {
+		url: `${ baseUrl }/blog/${ post.slug }`,
+		lastModified: new Date( post.modified ).toISOString(),
+		changeFrequency: 'weekly',
+		priority: 0.8
 	} ) ) as MetadataRoute.Sitemap;
 
 	const webPages = await sendApiRequest(
@@ -28,5 +39,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	return [
 		...comicPagesSitemap,
 		...webPagesSitemap,
+		...blogPostsSitemap,
 	];
 }
