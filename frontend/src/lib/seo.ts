@@ -32,3 +32,5 @@ export function getYoastMetadata( pageData: WebPage ): Metadata {
 		},
 	}
 }
+
+export const blogDescription = "Keep up to date with the development of Vessel here. Get behind-the-scenes looks at progress, sketches and more!";

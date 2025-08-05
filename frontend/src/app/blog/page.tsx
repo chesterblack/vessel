@@ -3,10 +3,9 @@ import { Metadata } from "next";
 
 import parse from 'html-react-parser';
 import "@/styles/blog.scss";
+import { blogDescription } from "@/lib/seo";
 import { sendApiRequest } from "@/lib/utilities";
 
-
-export const blogDescription = "Keep up to date with the development of Vessel here. Get behind-the-scenes looks at progress, sketches and more!";
 
 export const metadata: Metadata = {
 	title: 'Blog | Vessel',

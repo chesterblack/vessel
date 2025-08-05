@@ -1,4 +1,4 @@
-import { blogDescription } from "./page";
+import { blogDescription } from "@/lib/seo";
 
 export default async function Loading() {
 	return (
