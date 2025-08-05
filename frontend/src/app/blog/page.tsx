@@ -1,9 +1,17 @@
 import { Post } from "@/types/wp-post-types";
+import { Metadata } from "next";
 
 import parse from 'html-react-parser';
 import "@/styles/blog.scss";
 import { sendApiRequest } from "@/lib/utilities";
 
+
+export const blogDescription = "Keep up to date with the development of Vessel here. Get behind-the-scenes looks at progress, sketches and more!";
+
+export const metadata: Metadata = {
+	title: 'Blog | Vessel',
+	description: blogDescription
+}
 
 export default async function BlogArchivePage() {
 	const blogPosts = await sendApiRequest( 
@@ -15,7 +23,7 @@ export default async function BlogArchivePage() {
 		<>
 			<main className="blog-archive">
 				<h1>Blog</h1>
-				<p>Keep up to date with the development of Vessel here. Get behind-the-scenes looks at progress, sketches and more!</p>
+				<p>{ blogDescription }</p>
 
 				<div className="blog-archive__list">
 					{
