@@ -38,3 +38,9 @@
 	color: colors.$shallow-dark;
 	float: right;
 }
+
+@media screen and ( max-width: 600px ) {
+	.blog-archive__list {
+		columns: 1;
+	}
+}
