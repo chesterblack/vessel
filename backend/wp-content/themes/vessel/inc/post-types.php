@@ -1,8 +1,6 @@
 <?php
-/**
- * Set up custom post types required for the site
- */
 
+// Set up custom post types required for the site
 function setup_post_types() {
 	// Comic page
 	register_post_type(
@@ -49,9 +47,24 @@ function setup_post_types() {
 }
 add_action( 'init', 'setup_post_types' );
 
+// Renames the default post type to blog posts
+function rename_blogs( array $args, string $post_type ): array {
+	if ( $post_type === 'post' ) {
+		$args['labels'] = [
+			'name' => _x( 'Blog Posts', 'Post Type General Name', 'text_domain' ),
+			'singular_name' => _x( 'Blog Post', 'Post Type Singular Name', 'text_domain' ),
+			'menu_name' => __( 'Blog Posts', 'text_domain' ),
+			'add_new_item' => __( 'Add New Blog Post' ),
+		];
+	}
+
+	return $args;
+}
+add_filter( 'register_post_type_args', 'rename_blogs', 0, 2 );
+
 // Hides comments
-function remove_comments( $args, $post_type ) {
-	if ( in_array( $post_type, [ 'comment' ] ) ) {
+function remove_comments( array $args, string $post_type ): array {
+	if ( $post_type === 'comment' ) {
 		$args['public']              = false;
 		$args['show_ui']             = false;
 		$args['show_in_menu']        = false;
