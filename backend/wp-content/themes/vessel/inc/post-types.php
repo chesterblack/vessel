@@ -48,7 +48,7 @@ function setup_post_types() {
 add_action( 'init', 'setup_post_types' );
 
 // Renames the default post type to blog posts
-function rename_blogs( array $args, string $post_type ): array {
+function rename_default_post_types( array $args, string $post_type ): array {
 	if ( $post_type === 'post' ) {
 		$args['labels'] = [
 			'name' => _x( 'Blog Posts', 'Post Type General Name', 'text_domain' ),
@@ -58,9 +58,18 @@ function rename_blogs( array $args, string $post_type ): array {
 		];
 	}
 
+	if ( $post_type === 'page' ) {
+		$args['labels'] = [
+			'name' => _x( 'Web Pages', 'Post Type General Name', 'text_domain' ),
+			'singular_name' => _x( 'Web Page', 'Post Type Singular Name', 'text_domain' ),
+			'menu_name' => __( 'Web Pages', 'text_domain' ),
+			'add_new_item' => __( 'Add New Web Page' ),
+		];
+	}
+
 	return $args;
 }
-add_filter( 'register_post_type_args', 'rename_blogs', 0, 2 );
+add_filter( 'register_post_type_args', 'rename_default_post_types', 0, 2 );
 
 // Hides comments
 function remove_comments( array $args, string $post_type ): array {
