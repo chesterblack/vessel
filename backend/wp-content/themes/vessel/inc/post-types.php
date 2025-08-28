@@ -39,7 +39,7 @@ function setup_post_types() {
 			'show_ui' => true,
 			'show_in_rest' => true,
 			'menu_icon' => 'dashicons-universal-access',
-			'template' => [ [ 'vessel/character-bio', [] ] ],
+			'template' => [ [ 'vessel/character-bio-v2', [] ] ],
 			'template_lock' => 'all',
 			'supports' => [ 'title', 'editor', 'custom-fields' ],
 		]
