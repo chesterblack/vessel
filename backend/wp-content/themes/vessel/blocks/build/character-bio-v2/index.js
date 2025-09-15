@@ -31,8 +31,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./editor.scss */ "./src/character-bio-v2/editor.scss");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/components/ImageUpload */ "./src/shared/components/ImageUpload.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__);
+
+
 
 
 
@@ -43,8 +46,22 @@ function Edit({
   attributes,
   setAttributes
 }) {
+  var _thisChapter$name, _thisChapter$descript, _thisChapter$portrait;
   const [chapters, setChapters] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [selectedChapter, setSelectedChapter] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)();
+  function setJsonAttribute(key, value) {
+    var _allData$selectedChap;
+    const allData = JSON.parse(attributes.chapters);
+    const chapterData = (_allData$selectedChap = allData[selectedChapter]) !== null && _allData$selectedChap !== void 0 ? _allData$selectedChap : {};
+    chapterData[key] = value;
+    const newAttributes = {
+      chapters: allData
+    };
+    newAttributes.chapters[selectedChapter] = chapterData;
+    setAttributes({
+      chapters: JSON.stringify(newAttributes.chapters)
+    });
+  }
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     (async () => {
       const data = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default()({
@@ -67,31 +84,45 @@ function Edit({
       chapters: '{}'
     });
   }
+  const thisChapter = JSON.parse(attributes.chapters)?.[selectedChapter];
+  const name = (_thisChapter$name = thisChapter?.name) !== null && _thisChapter$name !== void 0 ? _thisChapter$name : '';
+  const description = (_thisChapter$descript = thisChapter?.description) !== null && _thisChapter$descript !== void 0 ? _thisChapter$descript : '';
+  const portrait = (_thisChapter$portrait = thisChapter?.portrait) !== null && _thisChapter$portrait !== void 0 ? _thisChapter$portrait : {};
   console.log('attributes: ', attributes);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)(),
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
       label: "Chapter Selector",
       value: selectedChapter,
       options: chapters,
       onChange: v => setSelectedChapter(v)
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
-      className: "description",
-      tagName: "p",
-      value: JSON.parse(attributes.chapters)?.[selectedChapter]?.description,
-      onChange: newValue => {
-        var _allData$selectedChap;
-        const allData = JSON.parse(attributes.chapters);
-        const chapterData = (_allData$selectedChap = allData[selectedChapter]) !== null && _allData$selectedChap !== void 0 ? _allData$selectedChap : {};
-        chapterData.description = newValue;
-        const newAttributes = {
-          chapters: allData
-        };
-        newAttributes.chapters[selectedChapter] = chapterData;
-        setAttributes({
-          chapters: JSON.stringify(newAttributes.chapters)
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      label: "Portrait",
+      image: portrait,
+      callback: ({
+        url,
+        width,
+        height,
+        alt
+      }) => {
+        setJsonAttribute('portrait', {
+          url,
+          width,
+          height,
+          alt
         });
       }
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+      className: "name",
+      label: "Name",
+      value: name,
+      onChange: value => setJsonAttribute('name', value)
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+      className: "description",
+      label: "Description",
+      tagName: "p",
+      value: description,
+      onChange: value => setJsonAttribute('description', value)
     })]
   });
 }
@@ -107,6 +138,56 @@ function Edit({
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
+
+/***/ }),
+
+/***/ "./src/shared/components/ImageUpload.jsx":
+/*!***********************************************!*\
+  !*** ./src/shared/components/ImageUpload.jsx ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ImageUpload)
+/* harmony export */ });
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+function ImageUpload({
+  image,
+  callback,
+  label
+}) {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+    className: "image-upload",
+    children: [label && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+      children: label
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.MediaUploadCheck, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.MediaUpload, {
+        onSelect: callback,
+        allowedTypes: ['image'],
+        value: image?.id,
+        render: ({
+          open
+        }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+          onClick: open,
+          variant: "primary",
+          children: "Open Media Library"
+        })
+      })
+    }), image && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+      className: "comic-preview",
+      src: image.url
+    })]
+  });
+}
 
 /***/ }),
 

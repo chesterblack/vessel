@@ -4,10 +4,23 @@ import { SelectControl } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 
 import './editor.scss';
+import { TextControl } from '@wordpress/components';
+import ImageUpload from '../shared/components/ImageUpload';
 
 export default function Edit( { attributes, setAttributes } ) {
 	const [ chapters, setChapters ] = useState( [] );
 	const [ selectedChapter, setSelectedChapter ] = useState();
+
+	function setJsonAttribute( key, value ) {
+		const allData = JSON.parse( attributes.chapters );
+		const chapterData = allData[ selectedChapter ] ?? {};
+		chapterData[ key ] = value;
+
+		const newAttributes = { chapters: allData };
+		newAttributes.chapters[ selectedChapter ] = chapterData;
+
+		setAttributes( { chapters: JSON.stringify( newAttributes.chapters ) } );
+	}
 
 	useEffect( () => {
 		( async () => {
@@ -33,6 +46,11 @@ export default function Edit( { attributes, setAttributes } ) {
 		setAttributes( { chapters: '{}' } );
 	}
 
+	const thisChapter = JSON.parse( attributes.chapters )?.[ selectedChapter ];
+	const name        = thisChapter?.name ?? '';
+	const description = thisChapter?.description ?? '';
+	const portrait       = thisChapter?.portrait ?? {};
+
 	console.log( 'attributes: ', attributes );
 
 	return (
@@ -44,20 +62,27 @@ export default function Edit( { attributes, setAttributes } ) {
 				onChange={ v => setSelectedChapter( v ) }
 			/>
 
+			<ImageUpload
+				label='Portrait'
+				image={ portrait }
+				callback={ ( { url, width, height, alt } ) => {
+					setJsonAttribute( 'portrait', { url, width, height, alt } );
+				} }
+			/>
+
+			<TextControl
+				className='name'
+				label='Name'
+				value={ name }
+				onChange={ value => setJsonAttribute( 'name', value ) }
+			/>
+
 			<RichText
 				className='description'
+				label='Description'
 				tagName='p'
-				value={ JSON.parse( attributes.chapters )?.[ selectedChapter ]?.description }
-				onChange={ newValue => {
-					const allData = JSON.parse( attributes.chapters );
-					const chapterData = allData[ selectedChapter ] ?? {};
-					chapterData.description = newValue;
-
-					const newAttributes = { chapters: allData };
-					newAttributes.chapters[ selectedChapter ] = chapterData;
-
-					setAttributes( { chapters: JSON.stringify( newAttributes.chapters ) } );
-				} }
+				value={ description }
+				onChange={ value => setJsonAttribute( 'description', value ) }
 			/>
 		</div>
 	)

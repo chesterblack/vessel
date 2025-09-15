@@ -15,9 +15,18 @@ export interface ImageAttributes {
 
 export interface CharacterBioBlock extends Block {
 	attrs: {
-		portrait: ImageAttributes
-		descriptions: Record<string, string>
+		chapters: string
 	}
+}
+
+export interface CharacterBioDatum {
+	name?: string
+	description?: string
+	portrait?: ImageAttributes
+}
+
+export interface CharacterBioData {
+	[ chapterName: string ]: CharacterBioDatum
 }
 
 export interface ComicPageBlock {

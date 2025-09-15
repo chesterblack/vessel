@@ -2,17 +2,16 @@ import { ReactNode } from "react";
 
 import Image from "next/image";
 import { Character } from "@/types/wp-post-types";
+import { ImageAttributes } from "@/types/wp-blocks";
 
 
 interface Props {
-	character: Character
+	portrait: ImageAttributes
+	characterName: string
 	size?: number | [ number, number ]
 }
 
-export default function CharacterPortrait( { character, size = 150 }: Props ): ReactNode {
-	const portrait = character?.content_blocks[0]?.attrs?.portrait;
-	const characterName = character.title.rendered;
-
+export default function CharacterPortrait( { portrait, characterName, size = 150 }: Props ): ReactNode {
 	size = typeof size === 'number' ? [ size, size ] : size;
 
 	let portraitImage = <Image

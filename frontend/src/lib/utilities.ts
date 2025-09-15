@@ -1,4 +1,5 @@
 import { PageNumber } from "@/types/types";
+import { CharacterBioBlock, CharacterBioData, CharacterBioDatum } from "@/types/wp-blocks";
 import { Character, ComicPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { Metadata } from "next";
@@ -36,18 +37,22 @@ export async function sendApiRequest(
 /**
  * Returns the latest description up to a certain chapter
  */
-export function getLatestDescription(
+export function getLatestCharacterBioData(
 	chapters: Chapter[],
 	currentChapter: string,
-	descriptions: Record<string, string>
-): string {
-	if ( descriptions[ currentChapter ] ) {
-		return descriptions[ currentChapter ];
+	characterInfo: CharacterBioData
+): CharacterBioDatum {
+	if ( characterInfo[ currentChapter ] ) {
+		return characterInfo[ currentChapter ];
 	}
-	
+
 	const chapterSlugs = chapters.map( ( c: { slug: string } ) => c.slug );
 
-	let description = null;
+	let info = {
+		name: null,
+		description: null,
+		portrait: null,
+	} as CharacterBioDatum;
 
 	for ( let i = 0; i < chapterSlugs.length; i++ ) {
 		const slug = chapterSlugs[i];
@@ -55,12 +60,20 @@ export function getLatestDescription(
 			break;
 		}
 
-		if ( descriptions[ slug ] ) {
-			description = descriptions[ slug ];
+		if ( characterInfo[ slug ]?.name ) {
+			info.name = characterInfo[ slug ].name;
+		}
+
+		if ( characterInfo[ slug ]?.description ) {
+			info.description = characterInfo[ slug ].description;
+		}
+
+		if ( characterInfo[ slug ]?.portrait ) {
+			info.portrait = characterInfo[ slug ].portrait;
 		}
 	}
 
-	return description;
+	return info;
 }
 
 
@@ -70,7 +83,15 @@ export function getLatestDescription(
 export function getFirstDescription(
 	character: Character
 ): string {
-	return character.content_blocks[0].attrs.descriptions[0] ?? '';
+	const chapterData = JSON.parse(
+		character.content_blocks[0].attrs.chapters
+	) as CharacterBioData;
+
+	const firstDatum = chapterData[
+		Object.keys( chapterData )[0]
+	];
+
+	return firstDatum.description ?? '';
 }
 
 

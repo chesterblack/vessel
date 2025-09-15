@@ -21,7 +21,6 @@ export interface YoastHead {
 	schema: Graph,
 };
 
-
 export interface OgImage {
 	url: string,
 	type: string,

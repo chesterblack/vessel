@@ -3,31 +3,33 @@ import { Character } from "@/types/wp-post-types";
 import Link from "next/link";
 import parse from 'html-react-parser';
 import CharacterPortrait from "./CharacterPortrait";
+import { CharacterBioDatum } from "@/types/wp-blocks";
 
 interface Props {
-	characterData: Character
-	characterDescription: string
+	character: Character
+	characterBio: CharacterBioDatum
 }
 
-export default function CharacterBio( { characterData, characterDescription }: Props ) {
-	if ( ! characterData ) {
-		return;
-	}
+export default function CharacterBio( { character, characterBio }: Props ) {
+	const { portrait, name, description } = characterBio;
 
-	const description = parse( characterDescription );
+	const parsedDescription = parse( description ?? '' );
 
 	return (
 		<div className="character-bio">
-			<Link href={ `/characters/${ characterData.slug }` }>
-				<CharacterPortrait character={ characterData } />
+			<Link href={ `/characters/${ character.slug }` }>
+				<CharacterPortrait
+					portrait={ portrait }
+					characterName={ name ? name : character.title.rendered }
+				/>
 			</Link>
 			<div>
 				<h2>
-					<Link href={ `/characters/${ characterData.slug }` }>
-						{ characterData.title.rendered }
+					<Link href={ `/characters/${ character.slug }` }>
+						{ name ? name : character.title.rendered }
 					</Link>
 				</h2>
-				<p>{ description }</p>
+				<p>{ parsedDescription }</p>
 			</div>
 		</div>
 	);
