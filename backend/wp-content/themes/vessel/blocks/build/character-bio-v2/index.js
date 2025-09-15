@@ -2,36 +2,40 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/comic-page/block.json":
-/*!***********************************!*\
-  !*** ./src/comic-page/block.json ***!
-  \***********************************/
+/***/ "./src/character-bio-v2/block.json":
+/*!*****************************************!*\
+  !*** ./src/character-bio-v2/block.json ***!
+  \*****************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"vessel/comic-page","version":"0.1.0","title":"Comic Page","category":"widgets","icon":"welcome-add-page","description":"A comic page.","example":{},"supports":{"html":false},"textdomain":"comic-page","editorScript":"file:./index.js","editorStyle":"file:./index.css","attributes":{"pageImage":{"type":"object"},"pageNumber":{"type":"number"}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"vessel/character-bio-v2","version":"0.1.0","title":"Character Bio","category":"widgets","icon":"universal-access","description":"Info panel for a character.","example":{},"supports":{"html":false},"textdomain":"character-bio-v2","editorScript":"file:./index.js","editorStyle":"file:./index.css","attributes":{"chapters":{"type":"string"}}}');
 
 /***/ }),
 
-/***/ "./src/comic-page/edit.js":
-/*!********************************!*\
-  !*** ./src/comic-page/edit.js ***!
-  \********************************/
+/***/ "./src/character-bio-v2/edit.jsx":
+/*!***************************************!*\
+  !*** ./src/character-bio-v2/edit.jsx ***!
+  \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Edit)
 /* harmony export */ });
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
-/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/components/ImageUpload */ "./src/shared/components/ImageUpload.jsx");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./editor.scss */ "./src/comic-page/editor.scss");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./editor.scss */ "./src/character-bio-v2/editor.scss");
+/* harmony import */ var _shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/components/ImageUpload */ "./src/shared/components/ImageUpload.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__);
+
+
 
 
 
@@ -40,57 +44,97 @@ __webpack_require__.r(__webpack_exports__);
 
 function Edit({
   attributes,
-  setAttributes,
-  context
+  setAttributes
 }) {
-  const postId = wp.data.select('core/editor').getCurrentPostId();
-  const [meta, setMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityProp)('postType', 'comic_page', 'meta', postId);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+  var _thisChapter$name, _thisChapter$descript, _thisChapter$portrait;
+  const [chapters, setChapters] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [selectedChapter, setSelectedChapter] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)();
+  function setJsonAttribute(key, value) {
+    var _allData$selectedChap;
+    const allData = JSON.parse(attributes.chapters);
+    const chapterData = (_allData$selectedChap = allData[selectedChapter]) !== null && _allData$selectedChap !== void 0 ? _allData$selectedChap : {};
+    chapterData[key] = value;
+    const newAttributes = {
+      chapters: allData
+    };
+    newAttributes.chapters[selectedChapter] = chapterData;
+    setAttributes({
+      chapters: JSON.stringify(newAttributes.chapters)
+    });
+  }
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    (async () => {
+      const data = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default()({
+        path: '/wp/v2/chapters',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const options = data.map(chapter => ({
+        label: chapter.name,
+        value: chapter.slug
+      }));
+      setChapters(options);
+      setSelectedChapter(options[0].value);
+    })();
+  }, []);
+  if (!attributes?.chapters) {
+    setAttributes({
+      chapters: '{}'
+    });
+  }
+  const thisChapter = JSON.parse(attributes.chapters)?.[selectedChapter];
+  const name = (_thisChapter$name = thisChapter?.name) !== null && _thisChapter$name !== void 0 ? _thisChapter$name : '';
+  const description = (_thisChapter$descript = thisChapter?.description) !== null && _thisChapter$descript !== void 0 ? _thisChapter$descript : '';
+  const portrait = (_thisChapter$portrait = thisChapter?.portrait) !== null && _thisChapter$portrait !== void 0 ? _thisChapter$portrait : {};
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)(),
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
-      label: "Page Number",
-      type: "number",
-      value: attributes.pageNumber,
-      onChange: value => {
-        setAttributes({
-          pageNumber: parseFloat(value)
-        });
-        setMeta({
-          ...meta,
-          comic_page_number: parseFloat(value)
-        });
-      }
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
-      children: "Comic Page"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      image: attributes.pageImage,
-      callback: media => {
-        console.log('media: ', media);
-        setAttributes({
-          pageImage: {
-            url: media.url,
-            sizes: media.sizes,
-            width: media.width,
-            height: media.height,
-            alt: media.alt
-          }
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+      label: "Chapter Selector",
+      value: selectedChapter,
+      options: chapters,
+      onChange: v => setSelectedChapter(v)
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      label: "Portrait",
+      image: portrait,
+      callback: ({
+        url,
+        width,
+        height,
+        alt
+      }) => {
+        setJsonAttribute('portrait', {
+          url,
+          width,
+          height,
+          alt
         });
       },
       deleteCallback: () => {
-        setAttributes({
-          pageImage: null
-        });
+        setJsonAttribute('portrait', null);
       }
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+      className: "name",
+      label: "Name",
+      value: name,
+      onChange: value => setJsonAttribute('name', value)
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+      className: "description",
+      label: "Description",
+      tagName: "p",
+      value: description,
+      onChange: value => setJsonAttribute('description', value)
     })]
   });
 }
 
 /***/ }),
 
-/***/ "./src/comic-page/editor.scss":
-/*!************************************!*\
-  !*** ./src/comic-page/editor.scss ***!
-  \************************************/
+/***/ "./src/character-bio-v2/editor.scss":
+/*!******************************************!*\
+  !*** ./src/character-bio-v2/editor.scss ***!
+  \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -159,6 +203,16 @@ function ImageUpload({
 
 /***/ }),
 
+/***/ "@wordpress/api-fetch":
+/*!**********************************!*\
+  !*** external ["wp","apiFetch"] ***!
+  \**********************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["apiFetch"];
+
+/***/ }),
+
 /***/ "@wordpress/block-editor":
 /*!*************************************!*\
   !*** external ["wp","blockEditor"] ***!
@@ -189,13 +243,13 @@ module.exports = window["wp"]["components"];
 
 /***/ }),
 
-/***/ "@wordpress/core-data":
-/*!**********************************!*\
-  !*** external ["wp","coreData"] ***!
-  \**********************************/
+/***/ "react":
+/*!************************!*\
+  !*** external "React" ***!
+  \************************/
 /***/ ((module) => {
 
-module.exports = window["wp"]["coreData"];
+module.exports = window["React"];
 
 /***/ }),
 
@@ -280,14 +334,14 @@ module.exports = window["ReactJSXRuntime"];
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-/*!*********************************!*\
-  !*** ./src/comic-page/index.js ***!
-  \*********************************/
+/*!***************************************!*\
+  !*** ./src/character-bio-v2/index.js ***!
+  \***************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./src/comic-page/edit.js");
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./block.json */ "./src/comic-page/block.json");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./src/character-bio-v2/edit.jsx");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./block.json */ "./src/character-bio-v2/block.json");
 
 
 

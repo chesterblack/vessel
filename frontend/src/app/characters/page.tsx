@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 }
 
 export default async function CharactersPage() {
-	const chapterData = await sendApiRequest( 'GET', 'wp/v2/chapters' ) as Chapter[];
+	const chapterData   = await sendApiRequest( 'GET', 'wp/v2/chapters' ) as Chapter[];
 	const characterData = await sendApiRequest( 'GET', 'wp/v2/character' ) as Character[];
 
 	return (

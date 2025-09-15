@@ -4,9 +4,10 @@ import { Character } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 
 import { useState } from "react";
-import { getLatestDescription } from "@/lib/utilities";
+import { getLatestCharacterBioData } from "@/lib/utilities";
 import CharacterBio from "@/components/CharacterBio";
 import ChapterSelector from "@/components/ChapterSelector";
+import { CharacterBioBlock, CharacterBioData } from "@/types/wp-blocks";
 
 interface Props {
 	chapters: Chapter[]
@@ -25,20 +26,24 @@ export default function CharacterList( { chapters, characters }: Props ) {
 			/>
 
 			{ characters.map( ( character ) => {
-				const description = getLatestDescription(
-					chapters,
-					currentChapter,
-					character.content_blocks[0].attrs.descriptions
-				);
-
-				if ( ! description ) {
+				if ( ! character.content_blocks[0].attrs?.chapters ) {
 					return;
 				}
+				
+				const characterBlockData = JSON.parse(
+					character.content_blocks[0].attrs.chapters
+				) as CharacterBioData;
+
+				const characterBio = getLatestCharacterBioData(
+					chapters,
+					currentChapter,
+					characterBlockData
+				);
 
 				return (
 					<CharacterBio
-						characterData={ character }
-						characterDescription={ description }
+						character={ character }
+						characterBio={ characterBio }
 						key={ character.id }
 					/>
 				);

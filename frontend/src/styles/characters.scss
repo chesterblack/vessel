@@ -2,8 +2,7 @@
 @use '@/styles/partials/colors.scss';
 @use '@/styles/partials/fonts.scss';
 
-main.characters,
-main.character {
+main.characters {
 	select {
 		cursor: pointer;
 		font-size: 20px;
@@ -42,88 +41,30 @@ main.character {
 	
 	h2 {
 		margin: 0;
-		
-		a {
-			font-family: inherit;
-			color: inherit;
-			text-decoration: none;
-			transition: .2s ease-in-out;
-			padding-inline: 2px;
-			border-radius: 5px;
-	
-			&:hover {
-				background-color: colors.$ice-blue;
-			}
-		}
 	}
 
 	p {
 		margin-top: 10px;
 	}
-
-	.character-portrait {
-		transition: .2s ease-in-out;
-		outline-color: colors.$powder-pink;
-
-		&:hover {
-			outline: 3px solid colors.$powder-pink;
-		}
-	}
-}
-
-.single-character {
-	display: flex;
-	align-items: flex-start;
-	justify-content: flex-start;
-	gap: 30px;
-	margin-top: 30px;
 }
 
 .character-descriptions {
 	width: 100%;
 }
 
-.character-description {
-	margin-bottom: 30px;
-	width: 100%;
-	transition: .2s ease-in-out;
-	min-height: 65px;
-
-	h3 {
-		margin: 0;
-	}
-
-	&.hidden {
-		border-radius: 15px;
-		background-color: colors.$shallow-dark;
-		position: relative;
-
-		.reveal-button {
-			display: block;
-		}
-
-		& > *:not( .unblur ) {
-			filter: blur( 10px );
-		}
-	}
-
-	.reveal-button {
-		@include mixins.absolute-centre;
-		display: none;
-		border: none;
-		border-radius: 30px;
-		padding: 0 20px;
-		cursor: pointer;
-
-		&:hover {
-			background-color: colors.$ice-blue;
-		}
-	}
+.character-portrait-frame {
+	margin: 0;
+	min-width: 150px;
+	width: 150px;
+	height: 150px;
+	overflow: hidden;
+	border-radius: 15px;
+	position: relative;
 }
 
 .character-portrait {
 	background-color: colors.$ice-blue;
-	border-radius: 15px;
+	max-height: 100%;
 }
 
 @media screen and ( max-width: 600px ) {

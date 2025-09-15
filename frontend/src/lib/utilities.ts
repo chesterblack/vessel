@@ -1,4 +1,5 @@
 import { PageNumber } from "@/types/types";
+import { CharacterBioBlock, CharacterBioData, CharacterBioDatum } from "@/types/wp-blocks";
 import { Character, ComicPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { Metadata } from "next";
@@ -36,31 +37,41 @@ export async function sendApiRequest(
 /**
  * Returns the latest description up to a certain chapter
  */
-export function getLatestDescription(
+export function getLatestCharacterBioData(
 	chapters: Chapter[],
 	currentChapter: string,
-	descriptions: Record<string, string>
-): string {
-	if ( descriptions[ currentChapter ] ) {
-		return descriptions[ currentChapter ];
-	}
-	
+	characterInfo: CharacterBioData
+): CharacterBioDatum {
 	const chapterSlugs = chapters.map( ( c: { slug: string } ) => c.slug );
 
-	let description = null;
+	let info = {
+		name: null,
+		description: null,
+		portrait: null,
+	} as CharacterBioDatum;
 
 	for ( let i = 0; i < chapterSlugs.length; i++ ) {
 		const slug = chapterSlugs[i];
+		const { name, description, portrait } = characterInfo[ slug ];
+
+		if ( name && name !== '' ) {
+			info.name = characterInfo[ slug ].name;
+		}
+
+		if ( description && description !== '' ) {
+			info.description = characterInfo[ slug ].description;
+		}
+
+		if ( portrait ) {
+			info.portrait = characterInfo[ slug ].portrait;
+		}
+
 		if ( slug === currentChapter ) {
 			break;
 		}
-
-		if ( descriptions[ slug ] ) {
-			description = descriptions[ slug ];
-		}
 	}
 
-	return description;
+	return info;
 }
 
 
@@ -70,7 +81,19 @@ export function getLatestDescription(
 export function getFirstDescription(
 	character: Character
 ): string {
-	return character.content_blocks[0].attrs.descriptions[0] ?? '';
+	if ( ! character.content_blocks[0].attrs?.chapters ) {
+		return;
+	}
+
+	const chapterData = JSON.parse(
+		character.content_blocks[0].attrs.chapters
+	) as CharacterBioData;
+
+	const firstDatum = chapterData[
+		Object.keys( chapterData )[0]
+	];
+
+	return firstDatum.description ?? '';
 }
 
 

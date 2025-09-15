@@ -2,24 +2,23 @@ import { ReactNode } from "react";
 
 import Image from "next/image";
 import { Character } from "@/types/wp-post-types";
+import { ImageAttributes } from "@/types/wp-blocks";
 
 
 interface Props {
-	character: Character
+	portrait: ImageAttributes
+	characterName: string
 	size?: number | [ number, number ]
 }
 
-export default function CharacterPortrait( { character, size = 150 }: Props ): ReactNode {
-	const portrait = character?.content_blocks[0]?.attrs?.portrait;
-	const characterName = character.title.rendered;
-
+export default function CharacterPortrait( { portrait, characterName, size = 150 }: Props ): ReactNode {
 	size = typeof size === 'number' ? [ size, size ] : size;
 
 	let portraitImage = <Image
 		className='character-portrait'
 		src={ '/fallback-image-500.png' }
-		width={ size[ 0 ] }
-		height={ size[ 1 ] }
+		fill
+		objectFit="cover"
 		alt={ characterName }
 	/>;
 
@@ -27,11 +26,15 @@ export default function CharacterPortrait( { character, size = 150 }: Props ): R
 		portraitImage = <Image
 			className='character-portrait'
 			src={ portrait.url }
-			width={ size[ 0 ] }
-			height={ size[ 1 ] }
+			fill
+			objectFit="cover"
 			alt={ portrait.alt ?? characterName }
 		/>
 	}
 
-	return portraitImage;
+	return (
+		<figure className="character-portrait-frame">
+			{ portraitImage }
+		</figure>
+	);
 }

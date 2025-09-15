@@ -35,6 +35,9 @@ export default function Edit( { attributes, setAttributes, context } ) {
 						}
 					} );
 				} }
+				deleteCallback={ () => {
+					setAttributes( { pageImage: null } );
+				} }
 			/>
 		</div>
 	);
