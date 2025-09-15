@@ -17,8 +17,8 @@ export default function CharacterPortrait( { portrait, characterName, size = 150
 	let portraitImage = <Image
 		className='character-portrait'
 		src={ '/fallback-image-500.png' }
-		width={ size[ 0 ] }
-		height={ size[ 1 ] }
+		fill
+		objectFit="cover"
 		alt={ characterName }
 	/>;
 
@@ -26,11 +26,15 @@ export default function CharacterPortrait( { portrait, characterName, size = 150
 		portraitImage = <Image
 			className='character-portrait'
 			src={ portrait.url }
-			width={ size[ 0 ] }
-			height={ size[ 1 ] }
+			fill
+			objectFit="cover"
 			alt={ portrait.alt ?? characterName }
 		/>
 	}
 
-	return portraitImage;
+	return (
+		<figure className="character-portrait-frame">
+			{ portraitImage }
+		</figure>
+	);
 }

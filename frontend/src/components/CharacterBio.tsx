@@ -17,18 +17,12 @@ export default function CharacterBio( { character, characterBio }: Props ) {
 
 	return (
 		<div className="character-bio">
-			<Link href={ `/characters/${ character.slug }` }>
-				<CharacterPortrait
-					portrait={ portrait }
-					characterName={ name ? name : character.title.rendered }
-				/>
-			</Link>
+			<CharacterPortrait
+				portrait={ portrait }
+				characterName={ name ? name : character.title.rendered }
+			/>
 			<div>
-				<h2>
-					<Link href={ `/characters/${ character.slug }` }>
-						{ name ? name : character.title.rendered }
-					</Link>
-				</h2>
+				<h2>{ name ? name : character.title.rendered }</h2>
 				<p>{ parsedDescription }</p>
 			</div>
 		</div>

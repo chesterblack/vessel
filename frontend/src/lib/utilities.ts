@@ -42,10 +42,6 @@ export function getLatestCharacterBioData(
 	currentChapter: string,
 	characterInfo: CharacterBioData
 ): CharacterBioDatum {
-	if ( characterInfo[ currentChapter ] ) {
-		return characterInfo[ currentChapter ];
-	}
-
 	const chapterSlugs = chapters.map( ( c: { slug: string } ) => c.slug );
 
 	let info = {
@@ -56,20 +52,22 @@ export function getLatestCharacterBioData(
 
 	for ( let i = 0; i < chapterSlugs.length; i++ ) {
 		const slug = chapterSlugs[i];
-		if ( slug === currentChapter ) {
-			break;
-		}
+		const { name, description, portrait } = characterInfo[ slug ];
 
-		if ( characterInfo[ slug ]?.name ) {
+		if ( name && name !== '' ) {
 			info.name = characterInfo[ slug ].name;
 		}
 
-		if ( characterInfo[ slug ]?.description ) {
+		if ( description && description !== '' ) {
 			info.description = characterInfo[ slug ].description;
 		}
 
-		if ( characterInfo[ slug ]?.portrait ) {
+		if ( portrait ) {
 			info.portrait = characterInfo[ slug ].portrait;
+		}
+
+		if ( slug === currentChapter ) {
+			break;
 		}
 	}
 

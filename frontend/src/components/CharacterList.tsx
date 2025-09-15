@@ -17,8 +17,6 @@ interface Props {
 export default function CharacterList( { chapters, characters }: Props ) {
 	const [ currentChapter, setCurrentChapter ] = useState( chapters[0].slug );
 
-	console.log( 'characters: ', characters );
-
 	return (
 		<>
 			<ChapterSelector
