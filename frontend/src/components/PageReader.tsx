@@ -8,6 +8,7 @@ import PageReaderNav from "@/components/PageReaderNav";
 import JsonLdSchema from "./JsonLdSchema";
 import JumpToTop from "./JumpToTop";
 import AuthorsNote from "./AuthorsNote";
+import CharacterTags from "./CharacterTags";
 
 
 interface Props {
@@ -45,6 +46,10 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 					fetchPriority='high'
 				/>
 				<PageReaderNav pages={ pages } page={ pageNumber } />
+				<CharacterTags
+					characters={ pageData.content_blocks[0].attrs.characters }
+					pageData={ pageData }
+				/>
 				<AuthorsNote page={ pageData } />
 			</main>
 		</>

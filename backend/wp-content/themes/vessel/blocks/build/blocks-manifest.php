@@ -76,6 +76,33 @@ return array(
 			),
 			'pageNumber' => array(
 				'type' => 'number'
+			),
+			'characters' => array(
+				'type' => 'array'
+			)
+		)
+	),
+	'in-this-page' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'vessel/in-this-page',
+		'version' => '0.1.0',
+		'title' => 'Character Tags',
+		'category' => 'widgets',
+		'icon' => 'universal-access',
+		'description' => 'Sidebar panel to tag characters in pages.',
+		'example' => array(
+			
+		),
+		'supports' => array(
+			'html' => false
+		),
+		'textdomain' => 'in-this-page',
+		'editorScript' => 'file:./index.js',
+		'editorStyle' => 'file:./index.css',
+		'attributes' => array(
+			'characters' => array(
+				'type' => 'array'
 			)
 		)
 	)

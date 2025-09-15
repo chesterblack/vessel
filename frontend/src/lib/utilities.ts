@@ -1,10 +1,11 @@
 import { PageNumber } from "@/types/types";
 import { CharacterBioBlock, CharacterBioData, CharacterBioDatum } from "@/types/wp-blocks";
-import { Character, ComicPage } from "@/types/wp-post-types";
+import { Character, ComicPage, Post } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { Metadata } from "next";
 
 import { cache } from "react";
+import { WP_Term } from "wp-types";
 
 /**
  * Send a request to the backend API, include the wp/v2/
@@ -52,6 +53,10 @@ export function getLatestCharacterBioData(
 
 	for ( let i = 0; i < chapterSlugs.length; i++ ) {
 		const slug = chapterSlugs[i];
+		if ( ! characterInfo[ slug ] ) {
+			continue;
+		}
+
 		const { name, description, portrait } = characterInfo[ slug ];
 
 		if ( name && name !== '' ) {
@@ -81,13 +86,7 @@ export function getLatestCharacterBioData(
 export function getFirstDescription(
 	character: Character
 ): string {
-	if ( ! character.content_blocks[0].attrs?.chapters ) {
-		return;
-	}
-
-	const chapterData = JSON.parse(
-		character.content_blocks[0].attrs.chapters
-	) as CharacterBioData;
+	const chapterData = getCharacterBioData( character );
 
 	const firstDatum = chapterData[
 		Object.keys( chapterData )[0]
@@ -221,7 +220,7 @@ export function groupPagesByChapter(
 			return;
 		}
 
-		const embeddedChapters = page._embedded['wp:term'][0] as Chapter[];
+		const embeddedChapters = getEmbeddedChapters( page );
 
 		embeddedChapters.forEach( chapter => {
 			if ( chapters[ chapter.name ] ) {
@@ -290,4 +289,44 @@ export async function getComicPageMetadata(
 	}
 
 	return metadata;
+}
+
+export function getEmbeddedChapters(
+	post: Post
+): Chapter[] {
+	const terms = post?._embedded?.[ 'wp:term' ] as WP_Term[][];
+
+	if ( ! terms ) {
+		return [];
+	}
+
+	const chapters = [];
+
+	terms.forEach( taxonomy => {
+		taxonomy.forEach( term => {
+			if ( term.taxonomy === 'chapters' ) {
+				chapters.push( term );
+			}
+		} );
+	} );
+
+	return chapters;
+}
+
+/*
+ * Extract all data from the JSON attribute in the
+ * character block
+ */
+export function getCharacterBioData(
+	character: Character
+): CharacterBioData {
+	if ( ! character.content_blocks[0].attrs?.chapters ) {
+		return;
+	}
+	
+	const characterBlockData = JSON.parse(
+		character.content_blocks[0].attrs.chapters
+	) as CharacterBioData;
+
+	return characterBlockData;
 }
