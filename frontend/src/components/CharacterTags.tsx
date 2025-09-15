@@ -18,8 +18,11 @@ export default async function CharacterTags( { characters, pageData }: Props ) {
 		{ include: characters.join( ',' ) }
 	);
 
+	if ( ! characterData ) {
+		return;
+	}
+	
 	const tags = [];
-
 	characterData.forEach( ( character: Character ) => {
 		const chapters = getEmbeddedChapters( pageData );
 
