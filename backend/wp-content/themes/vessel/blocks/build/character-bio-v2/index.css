@@ -1,6 +1,17 @@
 /*!*********************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/character-bio-v2/editor.scss ***!
   \*********************************************************************************************************************************************************************************************************************************************************/
+.image-upload-preview {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+
 label {
   font-size: 11px;
   font-weight: 500;
@@ -9,6 +20,12 @@ label {
   display: block;
   margin-bottom: 8px;
   padding: 0px;
+}
+
+.delete {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .wp-block-vessel-character-bio-v2 {

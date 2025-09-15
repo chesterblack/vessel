@@ -51,8 +51,6 @@ export default function Edit( { attributes, setAttributes } ) {
 	const description = thisChapter?.description ?? '';
 	const portrait       = thisChapter?.portrait ?? {};
 
-	console.log( 'attributes: ', attributes );
-
 	return (
 		<div { ...useBlockProps() }>
 			<SelectControl
@@ -67,6 +65,9 @@ export default function Edit( { attributes, setAttributes } ) {
 				image={ portrait }
 				callback={ ( { url, width, height, alt } ) => {
 					setJsonAttribute( 'portrait', { url, width, height, alt } );
+				} }
+				deleteCallback={ () => {
+					setJsonAttribute( 'portrait', null );
 				} }
 			/>
 
