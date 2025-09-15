@@ -2,6 +2,7 @@ import { TextControl } from '@wordpress/components'
 import { useBlockProps } from '@wordpress/block-editor';
 import { useEntityProp } from '@wordpress/core-data';
 import ImageUpload from '../shared/components/ImageUpload';
+import CharacterTags from './CharacterTags';
 import './editor.scss';
 
 export default function Edit( { attributes, setAttributes, context } ) {
@@ -39,6 +40,8 @@ export default function Edit( { attributes, setAttributes, context } ) {
 					setAttributes( { pageImage: null } );
 				} }
 			/>
+
+			<CharacterTags attributes={ attributes } setAttributes={ setAttributes } />
 		</div>
 	);
 }

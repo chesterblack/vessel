@@ -1,26 +1,20 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "vessel/comic-page",
+  "name": "vessel/in-this-page",
   "version": "0.1.0",
-  "title": "Comic Page",
+  "title": "Character Tags",
   "category": "widgets",
-  "icon": "welcome-add-page",
-  "description": "A comic page.",
+  "icon": "universal-access",
+  "description": "Sidebar panel to tag characters in pages.",
   "example": {},
   "supports": {
     "html": false
   },
-  "textdomain": "comic-page",
+  "textdomain": "in-this-page",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "attributes": {
-    "pageImage": {
-      "type": "object"
-    },
-    "pageNumber": {
-      "type": "number"
-    },
     "characters": {
       "type": "array"
     }
