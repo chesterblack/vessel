@@ -81,6 +81,10 @@ export function getLatestCharacterBioData(
 export function getFirstDescription(
 	character: Character
 ): string {
+	if ( ! character.content_blocks[0].attrs?.chapters ) {
+		return;
+	}
+
 	const chapterData = JSON.parse(
 		character.content_blocks[0].attrs.chapters
 	) as CharacterBioData;

@@ -75,6 +75,11 @@ function Edit({
             alt: media.alt
           }
         });
+      },
+      deleteCallback: () => {
+        setAttributes({
+          pageImage: null
+        });
       }
     })]
   });

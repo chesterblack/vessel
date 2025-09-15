@@ -3,13 +3,12 @@
   \***************************************************************************************************************************************************************************************************************************************************/
 .image-upload-preview {
   position: relative;
-  width: 150px;
-  height: 150px;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  margin-bottom: 5px;
-  border-radius: 10px;
+}
+
+.delete {
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 
 label {
@@ -22,12 +21,6 @@ label {
   padding: 0px;
 }
 
-.delete {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-}
-
-.comic-preview {
+.wp-block-vessel-comic-page .image-upload-preview img {
   max-width: 100%;
 }

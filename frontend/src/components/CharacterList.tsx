@@ -26,6 +26,10 @@ export default function CharacterList( { chapters, characters }: Props ) {
 			/>
 
 			{ characters.map( ( character ) => {
+				if ( ! character.content_blocks[0].attrs?.chapters ) {
+					return;
+				}
+				
 				const characterBlockData = JSON.parse(
 					character.content_blocks[0].attrs.chapters
 				) as CharacterBioData;

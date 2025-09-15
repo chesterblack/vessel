@@ -3,13 +3,12 @@
   \*********************************************************************************************************************************************************************************************************************************************************/
 .image-upload-preview {
   position: relative;
-  width: 150px;
-  height: 150px;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  margin-bottom: 5px;
-  border-radius: 10px;
+}
+
+.delete {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 label {
@@ -22,15 +21,18 @@ label {
   padding: 0px;
 }
 
-.delete {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
 .wp-block-vessel-character-bio-v2 {
   display: flex;
   gap: 25px;
+}
+.wp-block-vessel-character-bio-v2 .image-upload-preview {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 5px;
+  border-radius: 10px;
 }
 .wp-block-vessel-character-bio-v2 .description {
   border: 1px solid #8d8d8d;

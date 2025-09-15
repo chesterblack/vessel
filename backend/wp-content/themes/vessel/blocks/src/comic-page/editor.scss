@@ -1,5 +1,8 @@
 @use '../shared/editor.scss';
 
-.comic-preview {
-	max-width: 100%;
+.wp-block-vessel-comic-page {
+	.image-upload-preview img {
+		max-width: 100%;
+	}
 }
+
