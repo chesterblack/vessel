@@ -11,8 +11,6 @@ export default function AuthorsNote( { page }: Props ) {
 		return <></>;
 	}
 
-	console.log( 'page: ', page );
-
 	const date = new Date( page.modified );
 
 	return (
