@@ -7,6 +7,10 @@ import JsonLdSchema from '@/components/JsonLdSchema';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getYoastMetadata } from '@/lib/seo';
+import Image from 'next/image';
+import { Author } from '@/types/types';
+
+import "@/styles/blog.scss";
 
 export interface Props {
 	params: Promise<{ slug: string }>
@@ -16,7 +20,7 @@ const getBlogPost = cache( async ( slug: string ) => {
 	return await sendApiRequest(
 		'GET',
 		'wp/v2/posts',
-		{ slug: slug }
+		{ slug: slug, _embed: true }
 	).then( d => d[0] ) as Post;
 } );
 
@@ -35,10 +39,16 @@ export default async function BlogPostPage( { params }: Props ) {
 	const { slug } = await params;
 	
 	const blogPost = await getBlogPost( slug );
-	
-	const title = blogPost.title;
+
+	if ( ! blogPost ) {
+		notFound();
+	}
+
+	const title   = blogPost.title;
 	const content = parse( blogPost.content.rendered );
-	const schema = blogPost.yoast_head_json.schema;
+	const schema  = blogPost.yoast_head_json.schema;
+	const author  = blogPost._embedded.author[0] as Author;
+	const date    = new Date( blogPost.modified );
 
 	return (
 		<>
@@ -49,6 +59,22 @@ export default async function BlogPostPage( { params }: Props ) {
 				<h1>{ title.rendered }</h1>
 				<div className="content">
 					{ content }
+				</div>
+				<div className='author'>
+					<div>
+						<h3>
+							{ author.name }
+						</h3>
+						<span className='date'>
+							{ `${ date.toDateString() }, ${ date.toLocaleTimeString() }` }
+						</span>
+					</div>
+					<Image
+						src={ `https://kipbite-assets.fra1.digitaloceanspaces.com/vessel/${ author.slug }-icon.png` }
+						height={ 100 }
+						width={ 100 }
+						alt={ author.name }
+					/>
 				</div>
 			</main>
 		</>

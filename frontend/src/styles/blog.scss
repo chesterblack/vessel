@@ -39,8 +39,44 @@
 	float: right;
 }
 
+.author {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 5px;
+	text-align: right;
+
+	h3 {
+		margin: 0;
+	}
+
+	.date {
+		font-style: italic;
+		color: colors.$shallow-dark;
+	}
+}
+
+figure {
+	figcaption {
+		margin: 0;
+		text-align: center;
+		color: colors.$shallow-dark;
+		font-style: italic;
+		font-size: 0.8rem;
+	}
+
+	img {
+		border-radius: 10px;
+	}
+}
+
 @media screen and ( max-width: 600px ) {
 	.blog-archive__list {
 		columns: 1;
+	}
+
+	.author img {
+		width: 75px;
+		height: 75px;
 	}
 }

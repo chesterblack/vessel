@@ -27,3 +27,11 @@ export interface OgImage {
 	width: string,
 	height: string,
 }
+
+export interface Author {
+	description: string
+	id: number
+	link: string
+	name: string
+	slug: string
+}
