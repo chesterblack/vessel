@@ -95,10 +95,10 @@ main.page-reader {
 	left: 10px;
 	width: 500px;
 	max-width: calc( 100% - 20px );
-	border: 3px solid colors.$shallow-dark;
 	border-radius: 15px;
 	gap: 10px;
 	padding: 10px;
+	box-shadow: 0px 3px 8px -6px colors.$deep-dark;
 
 	h4 {
 		margin: 0;

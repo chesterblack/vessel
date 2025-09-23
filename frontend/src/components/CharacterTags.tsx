@@ -14,14 +14,14 @@ export default async function CharacterTags( { characters, pageData }: Props ) {
 
 	const characterData = await sendApiRequest(
 		'GET',
-		`/wp/v2/character`,
+		`wp/v2/character`,
 		{ include: characters.join( ',' ) }
 	);
 
 	if ( ! characterData ) {
 		return;
 	}
-	
+
 	const tags = [];
 	characterData.forEach( ( character: Character ) => {
 		const chapters = getEmbeddedChapters( pageData );
