@@ -23,6 +23,9 @@
     },
     "characters": {
       "type": "array"
+    },
+    "backgroundGradient": {
+      "type": "string"
     }
   }
 }

@@ -2,6 +2,58 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/comic-page/BackgroundGradientPicker.jsx":
+/*!*****************************************************!*\
+  !*** ./src/comic-page/BackgroundGradientPicker.jsx ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ BackgroundGradientPicker)
+/* harmony export */ });
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+function BackgroundGradientPicker({
+  setAttributes,
+  attributes
+}) {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelBody, {
+    title: "Background",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      className: "background-gradient-picker",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.GradientPicker, {
+        onChange: g => setAttributes({
+          backgroundGradient: g
+        }),
+        value: attributes.backgroundGradient,
+        gradients: [{
+          gradient: 'linear-gradient( 0deg, #51596C 0%, #b2e2f4 100%)',
+          name: 'Illosian Blue',
+          slug: 'illosian-blue'
+        }, {
+          gradient: 'linear-gradient( 0deg, #2e2a29 0%, #402a25 100%)',
+          name: 'Vinicirii Destruction',
+          slug: 'vinicirii-destruction'
+        }, {
+          gradient: 'linear-gradient( 0deg, #ccc09c 0%, #705b44 100%)',
+          name: 'Flashback Sepia',
+          slug: 'flashback-sepia'
+        }]
+      })
+    })
+  });
+}
+
+/***/ }),
+
 /***/ "./src/comic-page/CharacterTags.jsx":
 /*!******************************************!*\
   !*** ./src/comic-page/CharacterTags.jsx ***!
@@ -18,12 +70,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./editor.scss */ "./src/comic-page/editor.scss");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__);
-
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./editor.scss */ "./src/comic-page/editor.scss");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__);
 
 
 
@@ -51,20 +100,18 @@ function CharacterTags({
       setCharacters(options);
     })();
   }, []);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-      title: 'Characters',
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-        multiple: true,
-        label: "Characters",
-        value: attributes.characters,
-        options: characters,
-        onChange: c => setAttributes({
-          characters: c
-        })
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    title: "Characters",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+      multiple: true,
+      label: "Characters",
+      value: attributes.characters,
+      options: characters,
+      onChange: c => setAttributes({
+        characters: c
       })
     })
-  }, 'inspector');
+  });
 }
 ;
 
@@ -76,7 +123,7 @@ function CharacterTags({
   \***********************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"vessel/comic-page","version":"0.1.0","title":"Comic Page","category":"widgets","icon":"welcome-add-page","description":"A comic page.","example":{},"supports":{"html":false},"textdomain":"comic-page","editorScript":"file:./index.js","editorStyle":"file:./index.css","attributes":{"pageImage":{"type":"object"},"pageNumber":{"type":"number"},"characters":{"type":"array"}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"vessel/comic-page","version":"0.1.0","title":"Comic Page","category":"widgets","icon":"welcome-add-page","description":"A comic page.","example":{},"supports":{"html":false},"textdomain":"comic-page","editorScript":"file:./index.js","editorStyle":"file:./index.css","attributes":{"pageImage":{"type":"object"},"pageNumber":{"type":"number"},"characters":{"type":"array"},"backgroundGradient":{"type":"string"}}}');
 
 /***/ }),
 
@@ -99,8 +146,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/components/ImageUpload */ "./src/shared/components/ImageUpload.jsx");
 /* harmony import */ var _CharacterTags__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CharacterTags */ "./src/comic-page/CharacterTags.jsx");
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./editor.scss */ "./src/comic-page/editor.scss");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _BackgroundGradientPicker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./BackgroundGradientPicker */ "./src/comic-page/BackgroundGradientPicker.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__);
+
 
 
 
@@ -115,46 +164,57 @@ function Edit({
 }) {
   const postId = wp.data.select('core/editor').getCurrentPostId();
   const [meta, setMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityProp)('postType', 'comic_page', 'meta', postId);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)(),
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
-      label: "Page Number",
-      type: "number",
-      value: attributes.pageNumber,
-      onChange: value => {
-        setAttributes({
-          pageNumber: parseFloat(value)
-        });
-        setMeta({
-          ...meta,
-          comic_page_number: parseFloat(value)
-        });
-      }
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-      children: "Comic Page"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      image: attributes.pageImage,
-      callback: media => {
-        console.log('media: ', media);
-        setAttributes({
-          pageImage: {
-            url: media.url,
-            sizes: media.sizes,
-            width: media.width,
-            height: media.height,
-            alt: media.alt
-          }
-        });
-      },
-      deleteCallback: () => {
-        setAttributes({
-          pageImage: null
-        });
-      }
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_CharacterTags__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      attributes: attributes,
-      setAttributes: setAttributes
-    })]
+    style: {
+      background: attributes.backgroundGradient
+    },
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      className: "inner",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
+        label: "Page Number",
+        type: "number",
+        value: attributes.pageNumber,
+        onChange: value => {
+          setAttributes({
+            pageNumber: parseFloat(value)
+          });
+          setMeta({
+            ...meta,
+            comic_page_number: parseFloat(value)
+          });
+        }
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("label", {
+        children: "Comic Page"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        image: attributes.pageImage,
+        callback: media => {
+          console.log('media: ', media);
+          setAttributes({
+            pageImage: {
+              url: media.url,
+              sizes: media.sizes,
+              width: media.width,
+              height: media.height,
+              alt: media.alt
+            }
+          });
+        },
+        deleteCallback: () => {
+          setAttributes({
+            pageImage: null
+          });
+        }
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_CharacterTags__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        attributes: attributes,
+        setAttributes: setAttributes
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_BackgroundGradientPicker__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        attributes: attributes,
+        setAttributes: setAttributes
+      })]
+    }, 'inspector')]
   });
 }
 
