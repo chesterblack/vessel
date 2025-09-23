@@ -56,6 +56,20 @@
 	}
 }
 
+figure {
+	figcaption {
+		margin: 0;
+		text-align: center;
+		color: colors.$shallow-dark;
+		font-style: italic;
+		font-size: 0.8rem;
+	}
+
+	img {
+		border-radius: 10px;
+	}
+}
+
 @media screen and ( max-width: 600px ) {
 	.blog-archive__list {
 		columns: 1;

@@ -39,16 +39,16 @@ export default async function BlogPostPage( { params }: Props ) {
 	const { slug } = await params;
 	
 	const blogPost = await getBlogPost( slug );
-	
+
+	if ( ! blogPost ) {
+		notFound();
+	}
+
 	const title   = blogPost.title;
 	const content = parse( blogPost.content.rendered );
 	const schema  = blogPost.yoast_head_json.schema;
 	const author  = blogPost._embedded.author[0] as Author;
 	const date    = new Date( blogPost.modified );
-
-	console.log( 'blogPost: ', blogPost );
-
-
 
 	return (
 		<>
