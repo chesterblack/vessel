@@ -1,0 +1,27 @@
+import { Author } from "@/types/types";
+import { Post } from "@/types/wp-post-types"
+import AuthorImage from "./AuthorImage";
+
+interface Props {
+	blogData: Post
+}
+
+export default function BlogListing( { blogData }: Props ) {
+	const { slug, id, modified, _embedded, title } = blogData;
+	const author = _embedded.author[0] as Author;
+
+	return (
+		<a href={ `/blog/${ slug }` } className="blog-link" key={ id }>
+			<AuthorImage author={ author } size={ 75 } />
+
+			<div>
+				<span className="blog-link__date">
+					{ new Date( modified ).toDateString() }
+				</span>
+				<h3>
+					{ title.rendered }
+				</h3>
+			</div>
+		</a>
+	)
+}

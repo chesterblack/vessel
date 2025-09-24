@@ -5,6 +5,8 @@ export type NumericalString = `${ number }` | number;
 
 export type PageNumber = number | NumericalString | 'latest';
 
+export type ImageSize = [ number, number ] | number;
+
 export interface YoastHead {
 	title: string,
 	robots: Robots,
