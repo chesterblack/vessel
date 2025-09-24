@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import apiFetch from '@wordpress/api-fetch';
 import { SelectControl, PanelBody } from '@wordpress/components';
-import { InspectorControls } from '@wordpress/block-editor';
 import './editor.scss';
 
 export default function CharacterTags( { attributes, setAttributes } ) {
@@ -29,16 +28,14 @@ export default function CharacterTags( { attributes, setAttributes } ) {
 	}, [] );
 
 	return (
-		<InspectorControls key={ 'inspector' }>
-			<PanelBody title={ 'Characters' }>
-				<SelectControl
-					multiple
-					label="Characters"
-					value={ attributes.characters }
-					options={ characters }
-					onChange={ c => setAttributes( { characters: c } ) }
-				/>
-			</PanelBody>
-		</InspectorControls>
+		<PanelBody title='Characters'>
+			<SelectControl
+				multiple
+				label="Characters"
+				value={ attributes.characters }
+				options={ characters }
+				onChange={ c => setAttributes( { characters: c } ) }
+			/>
+		</PanelBody>
 	);
 };
