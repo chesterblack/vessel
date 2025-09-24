@@ -3,40 +3,36 @@
 .blog-archive__list {
 	padding: 0;
 	list-style: none;
-	columns: 2;
 	gap: 15px;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .blog-link {
-	display: block;
+	display: flex;
+	gap: 10px;
+	align-items: center;
 	color: colors.$deep-dark;
 	text-decoration: none;
 	background-color: colors.$med-light;
 	border-radius: 10px;
-	padding: 10px 20px;
+	padding: 10px 15px;
 	transition: ease-in-out .1s;
-	position: relative;
-	break-inside: avoid;
-	margin-bottom: 15px;
-	
+	width: calc( 50% - 15px );
+
 	&:hover {
 		background-color: colors.$ice-blue
 	}
 
-	h4 {
-		margin: 0;
-	}
-	
-	p {
+	h3 {
 		margin: 0;
 	}
 }
 
 .blog-link__date {
-	font-size: 12px;
+	font-size: 0.8rem;
 	font-style: italic;
 	color: colors.$shallow-dark;
-	float: right;
 }
 
 .author {
@@ -71,8 +67,8 @@ figure {
 }
 
 @media screen and ( max-width: 600px ) {
-	.blog-archive__list {
-		columns: 1;
+	.blog-link {
+		width: 100%;
 	}
 
 	.author img {

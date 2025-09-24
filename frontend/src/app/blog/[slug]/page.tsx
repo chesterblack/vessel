@@ -11,6 +11,7 @@ import Image from 'next/image';
 import { Author } from '@/types/types';
 
 import "@/styles/blog.scss";
+import AuthorImage from '@/components/AuthorImage';
 
 export interface Props {
 	params: Promise<{ slug: string }>
@@ -69,12 +70,7 @@ export default async function BlogPostPage( { params }: Props ) {
 							{ `${ date.toDateString() }, ${ date.toLocaleTimeString() }` }
 						</span>
 					</div>
-					<Image
-						src={ `https://kipbite-assets.fra1.digitaloceanspaces.com/vessel/${ author.slug }-icon.png` }
-						height={ 100 }
-						width={ 100 }
-						alt={ author.name }
-					/>
+					<AuthorImage author={ author } size={ 100 } />
 				</div>
 			</main>
 		</>

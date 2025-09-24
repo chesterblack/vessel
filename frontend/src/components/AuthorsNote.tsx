@@ -1,6 +1,7 @@
 import { ComicPage } from '@/types/wp-post-types';
 import parse from 'html-react-parser';
 import Image from 'next/image';
+import AuthorImage from './AuthorImage';
 
 interface Props {
 	page: ComicPage
@@ -15,12 +16,7 @@ export default function AuthorsNote( { page }: Props ) {
 
 	return (
 		<div className="authors-note">
-			<Image
-				src="https://admin.vesselcomic.com/wp-content/uploads/2025/07/kipicon.png"
-				width={ 100 }
-				height={ 100 }
-				alt="Kipbite"
-			/>
+			<AuthorImage author={ { slug: 'kip', name: 'Kip' } } size={ 100 } />
 			<div>
 				<span className='date'>
 					{ `${ date.toDateString() }, ${ date.toLocaleTimeString() }` }

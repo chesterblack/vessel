@@ -1,10 +1,10 @@
 import { Post } from "@/types/wp-post-types";
 import { Metadata } from "next";
 
-import parse from 'html-react-parser';
 import "@/styles/blog.scss";
 import { blogDescription } from "@/lib/seo";
 import { sendApiRequest } from "@/lib/utilities";
+import BlogListing from "@/components/BlogListing";
 
 
 export const metadata: Metadata = {
@@ -15,7 +15,8 @@ export const metadata: Metadata = {
 export default async function BlogArchivePage() {
 	const blogPosts = await sendApiRequest( 
 		'GET',
-		'wp/v2/posts'
+		'wp/v2/posts',
+		{ _embed: true }
 	) as Post[];
 
 	return (
@@ -27,16 +28,7 @@ export default async function BlogArchivePage() {
 				<div className="blog-archive__list">
 					{
 						blogPosts.map( blog => (
-							<a href={ `/blog/${ blog.slug }` } className="blog-link" key={ blog.id }>
-								<span className="blog-link__date">
-									{ new Date( blog.modified ).toDateString() }
-								</span>
-								<h4>
-									{ blog.title.rendered }
-								</h4>
-
-								{ parse( blog.excerpt.rendered ) }
-							</a>
+							<BlogListing blogData={ blog } key={ blog.id } />
 						) )
 					}
 				</div>
