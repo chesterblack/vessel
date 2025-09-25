@@ -1,5 +1,6 @@
 import { GradientPicker, PanelBody } from '@wordpress/components';
 import { useState } from 'react';
+import ImageUpload from '../shared/components/ImageUpload';
 
 export default function BackgroundGradientPicker( { setAttributes, attributes } ) {
 	return (
@@ -27,6 +28,23 @@ export default function BackgroundGradientPicker( { setAttributes, attributes } 
 					] }
 				/>
 			</div>
+			<ImageUpload
+				image={ attributes.backgroundImage }
+				callback={ ( media ) => {
+					setAttributes( {
+						backgroundImage: {
+							url: media.url,
+							sizes: media.sizes,
+							width: media.width,
+							height: media.height,
+							alt: media.alt
+						}
+					} );
+				} }
+				deleteCallback={ () => {
+					setAttributes( { backgroundImage: null } );
+				} }
+			/>
 		</PanelBody>
 	);
 }

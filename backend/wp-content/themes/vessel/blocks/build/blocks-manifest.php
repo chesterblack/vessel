@@ -82,6 +82,9 @@ return array(
 			),
 			'backgroundGradient' => array(
 				'type' => 'string'
+			),
+			'backgroundImage' => array(
+				'type' => 'object'
 			)
 		)
 	)

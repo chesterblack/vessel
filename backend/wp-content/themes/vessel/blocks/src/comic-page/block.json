@@ -18,6 +18,7 @@
 		"pageImage": { "type": "object" },
 		"pageNumber": { "type": "number" },
 		"characters": { "type": "array" },
-		"backgroundGradient": { "type": "string" }
+		"backgroundGradient": { "type": "string" },
+		"backgroundImage": { "type": "object" }
 	}
 }

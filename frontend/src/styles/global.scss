@@ -15,6 +15,8 @@ body,
 body:has( .next-error-h1 ) {
 	margin: 0;
 	background: linear-gradient( colors.$shallow-dark, colors.$ice-blue );
+	background-position: bottom 160px left 0;
+	background-repeat: repeat-x;
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;

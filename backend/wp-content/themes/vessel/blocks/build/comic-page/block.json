@@ -26,6 +26,9 @@
     },
     "backgroundGradient": {
       "type": "string"
+    },
+    "backgroundImage": {
+      "type": "object"
     }
   }
 }
