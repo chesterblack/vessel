@@ -23,6 +23,12 @@
     },
     "characters": {
       "type": "array"
+    },
+    "backgroundGradient": {
+      "type": "string"
+    },
+    "backgroundImage": {
+      "type": "object"
     }
   }
 }

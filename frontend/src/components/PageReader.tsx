@@ -9,6 +9,7 @@ import JsonLdSchema from "./JsonLdSchema";
 import JumpToTop from "./JumpToTop";
 import AuthorsNote from "./AuthorsNote";
 import CharacterTags from "./CharacterTags";
+import Background from "./Background";
 
 
 interface Props {
@@ -30,10 +31,15 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 
 	const schema = pageData.yoast_head_json.schema;
 
+	console.log( 'attrs: ', pageData.content_blocks[0].attrs );
+
+	const { backgroundGradient, backgroundImage } = pageData.content_blocks[0].attrs;
+
 	return (
 		<>
 			<JsonLdSchema schema={ schema } />
 			<main className={`page-reader ${ pageData.class_list.join(' ') }`}>
+				<Background backgroundGradient={ backgroundGradient } backgroundImage={ backgroundImage } />
 				<JumpToTop />
 				<PageReaderNav pages={ pages } page={ pageNumber } />
 				<Image

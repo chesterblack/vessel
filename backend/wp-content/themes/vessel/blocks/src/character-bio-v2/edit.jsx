@@ -78,13 +78,15 @@ export default function Edit( { attributes, setAttributes } ) {
 				onChange={ value => setJsonAttribute( 'name', value ) }
 			/>
 
-			<RichText
-				className='description'
-				label='Description'
-				tagName='p'
-				value={ description }
-				onChange={ value => setJsonAttribute( 'description', value ) }
-			/>
+			<div style={{ width: '50%' }}>
+				<label>Description</label>
+				<RichText
+					className='description'
+					tagName='p'
+					value={ description }
+					onChange={ value => setJsonAttribute( 'description', value ) }
+				/>
+			</div>
 		</div>
 	)
 }
