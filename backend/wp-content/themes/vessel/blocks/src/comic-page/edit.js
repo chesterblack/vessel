@@ -11,7 +11,7 @@ export default function Edit( { attributes, setAttributes, context } ) {
 	const [ meta, setMeta ] = useEntityProp( 'postType', 'comic_page', 'meta', postId );
 
 	return (
-		<div { ...useBlockProps() } style={{ background: attributes.backgroundGradient }}>
+		<div { ...useBlockProps() }>
 			<div className='inner'>
 				<TextControl
 					label='Page Number'

@@ -18,18 +18,6 @@ body:has( .next-error-h1 ) {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-
-	&:has( .backgrounds-percy ) {
-		background: linear-gradient( colors.$shallow-dark, colors.$ice-blue );
-	}
-
-	&:has( .backgrounds-cass ) {
-		background: linear-gradient( rgb(46, 42, 41), rgb(64, 42, 37) );
-	}
-
-	&:has( .backgrounds-flashback ) {
-		background: linear-gradient( rgb(204, 192, 156), rgb(112, 91, 68) );
-	}
 }
 
 main {

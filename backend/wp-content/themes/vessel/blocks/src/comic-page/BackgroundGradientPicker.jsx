@@ -10,7 +10,7 @@ export default function BackgroundGradientPicker( { setAttributes, attributes } 
 					value={ attributes.backgroundGradient }
 					gradients={ [
 						{
-							gradient: 'linear-gradient( 0deg, #51596C 0%, #b2e2f4 100%)',
+							gradient: 'linear-gradient( 0deg, #b2e2f4 0%, #51596C 100%)',
 							name: 'Illosian Blue',
 							slug: 'illosian-blue'
 						},

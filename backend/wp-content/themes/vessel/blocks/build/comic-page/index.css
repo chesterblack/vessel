@@ -21,22 +21,8 @@ label {
   padding: 0px;
 }
 
-.wp-block-vessel-comic-page {
-  padding-block: 20px;
-  max-width: 100%;
-}
-.wp-block-vessel-comic-page .inner {
-  max-width: 860px;
-  margin-inline: auto;
-}
 .wp-block-vessel-comic-page .image-upload-preview img {
   max-width: 100%;
-}
-.wp-block-vessel-comic-page label {
-  background-color: white;
-  padding: 2px 5px;
-  border-radius: 3px;
-  display: inline-block;
 }
 
 /*# sourceMappingURL=index.css.map*/

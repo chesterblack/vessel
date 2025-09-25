@@ -35,7 +35,7 @@ function BackgroundGradientPicker({
         }),
         value: attributes.backgroundGradient,
         gradients: [{
-          gradient: 'linear-gradient( 0deg, #51596C 0%, #b2e2f4 100%)',
+          gradient: 'linear-gradient( 0deg, #b2e2f4 0%, #51596C 100%)',
           name: 'Illosian Blue',
           slug: 'illosian-blue'
         }, {
@@ -166,9 +166,6 @@ function Edit({
   const [meta, setMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityProp)('postType', 'comic_page', 'meta', postId);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)(),
-    style: {
-      background: attributes.backgroundGradient
-    },
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
       className: "inner",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {

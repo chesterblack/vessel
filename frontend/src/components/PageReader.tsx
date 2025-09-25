@@ -28,12 +28,14 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 
 	const { src, width, height, alt } = getImageProps( pageData );
 
-	const schema = pageData.yoast_head_json.schema;
+	const schema     = pageData.yoast_head_json.schema;
+	const background = pageData.content_blocks[0].attrs.backgroundGradient;
 
 	return (
 		<>
 			<JsonLdSchema schema={ schema } />
 			<main className={`page-reader ${ pageData.class_list.join(' ') }`}>
+				<style>{ `body { background: ${ background }; }` }</style>
 				<JumpToTop />
 				<PageReaderNav pages={ pages } page={ pageNumber } />
 				<Image

@@ -31,6 +31,7 @@ export interface CharacterBioData {
 
 export interface ComicPageBlock {
 	attrs: {
+		backgroundGradient: string
 		characters: string[]
 		pageImage: ImageAttributes & {
 			sizes?: {
