@@ -26,8 +26,6 @@ export default async function CharacterTags( { characters, pageData }: Props ) {
 	characterData.forEach( ( character: Character ) => {
 		const chapters = getEmbeddedChapters( pageData );
 
-		console.log( 'chapters: ', chapters );
-
 		tags.push(
 			<CharacterTag
 				key={ character.id }

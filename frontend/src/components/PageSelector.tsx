@@ -26,21 +26,20 @@ export default function PageSelector( { pages, page }: Props ) {
 			} }
 		>
 			{
-				chapterPages.map( chapter => {
-					const chapterName = chapter[0];
-					const { id, pages } = chapter[1];
-
-					const options = pages.map( ( { title, slug, meta } ) => (
-						<option value={ meta.comic_page_number } key={ slug }>
-							{ title.rendered }
-						</option>
-					) );
+				chapterPages.map( ( { content, type } ) => {
+					if ( type === 'chapter' ) {
+						return (
+							<option disabled key={ content.id }>
+								{ content.name }
+							</option>
+						);
+					}
 
 					return (
-						<optgroup label={ chapterName } key={ id }>
-							{ options }
-						</optgroup>
-					);
+						<option value={ content.meta.comic_page_number } key={ content.slug }>
+							{ content.title.rendered }
+						</option>
+					)
 				} )
 			}
 		</select>

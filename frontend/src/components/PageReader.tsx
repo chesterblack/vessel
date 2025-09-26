@@ -31,8 +31,6 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 
 	const schema = pageData.yoast_head_json.schema;
 
-	console.log( 'attrs: ', pageData.content_blocks[0].attrs );
-
 	const { backgroundGradient, backgroundImage } = pageData.content_blocks[0].attrs;
 
 	return (
