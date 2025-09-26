@@ -207,13 +207,21 @@ export async function getChapterPages(
 }
 
 /**
- * Takes an array of pages and sorts them into child arrays by chapter
+ * Takes an array of pages and sorts them into an array containing either the page itself
+ * or the chapter that it belongs to whenever it finds a new chapter
  */
 export function groupPagesByChapter(
 	pages: ComicPage[]
-): [ string, { id: number, pages: ComicPage[] } ][]
+): ( {
+		type: 'chapter'
+		content: Chapter
+	} | {
+		type: 'page'
+		content: ComicPage
+	} )[]
 {
-	let chapters: Record<string, { id: number, pages: ComicPage[] }> = {};
+	let components = [];
+	let previousChapter: string = null;
 
 	pages.forEach( page => {
 		if ( ! page._embedded['wp:term'][0] ) {
@@ -222,21 +230,26 @@ export function groupPagesByChapter(
 
 		const embeddedChapters = getEmbeddedChapters( page );
 
-		embeddedChapters.forEach( chapter => {
-			if ( chapters[ chapter.name ] ) {
-				chapters[ chapter.name ].pages.push( page );
-			} else {
-				chapters[ chapter.name ] = {
-					id: chapter.id,
-					pages: [ page ],
-				};
+		if ( embeddedChapters ) {
+			const chapter = embeddedChapters[0];
+
+			if ( chapter.name !== previousChapter ) {
+				components.push( {
+					type: 'chapter',
+					content: chapter
+				} );
 			}
-		} );
+
+			components.push( {
+				type: 'page',
+				content: page
+			} );
+
+			previousChapter = chapter.name;
+		}
 	} );
 
-	const chapterPages = Object.entries( chapters );
-
-	return chapterPages;
+	return components;
 }
 
 /**

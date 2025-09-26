@@ -1,0 +1,221 @@
+{
+  "main": {
+    "id": "e843ba8007be96ce",
+    "type": "split",
+    "children": [
+      {
+        "id": "506b92fc283492d7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e185036740d226e5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "_templates/New Post.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "New Post"
+            }
+          },
+          {
+            "id": "3cdd000a3c4c460c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Comic Pages.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Comic Pages"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c90de5460ace9bb5",
+    "type": "split",
+    "children": [
+      {
+        "id": "ebcbba78f24a94be",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e466950e59ae9722",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "1ea83777e3f8a564",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "e65e110c42ed9efe",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "77cdc5e001e3d776",
+    "type": "split",
+    "children": [
+      {
+        "id": "710351e8e09c06f9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "38c9908ae9666edc",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Untitled.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Untitled"
+            }
+          },
+          {
+            "id": "70d7f4b0dd1db1ab",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Untitled.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Untitled"
+            }
+          },
+          {
+            "id": "232f544454773730",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "7dcd4db22fe0b9c4",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Untitled.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Untitled"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "sample-plugin:Sample Plugin": false,
+      "sample-plugin:Add new": false
+    }
+  },
+  "active": "3cdd000a3c4c460c",
+  "lastOpenFiles": [
+    "_site/folder/Page.html",
+    "_site/folder/page 2.html",
+    "_site/folder",
+    "_site/page-slug-2/index.html",
+    "_site/page-slug-2",
+    "_site/page-slug/index.html",
+    "_site/page-slug",
+    "_folder/Page.md",
+    "folder/page 2.md",
+    "folder/Page.md",
+    "folder",
+    "_folder/page 2.md",
+    "_site/Untitled.md",
+    "_site/Untitled.html",
+    "Comic Pages.md",
+    "_folder",
+    "_site/favicon.png",
+    "favicon.png",
+    "index.md",
+    "_site/index.html",
+    "_posts/Comic pages.md",
+    "about.md",
+    "_posts/2025-09-25-welcome-to-jekyll.md",
+    "Untitled 1.md",
+    "Untitled 2.md",
+    "_site/Untitled 2.md",
+    "_site/Untitled 1.md",
+    "_templates/New Post.md",
+    "_templates/New Page.md"
+  ]
+}

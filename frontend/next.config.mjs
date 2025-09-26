@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	productionBrowserSourceMaps: true,
 	images: {
 		remotePatterns: [
 			new URL( `${ process.env.BACKEND_URL }/**` ),
