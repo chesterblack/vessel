@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_templates/New Post.md",
+                "file": "_templates/New Page.md",
                 "mode": "source",
-                "source": false
+                "source": true
               },
               "icon": "lucide-file",
-              "title": "New Post"
+              "title": "New Page"
             }
           },
           {
@@ -183,11 +183,15 @@
       "command-palette:Open command palette": false,
       "bases:Create new base": false,
       "sample-plugin:Sample Plugin": false,
-      "sample-plugin:Add new": false
+      "sample-plugin:Add new": false,
+      "create-new-page:Add new": false
     }
   },
   "active": "3cdd000a3c4c460c",
   "lastOpenFiles": [
+    "_templates/New Post.md",
+    "Untitled.md",
+    "Comic Pages.md",
     "_site/folder/Page.html",
     "_site/folder/page 2.html",
     "_site/folder",
@@ -202,12 +206,10 @@
     "_folder/page 2.md",
     "_site/Untitled.md",
     "_site/Untitled.html",
-    "Comic Pages.md",
     "_folder",
     "_site/favicon.png",
     "favicon.png",
     "index.md",
-    "_site/index.html",
     "_posts/Comic pages.md",
     "about.md",
     "_posts/2025-09-25-welcome-to-jekyll.md",
@@ -215,7 +217,6 @@
     "Untitled 2.md",
     "_site/Untitled 2.md",
     "_site/Untitled 1.md",
-    "_templates/New Post.md",
     "_templates/New Page.md"
   ]
 }

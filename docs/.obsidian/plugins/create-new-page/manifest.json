@@ -1,0 +1,10 @@
+{
+	"id": "create-new-page",
+	"name": "New Page",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Creates a new Jekyll page with two clicks.",
+	"author": "Chester Black",
+	"authorUrl": "https://github.com/chesterblack",
+	"isDesktopOnly": false
+}
