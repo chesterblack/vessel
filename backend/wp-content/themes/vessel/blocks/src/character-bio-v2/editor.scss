@@ -1,9 +1,6 @@
 @use '../shared/editor.scss';
 
 .wp-block-vessel-character-bio-v2 {
-	display: flex;
-	gap: 25px;
-
 	.image-upload-preview {
 		width: 150px;
 		height: 150px;
@@ -20,5 +17,11 @@
 		padding: 5px 10px;
 		min-height: 150px;
 		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.inner {
+		display: flex;
+		gap: 25px;
 	}
 }
