@@ -16,7 +16,7 @@ export default function CharacterBio( { character, characterBio }: Props ) {
 	const parsedDescription = parse( description ?? '' );
 
 	return (
-		<div className="character-bio">
+		<Link className="character-bio" href={ `/characters/${ character.slug }` }>
 			<CharacterPortrait
 				portrait={ portrait }
 				characterName={ name ? name : character.title.rendered }
@@ -25,6 +25,6 @@ export default function CharacterBio( { character, characterBio }: Props ) {
 				<h2>{ name ? name : character.title.rendered }</h2>
 				<p>{ parsedDescription }</p>
 			</div>
-		</div>
+		</Link>
 	);
 }

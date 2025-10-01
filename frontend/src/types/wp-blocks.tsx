@@ -1,4 +1,4 @@
-interface Block {
+export interface Block {
 	blockName: string
 	innerBlocks: Block[]
 	innerHTML: string
@@ -29,7 +29,7 @@ export interface CharacterBioData {
 	[ chapterName: string ]: CharacterBioDatum
 }
 
-export interface ComicPageBlock {
+export interface ComicPageBlock extends Block {
 	attrs: {
 		backgroundGradient: string
 		backgroundImage: ImageAttributes | null

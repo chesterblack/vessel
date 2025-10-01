@@ -60,32 +60,36 @@ export default function Edit( { attributes, setAttributes } ) {
 				onChange={ v => setSelectedChapter( v ) }
 			/>
 
-			<ImageUpload
-				label='Portrait'
-				image={ portrait }
-				callback={ ( { url, width, height, alt } ) => {
-					setJsonAttribute( 'portrait', { url, width, height, alt } );
-				} }
-				deleteCallback={ () => {
-					setJsonAttribute( 'portrait', null );
-				} }
-			/>
+			<div className='inner'>
+				<div style={{ minWidth: '150px' }}>
+					<ImageUpload
+						label='Portrait'
+						image={ portrait }
+						callback={ ( { url, width, height, alt } ) => {
+							setJsonAttribute( 'portrait', { url, width, height, alt } );
+						} }
+						deleteCallback={ () => {
+							setJsonAttribute( 'portrait', null );
+						} }
+					/>
+				</div>
 
-			<TextControl
-				className='name'
-				label='Name'
-				value={ name }
-				onChange={ value => setJsonAttribute( 'name', value ) }
-			/>
+				<div style={{ width: '100%' }}>
+					<TextControl
+						className='name'
+						label='Name'
+						value={ name }
+						onChange={ value => setJsonAttribute( 'name', value ) }
+					/>
 
-			<div style={{ width: '50%' }}>
-				<label>Description</label>
-				<RichText
-					className='description'
-					tagName='p'
-					value={ description }
-					onChange={ value => setJsonAttribute( 'description', value ) }
-				/>
+						<label>Description</label>
+						<RichText
+							className='description'
+							tagName='p'
+							value={ description }
+							onChange={ value => setJsonAttribute( 'description', value ) }
+						/>
+				</div>
 			</div>
 		</div>
 	)

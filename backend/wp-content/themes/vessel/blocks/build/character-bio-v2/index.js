@@ -95,41 +95,49 @@ function Edit({
       value: selectedChapter,
       options: chapters,
       onChange: v => setSelectedChapter(v)
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      label: "Portrait",
-      image: portrait,
-      callback: ({
-        url,
-        width,
-        height,
-        alt
-      }) => {
-        setJsonAttribute('portrait', {
-          url,
-          width,
-          height,
-          alt
-        });
-      },
-      deleteCallback: () => {
-        setJsonAttribute('portrait', null);
-      }
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-      className: "name",
-      label: "Name",
-      value: name,
-      onChange: value => setJsonAttribute('name', value)
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-      style: {
-        width: '50%'
-      },
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-        children: "Description"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
-        className: "description",
-        tagName: "p",
-        value: description,
-        onChange: value => setJsonAttribute('description', value)
+      className: "inner",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+        style: {
+          minWidth: '150px'
+        },
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          label: "Portrait",
+          image: portrait,
+          callback: ({
+            url,
+            width,
+            height,
+            alt
+          }) => {
+            setJsonAttribute('portrait', {
+              url,
+              width,
+              height,
+              alt
+            });
+          },
+          deleteCallback: () => {
+            setJsonAttribute('portrait', null);
+          }
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        style: {
+          width: '100%'
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+          className: "name",
+          label: "Name",
+          value: name,
+          onChange: value => setJsonAttribute('name', value)
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
+          children: "Description"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+          className: "description",
+          tagName: "p",
+          value: description,
+          onChange: value => setJsonAttribute('description', value)
+        })]
       })]
     })]
   });
