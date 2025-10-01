@@ -1,4 +1,4 @@
-interface Block {
+export interface Block {
 	blockName: string
 	innerBlocks: Block[]
 	innerHTML: string

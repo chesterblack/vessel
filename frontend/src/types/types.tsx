@@ -7,6 +7,8 @@ export type PageNumber = number | NumericalString | 'latest';
 
 export type ImageSize = [ number, number ] | number;
 
+export type SluggedPageProps = { params: Promise<{ slug: string }> };
+
 export interface YoastHead {
 	title: string,
 	robots: Robots,

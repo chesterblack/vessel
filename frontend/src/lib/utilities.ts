@@ -5,7 +5,7 @@ import { Chapter } from "@/types/wp-taxonomies";
 import { Metadata } from "next";
 
 import { cache } from "react";
-import { WP_Term } from "wp-types";
+import { WP_Post, WP_Term } from "wp-types";
 
 /**
  * Send a request to the backend API, include the wp/v2/
@@ -53,7 +53,12 @@ export function getLatestCharacterBioData(
 
 	for ( let i = 0; i < chapterSlugs.length; i++ ) {
 		const slug = chapterSlugs[i];
+
 		if ( ! characterInfo[ slug ] ) {
+			if ( slug === currentChapter ) {
+				break;
+			}
+
 			continue;
 		}
 

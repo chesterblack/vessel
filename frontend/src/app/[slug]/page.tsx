@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { WebPage } from "@/types/wp-post-types";
+import { SluggedPageProps } from "@/types/types";
 
 import { notFound } from "next/navigation";
 import parse from 'html-react-parser';
@@ -7,12 +8,7 @@ import { sendApiRequest } from "@/lib/utilities";
 import { getYoastMetadata } from "@/lib/seo";
 import JsonLdSchema from "@/components/JsonLdSchema";
 
-
-export interface Props {
-	params: Promise<{ slug: string }>
-}
-
-export async function generateMetadata( { params }: Props ): Promise<Metadata> {
+export async function generateMetadata( { params }: SluggedPageProps ): Promise<Metadata> {
 	const { slug } = await params;
 
 	const pageData = await sendApiRequest( 
@@ -31,7 +27,7 @@ export async function generateMetadata( { params }: Props ): Promise<Metadata> {
 	return getYoastMetadata( pageData[0] );
 }
 
-export default async function Page( { params }: Props ) {
+export default async function Page( { params }: SluggedPageProps ) {
 	const { slug } = await params;
 
 	const pageData = await sendApiRequest( 
@@ -44,9 +40,9 @@ export default async function Page( { params }: Props ) {
 		notFound();
 	}
 
-	const title = pageData[0].title;
+	const title   = pageData[0].title;
 	const content = parse( pageData[0].content.rendered );
-	const schema = pageData[0].yoast_head_json.schema;
+	const schema  = pageData[0].yoast_head_json.schema;
 
 	return (
 		<>

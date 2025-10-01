@@ -34,6 +34,10 @@ export default function CharacterList( { chapters, characters }: Props ) {
 					characterBlockData
 				);
 
+				if ( ! characterBio.description ) {
+					return;
+				}
+
 				return (
 					<CharacterBio
 						character={ character }
