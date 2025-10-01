@@ -75,12 +75,14 @@ main.page-reader {
 }
 
 .character-tag {
-	cursor: help;
 	background-color: colors.$ice-blue;
 	padding: 2px 5px;
 	border-radius: 3px;
+	color: inherit;
+	text-decoration: none;
 
 	&:hover {
+		background-color: colors.$powder-pink;
 		.character-tag-popup {
 			display: flex;
 		}

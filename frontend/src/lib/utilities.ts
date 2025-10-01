@@ -84,7 +84,6 @@ export function getLatestCharacterBioData(
 	return info;
 }
 
-
 /**
  * Get the first available description for a character
  */
@@ -310,7 +309,7 @@ export async function getComicPageMetadata(
 }
 
 export function getEmbeddedChapters(
-	post: Post
+	post: ComicPage
 ): Chapter[] {
 	const terms = post?._embedded?.[ 'wp:term' ] as WP_Term[][];
 
