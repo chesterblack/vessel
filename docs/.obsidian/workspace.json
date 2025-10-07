@@ -182,8 +182,6 @@
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
       "bases:Create new base": false,
-      "sample-plugin:Sample Plugin": false,
-      "sample-plugin:Add new": false,
       "create-new-page:Add new": false
     }
   },

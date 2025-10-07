@@ -347,3 +347,8 @@ export function getCharacterBioData(
 
 	return characterBlockData;
 }
+
+export async function getChapters(): Promise<Chapter[]> {
+	const chapters = await sendApiRequest( 'GET', 'wp/v2/chapters' );
+	return chapters.filter( chapter => chapter.count > 0 );
+}

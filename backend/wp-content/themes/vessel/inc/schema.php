@@ -1,4 +1,9 @@
 <?php
+include_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+if ( ! is_plugin_active( 'wordpress-seo' ) ) {
+	return;
+}
 
 use Yoast\WP\SEO\Generators\Schema\Abstract_Schema_Piece;
 

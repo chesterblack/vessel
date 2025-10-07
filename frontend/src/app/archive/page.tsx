@@ -3,7 +3,7 @@ import { Chapter } from "@/types/wp-taxonomies";
 import { ComicPage } from "@/types/wp-post-types";
 
 import '@/styles/archive.scss';
-import { getChapterPages, sendApiRequest } from "@/lib/utilities";
+import { getChapterPages, getChapters, sendApiRequest } from "@/lib/utilities";
 import ChapterPages from "@/components/ChapterPages";
 
 
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 }
 
 export default async function ArchivePage() {
-	const chapters = await sendApiRequest( 'GET', 'wp/v2/chapters' ) as Chapter[] ?? [];
+	const chapters = await getChapters() ?? [];
 
 	let pageData: {
 		chapter: Chapter,

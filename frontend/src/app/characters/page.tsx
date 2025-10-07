@@ -4,7 +4,7 @@ import { Character } from '@/types/wp-post-types';
 
 import '@/styles/characters.scss';
 import CharacterList from "@/components/CharacterList";
-import { sendApiRequest } from '@/lib/utilities';
+import { getChapters, sendApiRequest } from '@/lib/utilities';
 
 export const metadata: Metadata = {
 	title: 'Meet the characters of Vessel',
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 }
 
 export default async function CharactersPage() {
-	const chapterData   = await sendApiRequest( 'GET', 'wp/v2/chapters' ) as Chapter[];
+	const chapterData   = await getChapters();
 	const characterData = await sendApiRequest( 'GET', 'wp/v2/character' ) as Character[];
 
 	return (

@@ -1,6 +1,6 @@
 import JsonLdSchema from "@/components/JsonLdSchema";
 import { getYoastMetadata } from "@/lib/seo";
-import { sendApiRequest } from "@/lib/utilities";
+import { getChapters, sendApiRequest } from "@/lib/utilities";
 import { SluggedPageProps } from "@/types/types";
 import { Character } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
@@ -38,11 +38,7 @@ export default async function CharacterProfilePage( { params }: SluggedPageProps
 		notFound();
 	}
 
-	const chapterData = await sendApiRequest(
-		'GET',
-		'wp/v2/chapters'
-	) as Chapter[];
-
+	const chapterData = await getChapters();
 	if ( ! chapterData ) {
 		console.error( "not found chapterData" );
 		notFound();
