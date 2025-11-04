@@ -17,6 +17,8 @@ interface Props {
 export default function CharacterList( { chapters, characters }: Props ) {
 	const [ currentChapter, setCurrentChapter ] = useState( chapters[0].slug );
 
+	console.log( 'characters: ', characters );
+
 	return (
 		<>
 			<ChapterSelector
@@ -33,6 +35,8 @@ export default function CharacterList( { chapters, characters }: Props ) {
 					currentChapter,
 					characterBlockData
 				);
+
+				console.log( 'characterBio: ', characterBio );
 
 				if ( ! characterBio.description ) {
 					return;

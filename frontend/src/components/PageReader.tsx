@@ -3,7 +3,8 @@ import { PageNumber } from "@/types/types";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import '@/styles/page-reader.scss';
-import { findPage, getImageProps, getPages, numeralisePageNumber } from "@/lib/utilities";
+import { findPage, getImageProps, numeralisePageNumber } from "@/lib/utilities";
+import { getComicPages } from "@/lib/data-fetching";
 import PageReaderNav from "@/components/PageReaderNav";
 import JsonLdSchema from "./JsonLdSchema";
 import JumpToTop from "./JumpToTop";
@@ -17,7 +18,7 @@ interface Props {
 }
 
 export default async function PageReader( { page = 'latest' }: Props ) {
-	const pages = await getPages();
+	const pages = await getComicPages();
 
 	let pageNumber = await numeralisePageNumber( page );
 

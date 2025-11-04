@@ -33,7 +33,7 @@ export default function CharacterPortrait( { portrait, characterName, size = 150
 	}
 
 	return (
-		<figure className="character-portrait-frame">
+		<figure className="character-portrait-frame" style={{ position: 'relative' }}>
 			{ portraitImage }
 		</figure>
 	);

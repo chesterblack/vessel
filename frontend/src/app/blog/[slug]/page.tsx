@@ -1,29 +1,17 @@
-import { Post } from '@/types/wp-post-types';
-
-import { cache } from 'react';
 import parse from 'html-react-parser';
-import { sendApiRequest } from '@/lib/utilities';
 import JsonLdSchema from '@/components/JsonLdSchema';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getYoastMetadata } from '@/lib/seo';
-import Image from 'next/image';
 import { Author } from '@/types/types';
 
 import "@/styles/blog.scss";
 import AuthorImage from '@/components/AuthorImage';
+import { getBlogPost } from '@/lib/data-fetching';
 
 export interface Props {
 	params: Promise<{ slug: string }>
 }
-
-const getBlogPost = cache( async ( slug: string ) => {
-	return await sendApiRequest(
-		'GET',
-		'wp/v2/posts',
-		{ slug: slug, _embed: true }
-	).then( d => d[0] ) as Post;
-} );
 
 export async function generateMetadata( { params }: Props ): Promise<Metadata> {
 	const { slug } = await params;

@@ -1,17 +1,16 @@
-import { Chapter } from '@/types/wp-taxonomies';
-
 import '@/styles/archive.scss';
-import { getChapterPages, sendApiRequest } from '@/lib/utilities';
+import { getChapterPages } from '@/lib/utilities';
 import ChapterPages from '@/components/ChapterPages';
+import { getChapter } from '@/lib/data-fetching';
+import { notFound } from 'next/navigation';
 
 export default async function SingleChapterPage( { params } ) {
 	const { slug } = await params;
+	const chapter  = await getChapter( slug );
 
-	const chapter = await sendApiRequest(
-		'GET',
-		'wp/v2/chapters',
-		{ slug: slug }
-	).then( d => d[0] ) as Chapter;
+	if ( ! chapter ) {
+		notFound();
+	}
 
 	const pages = await getChapterPages( chapter );
 

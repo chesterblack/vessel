@@ -1,48 +1,35 @@
+
 import { Metadata } from "next";
-import { WebPage } from "@/types/wp-post-types";
 import { SluggedPageProps } from "@/types/types";
 
 import { notFound } from "next/navigation";
 import parse from 'html-react-parser';
-import { sendApiRequest } from "@/lib/utilities";
 import { getYoastMetadata } from "@/lib/seo";
 import JsonLdSchema from "@/components/JsonLdSchema";
+import { getWebPage } from "@/lib/data-fetching";
 
 export async function generateMetadata( { params }: SluggedPageProps ): Promise<Metadata> {
 	const { slug } = await params;
-
-	const pageData = await sendApiRequest( 
-		'GET',
-		'wp/v2/pages',
-		{
-			slug: slug,
-			_fields: [ 'title', 'excerpt', 'yoast_head_json' ]
-		}
-	) as WebPage[];
+	const pageData = await getWebPage( slug );
 
 	if ( ! pageData ) {
 		notFound();
 	}
 
-	return getYoastMetadata( pageData[0] );
+	return getYoastMetadata( pageData );
 }
 
 export default async function Page( { params }: SluggedPageProps ) {
 	const { slug } = await params;
+	const pageData = await getWebPage( slug );
 
-	const pageData = await sendApiRequest( 
-		'GET',
-		'wp/v2/pages',
-		{ slug: slug }
-	) as WebPage[];
-
-	if ( ! pageData || pageData.length < 1 ) {
+	if ( ! pageData ) {
 		notFound();
 	}
 
-	const title   = pageData[0].title;
-	const content = parse( pageData[0].content.rendered );
-	const schema  = pageData[0].yoast_head_json.schema;
+	const title   = pageData.title;
+	const content = parse( pageData.content.rendered );
+	const schema  = pageData.yoast_head_json.schema;
 
 	return (
 		<>

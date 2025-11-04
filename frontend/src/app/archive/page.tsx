@@ -3,7 +3,8 @@ import { Chapter } from "@/types/wp-taxonomies";
 import { ComicPage } from "@/types/wp-post-types";
 
 import '@/styles/archive.scss';
-import { getChapterPages, getChapters, sendApiRequest } from "@/lib/utilities";
+import { getChapterPages } from "@/lib/utilities";
+import { getChapters } from "@/lib/data-fetching";
 import ChapterPages from "@/components/ChapterPages";
 
 
