@@ -65,7 +65,6 @@ export async function getPost(
 
 export const getChapters = cache( async () => {
 	const chapters = await getPosts( 'chapters' ) as Chapter[];
-	console.log( 'chapters: ', chapters );
 	return chapters.filter( chapter => chapter.count > 0 );
 } );
 

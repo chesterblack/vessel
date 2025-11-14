@@ -249,8 +249,6 @@ export async function numeralisePageNumber(
 ): Promise<number> {
 	const pages = await getComicPages();
 
-	console.log( 'pages: ', pages );
-
 	let number = pageNumber === 'latest' ? pages.length : pageNumber;
 	number = typeof number !== 'number' ? parseInt( number ) : number;
 
