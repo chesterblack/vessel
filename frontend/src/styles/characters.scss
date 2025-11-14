@@ -87,8 +87,10 @@ main.character {
 }
 
 @media screen and ( max-width: 600px ) {
-	.character-bio {
+	.character-bio,
+	.character-profile {
 		flex-direction: column;
 		align-items: center;
+		text-align: center;
 	}
 }

@@ -1,6 +1,7 @@
-import { getEmbeddedChapters, sendApiRequest } from "@/lib/utilities";
+import { getEmbeddedChapters } from "@/lib/utilities";
 import CharacterTag from "./CharacterTag";
 import { Character, ComicPage } from "@/types/wp-post-types";
+import { getCharacters } from "@/lib/data-fetching";
 
 interface Props {
 	characters: string[]
@@ -12,9 +13,7 @@ export default async function CharacterTags( { characters, pageData }: Props ) {
 		return;
 	}
 
-	const characterData = await sendApiRequest(
-		'GET',
-		`wp/v2/character`,
+	const characterData = await getCharacters(
 		{ include: characters.join( ',' ) }
 	);
 

@@ -1,7 +1,7 @@
-import { getCharacterBioData, getLatestCharacterBioData, sendApiRequest } from "@/lib/utilities";
+import { getCharacterBioData, getLatestCharacterBioData } from "@/lib/utilities";
+import { getChapters } from "@/lib/data-fetching";
 import { Character } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
-import { WP_Term } from "wp-types";
 import CharacterPortrait from "./CharacterPortrait";
 import Link from "next/link";
 
@@ -11,8 +11,9 @@ interface Props {
 }
 
 export default async function CharacterTag( { character, chapter }: Props ) {
-	const chapters = await sendApiRequest( 'GET', 'wp/v2/chapters' ) as Chapter[] ?? [];
+	const chapters   = await getChapters() ?? [];
 	const allBioData = getCharacterBioData( character );
+
 	const { name, portrait, description } = getLatestCharacterBioData( chapters, chapter.slug, allBioData );
 
 	if ( ! description ) {

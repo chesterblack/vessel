@@ -23,8 +23,6 @@ export default function Inner( { character, chapters }: Props ) {
 		characterData
 	);
 
-	console.log( 'name: ', name );
-
 	name = name ?? character.title.rendered;
 	description = description ?? 'Read on to find out more about this character';
 

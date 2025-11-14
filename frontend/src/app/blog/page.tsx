@@ -1,10 +1,9 @@
-import { Post } from "@/types/wp-post-types";
 import { Metadata } from "next";
 
 import "@/styles/blog.scss";
 import { blogDescription } from "@/lib/seo";
-import { sendApiRequest } from "@/lib/utilities";
 import BlogListing from "@/components/BlogListing";
+import { getBlogPosts } from "@/lib/data-fetching";
 
 
 export const metadata: Metadata = {
@@ -13,11 +12,7 @@ export const metadata: Metadata = {
 }
 
 export default async function BlogArchivePage() {
-	const blogPosts = await sendApiRequest( 
-		'GET',
-		'wp/v2/posts',
-		{ _embed: true }
-	) as Post[];
+	const blogPosts = await getBlogPosts();
 
 	return (
 		<>

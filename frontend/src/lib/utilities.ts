@@ -1,11 +1,13 @@
 import { PageNumber } from "@/types/types";
-import { CharacterBioBlock, CharacterBioData, CharacterBioDatum } from "@/types/wp-blocks";
-import { Character, ComicPage, Post } from "@/types/wp-post-types";
+import { CharacterBioData, CharacterBioDatum } from "@/types/wp-blocks";
+import { Character, ComicPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { Metadata } from "next";
 
 import { cache } from "react";
-import { WP_Post, WP_Term } from "wp-types";
+import { WP_Term } from "wp-types";
+
+import { getComicPages } from "@/lib/data-fetching";
 
 /**
  * Send a request to the backend API, include the wp/v2/
@@ -123,23 +125,6 @@ export function sortByAttribute<T>(
 
 	return newArray;
 }
-
-/**
- * Cached fetch for all pages so we're not spamming the back-end for the same content when someone is reading the comic
- */
-export const getPages = cache( () => (
-	sendApiRequest(
-		'GET',
-		'wp/v2/comic_page',
-		{
-			status: 'publish',
-			order: 'desc',
-			orderby: 'comic_page_number',
-			per_page: 100,
-			_embed: 'wp:term',
-		}
-	) as Promise<ComicPage[]>
-) );
 
 /**
  * Extract the image props needed from a comic page API object
@@ -262,7 +247,7 @@ export function groupPagesByChapter(
 export async function numeralisePageNumber(
 	pageNumber: PageNumber
 ): Promise<number> {
-	const pages = await getPages();
+	const pages = await getComicPages();
 
 	let number = pageNumber === 'latest' ? pages.length : pageNumber;
 	number = typeof number !== 'number' ? parseInt( number ) : number;
@@ -274,7 +259,7 @@ export async function numeralisePageNumber(
  * Is the page the most recent
  */
 export async function isLatestPage( page: ComicPage ): Promise<boolean> {
-	const pages = await getPages();
+	const pages = await getComicPages();
 	return pages.length === page.meta.comic_page_number;
 }
 
@@ -286,7 +271,7 @@ export async function getComicPageMetadata(
 ): Promise<Metadata> {
 	const metadata: Metadata = {};
 
-	const pages = await getPages();
+	const pages = await getComicPages();
 	const pageNumber = await numeralisePageNumber( page );
 	const pageData = findPage( pages, pageNumber );
 
@@ -346,4 +331,8 @@ export function getCharacterBioData(
 	) as CharacterBioData;
 
 	return characterBlockData;
+}
+
+export function isNumeric( number: number|string ) {
+	return typeof number === 'number' || ! isNaN( parseInt( number.toString() ) );
 }

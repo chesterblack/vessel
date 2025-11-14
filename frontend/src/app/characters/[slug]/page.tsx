@@ -1,61 +1,43 @@
 import JsonLdSchema from "@/components/JsonLdSchema";
 import { getYoastMetadata } from "@/lib/seo";
-import { sendApiRequest } from "@/lib/utilities";
+import { getChapters } from "@/lib/data-fetching";
 import { SluggedPageProps } from "@/types/types";
-import { Character } from "@/types/wp-post-types";
-import { Chapter } from "@/types/wp-taxonomies";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Inner from "./inner";
+import { getCharacter } from "@/lib/data-fetching";
 
 export async function generateMetadata( { params }: SluggedPageProps ): Promise<Metadata> {
-	const { slug } = await params;
-
-	const characterData = await sendApiRequest(
-		'GET',
-		'wp/v2/character',
-		{ slug: slug }
-	) as Character[];
+	const { slug }      = await params;
+	const characterData = await getCharacter( slug );
 
 	if ( ! characterData ) {
 		notFound();
 	}
 
-	return getYoastMetadata( characterData[0] );
+	return getYoastMetadata( characterData );
 }
 
 export default async function CharacterProfilePage( { params }: SluggedPageProps ) {
-	const { slug } = await params;
-
-	const characterData = await sendApiRequest(
-		'GET',
-		'wp/v2/character',
-		{ slug: slug }
-	) as Character[];
+	const { slug }      = await params;
+	const characterData = await getCharacter( slug );
 
 	if ( ! characterData ) {
-		console.error( "not found characterData" );
 		notFound();
 	}
 
-	const chapterData = await sendApiRequest(
-		'GET',
-		'wp/v2/chapters'
-	) as Chapter[];
-
+	const chapterData = await getChapters();
 	if ( ! chapterData ) {
-		console.error( "not found chapterData" );
 		notFound();
 	}
 
-	const character = characterData[0];
-	const schema = character.yoast_head_json.schema;
+	const schema = characterData.yoast_head_json.schema;
 
 	return (
-		<main className={ `character ${ character.title.rendered }` }>
+		<main className={ `character ${ characterData.slug }` }>
 			<JsonLdSchema schema={ schema } />
 			<Inner
-				character={ character }
+				character={ characterData }
 				chapters={ chapterData }
 			/>
 		</main>
