@@ -117,6 +117,37 @@ main.page-reader {
 	}
 }
 
+.page {
+	position: relative;
+	max-width: 100vw;
+}
+
+.page-area {
+	width: 50%;
+	height: 100%;
+	display: block;
+	position: absolute;
+	top: 0;
+
+	&.backward {
+		cursor: w-resize;
+		left: 0;
+
+		@media screen and ( max-width: 650px ) {
+			display: none;
+		}
+	}
+
+	&.forward {
+		cursor: e-resize;
+		right: 0;
+
+		@media screen and ( max-width: 650px ) {
+			width: 100%;
+		}
+	}
+}
+
 @media screen and ( max-width: 860px ) {
 	main.page-reader {
 		margin-block: 0;

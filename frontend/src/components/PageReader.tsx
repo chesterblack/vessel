@@ -11,6 +11,7 @@ import JumpToTop from "./JumpToTop";
 import AuthorsNote from "./AuthorsNote";
 import CharacterTags from "./CharacterTags";
 import Background from "./Background";
+import PageArea from "./PageArea";
 
 
 interface Props {
@@ -28,11 +29,12 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 		notFound();
 	}
 
-	const { src, width, height, alt } = getImageProps( pageData );
-
 	const schema = pageData.yoast_head_json.schema;
 
 	const { backgroundGradient, backgroundImage } = pageData.content_blocks[0].attrs;
+
+	const canGoBack = pageNumber > 1;
+	const canGoForward = pageNumber < pages.length;
 
 	return (
 		<>
@@ -41,14 +43,11 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 				<Background backgroundGradient={ backgroundGradient } backgroundImage={ backgroundImage } />
 				<JumpToTop />
 				<PageReaderNav pages={ pages } page={ pageNumber } />
-				<Image
-					className='page-image'
-					src={ src }
-					width={ width }
-					height={ height }
-					alt={ alt }
-					priority={ true }
-					fetchPriority='high'
+				<PageArea
+					pageData={ pageData }
+					pageNumber={ pageNumber }
+					canGoBack={ canGoBack }
+					canGoForward={ canGoForward }
 				/>
 				<PageReaderNav pages={ pages } page={ pageNumber } />
 				<CharacterTags
