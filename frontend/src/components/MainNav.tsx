@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import HamburgerButton from "./HamburgerButton";
+import SignIn from "./SignIn";
 
 
 export default function MainNav() {

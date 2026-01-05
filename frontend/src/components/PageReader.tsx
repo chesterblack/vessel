@@ -12,6 +12,7 @@ import AuthorsNote from "./AuthorsNote";
 import CharacterTags from "./CharacterTags";
 import Background from "./Background";
 import PageArea from "./PageArea";
+import SignIn from "./SignIn";
 
 
 interface Props {
@@ -40,6 +41,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 		<>
 			<JsonLdSchema schema={ schema } />
 			<main className={`page-reader ${ pageData.class_list.join(' ') }`}>
+				<SignIn />
 				<Background backgroundGradient={ backgroundGradient } backgroundImage={ backgroundImage } />
 				<JumpToTop />
 				<PageReaderNav pages={ pages } page={ pageNumber } />
