@@ -23,6 +23,24 @@ function setup_taxonomies() {
 		],
 	);
 
+	register_taxonomy(
+		'role_locks',
+		[ 'comic_page', 'page', 'post' ],
+		[
+			'description' => 'Mark this page as only to be visible to logged-in discord users with the right role',
+			'labels' => [
+				'name' => _x( 'Role Locks', 'Taxonomy General Name', 'text_domain' ),
+				'singular_name' => _x( 'Role Lock', 'Taxonomy Singular Name', 'text_domain' ),
+				'menu_name' => __( 'Role Locks', 'text_domain' ),
+				'add_new_item' => __( 'Add New Role Lock' ),
+			], 
+			'hierarchical' => false,
+			'public' => true,
+			'show_in_rest' => true,
+			'show_admin_column' => true,
+		],
+	);
+
 	// Removes default taxonomies
 	register_taxonomy( 'category', [] );
 	register_taxonomy( 'post_tag', [] );
