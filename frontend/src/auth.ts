@@ -1,6 +1,22 @@
-
-import NextAuth from "next-auth"
+import NextAuth, { DefaultSession } from "next-auth"
 import Discord from "next-auth/providers/discord"
+
+declare module "next-auth" {
+  interface User {
+    roles: string[]
+  }
+  interface Session {
+    user: {
+      roles: string[]
+    } & DefaultSession["user"]
+  }
+}
+
+declare module "next-auth/providers/discord" {
+	interface DiscordProfile {
+		roles: string[]
+	}
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -8,46 +24,39 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 			authorization: {
 				params: { scope: "identify email guilds guilds.members.read" }
 			},
-			// profile( profile ) {
-			// 	return {
-			// 		id: profile.id,
-			// 		name: profile.global_name ?? profile.username,
-			// 		email: profile.email,
-			// 		image: profile.image_url,
-			// 	}
+			async profile( profile, tokens ) {
+				const guildData = await fetch( `https://discord.com/api/users/@me/guilds/830103888190242876/member`, {
+					headers: {
+						Authorization: `Bearer ${ tokens.access_token }`
+					}
+				} ).then( res => res.json() );
 
-			// 	// const guildData = await fetch( `https://discord.com/api/users/@me/guilds/830103888190242876/member`, {
-			// 	// 	headers: {
-			// 	// 		Authorization: `Bearer ${ tokens.access_token }`
-			// 	// 	}
-			// 	// } ).then( res => res.json() );
-
-			// 	// return {
-			// 	// 	roles: guildData.roles,
-			// 	// 	foo: 'bar',
-			// 	// 	...profile
-			// 	// };
-			// }
+				return {
+					...profile,
+					roles: guildData.roles,
+				};
+			}
 		} ),
 	],
 	callbacks: {
-		async signIn ( { account, profile } ) {
-			const { access_token } = account;
-			const guildData = await fetch( `https://discord.com/api/users/@me/guilds/830103888190242876/member`, {
-				headers: {
-					Authorization: `Bearer ${ access_token }`
-				}
-			} )
-				.then( res => res.json() );
+		async session( { session, user, token } ) {
+			if ( user ) {
+				console.log( 'user: ', user );
+			}
 
-			const roles = new Set( guildData.roles );
-			const validRoles = new Set( [
-				'830148627367723079',
-				'1447593084727726282',
-				'831087820307169300',
-			] );
+			if ( token ) {
+				session.user.roles = token.roles as string[];
+				console.log( 'token: ', token );
+			}
 
-			return roles.intersection( validRoles ).size > 0;
+			return session;
+		},
+		async jwt( { token, user } ) {
+			if ( user ) {
+				token.roles = user.roles;
+			}
+
+			return token
 		}
 	}
 })
