@@ -11,6 +11,5 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
 	const user = await auth();
-	console.log( 'user: ', user );
 	return <PageReader />
 }

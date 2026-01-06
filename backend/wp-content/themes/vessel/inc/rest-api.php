@@ -64,3 +64,17 @@ function get_custom_fields( $post, $attr, $request, $object_type ) {
 }
 add_action( 'rest_api_init', 'add_custom_fields' );
 // ---
+
+function add_role_locks() {
+	register_rest_field(
+		[ 'comic_page', 'page', 'post' ],
+		'locked_to_ids',
+		[ 'get_callback' => 'get_role_locks' ]
+	);
+}
+
+function get_role_locks( $post, $attr, $request, $object_type ) {
+	$role_locks = get_the_terms( $post[ 'id' ], 'role_locks' ) ?: [];
+	return array_map( fn( $role_lock ) => $role_lock->slug, $role_locks );
+}
+add_action( 'rest_api_init', 'add_role_locks' );

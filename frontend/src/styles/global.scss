@@ -11,8 +11,7 @@ html {
 	}
 }
 
-body,
-body:has( .next-error-h1 ) {
+body {
 	margin: 0;
 	background: linear-gradient( colors.$shallow-dark, colors.$ice-blue );
 	background-position: bottom 160px left 0;

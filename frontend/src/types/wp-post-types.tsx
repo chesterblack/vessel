@@ -4,13 +4,13 @@ import { YoastHead } from "./types";
 
 export interface Post extends WP_REST_API_Post {
 	content_blocks: Block[]
-	role_locks: number[]
+	locked_to_ids: string[]
 	yoast_head?: string
 	yoast_head_json?: YoastHead
 }
 
 export interface WebPage extends WP_REST_API_Page {
-	role_locks: number[]
+	locked_to_ids: string[]
 	yoast_head?: string
 	yoast_head_json?: YoastHead
 }
@@ -21,7 +21,7 @@ export interface Character extends Post {
 }
 
 export interface ComicPage extends Post {
-	role_locks: number[]
+	locked_to_ids: string[]
 	content_blocks: ComicPageBlock[]
 	meta: {
 		comic_page_number?: number

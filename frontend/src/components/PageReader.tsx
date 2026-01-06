@@ -1,9 +1,8 @@
 import { PageNumber } from "@/types/types";
 
 import { notFound, redirect } from "next/navigation";
-import Image from "next/image";
 import '@/styles/page-reader.scss';
-import { findPage, getImageProps, numeralisePageNumber } from "@/lib/utilities";
+import { findPage, numeralisePageNumber } from "@/lib/utilities";
 import { getComicPages } from "@/lib/data-fetching";
 import PageReaderNav from "@/components/PageReaderNav";
 import JsonLdSchema from "./JsonLdSchema";
@@ -12,9 +11,7 @@ import AuthorsNote from "./AuthorsNote";
 import CharacterTags from "./CharacterTags";
 import Background from "./Background";
 import PageArea from "./PageArea";
-import SignIn from "./SignIn";
 import { getUser } from "@/lib/users";
-
 
 interface Props {
 	page?: PageNumber
@@ -31,9 +28,14 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 		notFound();
 	}
 
-	if ( pageData.role_locks && pageData.role_locks.length > 0 ) {
-		const user = await getUser();
-		// redirect( `/login?redirectTo=/page/${ pageNumber }` );
+	if ( pageData.locked_to_ids && pageData.locked_to_ids.length > 0 ) {
+		const { roles } = await getUser();
+		const rolesSet = new Set( roles );
+		const locksSet = new Set( pageData.locked_to_ids );
+
+		if ( rolesSet.intersection( locksSet ).size < 1 ) {
+			redirect( `/login?redirectTo=/page/${ pageNumber }` );
+		}
 	}
 
 	const schema = pageData.yoast_head_json.schema;
