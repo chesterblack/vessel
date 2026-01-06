@@ -7,6 +7,7 @@ import "@/styles/global.scss";
 import ComingSoon from "@/components/ComingSoon";
 import Header from "@/components/Header";
 import Footer from '@/components/Footer';
+import { getUser } from '@/lib/users';
 
 export const metadata: Metadata = {
 	title: 'Vessel',

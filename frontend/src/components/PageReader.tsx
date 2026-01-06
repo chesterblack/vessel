@@ -1,6 +1,6 @@
 import { PageNumber } from "@/types/types";
 
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Image from "next/image";
 import '@/styles/page-reader.scss';
 import { findPage, getImageProps, numeralisePageNumber } from "@/lib/utilities";
@@ -13,6 +13,7 @@ import CharacterTags from "./CharacterTags";
 import Background from "./Background";
 import PageArea from "./PageArea";
 import SignIn from "./SignIn";
+import { getUser } from "@/lib/users";
 
 
 interface Props {
@@ -30,6 +31,11 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 		notFound();
 	}
 
+	if ( pageData.role_locks && pageData.role_locks.length > 0 ) {
+		const user = await getUser();
+		// redirect( `/login?redirectTo=/page/${ pageNumber }` );
+	}
+
 	const schema = pageData.yoast_head_json.schema;
 
 	const { backgroundGradient, backgroundImage } = pageData.content_blocks[0].attrs;
@@ -41,7 +47,6 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 		<>
 			<JsonLdSchema schema={ schema } />
 			<main className={`page-reader ${ pageData.class_list.join(' ') }`}>
-				<SignIn />
 				<Background backgroundGradient={ backgroundGradient } backgroundImage={ backgroundImage } />
 				<JumpToTop />
 				<PageReaderNav pages={ pages } page={ pageNumber } />

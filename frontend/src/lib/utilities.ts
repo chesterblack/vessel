@@ -336,3 +336,12 @@ export function getCharacterBioData(
 export function isNumeric( number: number|string ) {
 	return typeof number === 'number' || ! isNaN( parseInt( number.toString() ) );
 }
+
+export async function makeDiscordApiCall( url: string, token: string ) {
+	return await fetch( url, {
+		method: 'GET',
+		headers: {
+			Authorization: `Bearer ${ token }`
+		}
+	} ).then( res => res.json() );
+}

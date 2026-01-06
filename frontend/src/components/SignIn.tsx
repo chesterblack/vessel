@@ -1,15 +1,15 @@
+"use client"
 
-import { signIn } from "@/auth"
- 
-export default function SignIn() {
-  return (
-    <form
-      action={async () => {
-        "use server"
-        await signIn("discord")
-      }}
-    >
-      <button type="submit">Signin with Discord</button>
-    </form>
-  )
-} 
+import { signIn } from "next-auth/react"
+
+interface Props {
+	redirectTo: string
+}
+
+export default function SignIn( { redirectTo }: Props ) {
+	return (
+		<button className="discord-sign-in" onClick={ () => signIn( 'discord' ) }>
+			Sign in with Discord
+		</button>
+	);
+}
