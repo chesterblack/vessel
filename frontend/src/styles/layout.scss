@@ -147,11 +147,10 @@ footer {
 	}
 }
 
-.logged-in-banner {
+.hanging-banner {
 	position: relative;
 	top: 0;
 	left: 15px;
-	background-color: colors.$discord-blurple;
 	width: fit-content;
 	border-radius: 0 0 30px 30px;
 	box-shadow: 0px 4px 9px -7px colors.$deep-dark;
@@ -159,9 +158,32 @@ footer {
 	align-items: center;
 	justify-content: center;
 	gap: 5px;
-	padding: 0 20px 0 10px;
+	padding: 5px 20px 6px 15px;
 	color: colors.$bright-light;
 	overflow: hidden;
+
+	img {
+		border-radius: 100%;
+	}
+
+	@media screen and ( max-width: 860px ) {
+		position: static;
+		width: 100%;
+		left: 0;
+		border-radius: 0;
+	}
+
+	@media screen and ( max-width: 650px ) {
+		img {
+			width: 30px;
+			height: 30px;
+			padding: 0;
+		}
+	}
+}
+
+.logged-in-banner {
+	background-color: colors.$discord-blurple;
 
 	.hover {
 		transition: .1s ease-in-out;
@@ -196,19 +218,22 @@ footer {
 			pointer-events: all;
 		}
 	}
+}
 
-	@media screen and ( max-width: 860px ) {
-		position: static;
-		width: 100%;
-		left: 0;
-		border-radius: 0;
-	}
+.kofi-banner {
+	background-color: colors.$kofi-dark;
+	color: colors.$bright-light;
+	text-decoration: none;
+	gap: 10px;
 	
-	@media screen and ( max-width: 650px ) {
-		img {
-			width: 30px;
-			height: 30px;
-			padding: 0;
-		}
+	&:hover {
+		background-color: colors.$kofi-orange;
+		color: colors.$kofi-dark;
+	}
+}
+
+body:has( .secret ) {
+	.kofi-banner {
+		display: none;
 	}
 }

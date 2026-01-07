@@ -8,8 +8,9 @@ interface Props {
 
 export default function LoggedInBanner( { user }: Props ) {
 	return (
-		<div className="logged-in-banner">
-			<Image src={ user.image } alt={ user.name } width={ 50 } height={ 50 } /> Logged in as { user.name }
+		<div className="hanging-banner logged-in-banner">
+			<Image src={ user.image } alt={ user.name } width={ 50 } height={ 50 } />
+			<span>Logged in as { user.name }</span>
 
 			<div className="hover">
 				<SignOut />

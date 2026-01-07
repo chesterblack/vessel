@@ -3,6 +3,7 @@ import MainNav from "./MainNav";
 import TextLogo from "./TextLogo";
 import { getUser } from "@/lib/users";
 import LoggedInBanner from "./LoggedInBanner";
+import KoFiBanner from "./KoFiBanner";
 
 export default async function Header() {
 	const user = await getUser();
@@ -15,6 +16,7 @@ export default async function Header() {
 				</Link>
 				<MainNav />
 			</header>
+			{ ! user && <KoFiBanner /> }
 			{ user && <LoggedInBanner user={ user } /> }
 		</>
 	);
