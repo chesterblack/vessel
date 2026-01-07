@@ -25,7 +25,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				params: { scope: "identify email guilds guilds.members.read" }
 			},
 			async profile( profile, tokens ) {
-				if (profile.avatar === null) {
+				if ( profile.avatar === null ) {
 					const defaultAvatarNumber =
 						profile.discriminator === "0"
 							? Number(BigInt(profile.id) >> BigInt(22)) % 6
@@ -44,7 +44,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
 				return {
 					id: profile.id,
-					name: profile.global_name ?? profile.username,
+					name: profile.username ?? profile.global_name,
 					email: profile.email,
 					image: profile.image_url,
 					roles: guildData.roles,

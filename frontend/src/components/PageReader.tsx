@@ -1,6 +1,6 @@
 import { PageNumber } from "@/types/types";
 
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import '@/styles/page-reader.scss';
 import { findPage, numeralisePageNumber } from "@/lib/utilities";
 import { getComicPages } from "@/lib/data-fetching";
@@ -12,6 +12,7 @@ import CharacterTags from "./CharacterTags";
 import Background from "./Background";
 import PageArea from "./PageArea";
 import { getUser } from "@/lib/users";
+import Secret from "./Secret";
 
 interface Props {
 	page?: PageNumber
@@ -29,12 +30,22 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 	}
 
 	if ( pageData.locked_to_ids && pageData.locked_to_ids.length > 0 ) {
-		const { roles } = await getUser();
+		const user = await getUser();
+
+		if ( ! user ) {
+			return (
+				<Secret redirectUrl={ `/page/${ pageNumber }` } />
+			);
+		}
+
+		const { roles } = user;
 		const rolesSet = new Set( roles );
 		const locksSet = new Set( pageData.locked_to_ids );
 
 		if ( rolesSet.intersection( locksSet ).size < 1 ) {
-			redirect( `/login?redirectTo=/page/${ pageNumber }` );
+			return (
+				<Secret redirectUrl={ `/page/${ pageNumber }` } user={ user } />
+			)
 		}
 	}
 

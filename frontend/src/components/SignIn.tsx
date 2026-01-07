@@ -1,15 +1,17 @@
 "use client"
 
 import { signIn } from "next-auth/react"
+import DiscordIcon from "@/../public/discord-logo.svg"
+import Image from "next/image";
 
 interface Props {
-	redirectTo: string
+	redirectTo?: string
 }
 
-export default function SignIn( { redirectTo }: Props ) {
+export default function SignIn( { redirectTo = '/' }: Props ) {
 	return (
 		<button className="discord-sign-in" onClick={ () => signIn( 'discord', { redirectTo } ) }>
-			Sign in with Discord
+			<Image src={ DiscordIcon } alt="Discord" width={ 20 } height={ 20 } /> Sign in with Discord
 		</button>
 	);
 }

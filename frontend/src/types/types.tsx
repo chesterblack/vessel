@@ -1,5 +1,8 @@
 import { Robots } from "next/dist/lib/metadata/types/metadata-types";
+import { ReactElement } from "react";
 import { Graph } from "schema-dts";
+
+export type Children = ReactElement | string | ( string | ReactElement )[];
 
 export type NumericalString = `${ number }` | number;
 
