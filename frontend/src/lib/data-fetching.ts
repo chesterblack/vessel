@@ -1,5 +1,5 @@
 import { cache } from "react";
-import { isNumeric, sendApiRequest } from "./utilities";
+import { arraysHaveOverlap, isNumeric, sendApiRequest } from "./utilities";
 import { Character, ComicPage, Post, WebPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { WP_REST_API_Post, WP_REST_API_Taxonomy } from "wp-types";
@@ -68,12 +68,30 @@ export const getChapters = cache( async () => {
 	return chapters.filter( chapter => chapter.count > 0 );
 } );
 
-export const getComicPages = cache( () => (
-	getPosts( 'comic_page', {
+export const getComicPages = cache( async ( roles?: string[] ) => {
+	const options = {
 		orderby: 'comic_page_number',
 		_embed: 'wp:term'
-	} ) as Promise<ComicPage[]>
-) );
+	}
+
+	const posts = await getPosts(
+		'comic_page',
+		options
+	) as ComicPage[];
+
+	const allowedPosts = posts.filter( post => {
+		if (
+			! post.locked_to_ids ||
+			post.locked_to_ids.length < 1
+		) {
+			return true;
+		}
+
+		return arraysHaveOverlap( roles, post.locked_to_ids );
+	} );
+
+	return allowedPosts;
+} );
 
 export const getCharacters = cache( ( params?: any ) => (
 	getPosts( 'character', params ) as Promise<Character[]>

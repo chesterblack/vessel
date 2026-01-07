@@ -345,3 +345,13 @@ export async function makeDiscordApiCall( url: string, token: string ) {
 		}
 	} ).then( res => res.json() );
 }
+
+export function arraysHaveOverlap(
+	array1: any[],
+	array2: any[]
+) {
+	const set1 = new Set( array1 );
+	const set2 = new Set( array2 );
+
+	return set1.intersection( set2 ).size > 0;
+}

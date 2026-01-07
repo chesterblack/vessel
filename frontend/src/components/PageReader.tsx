@@ -2,7 +2,7 @@ import { PageNumber } from "@/types/types";
 
 import { notFound } from "next/navigation";
 import '@/styles/page-reader.scss';
-import { findPage, numeralisePageNumber } from "@/lib/utilities";
+import { arraysHaveOverlap, findPage, numeralisePageNumber } from "@/lib/utilities";
 import { getComicPages } from "@/lib/data-fetching";
 import PageReaderNav from "@/components/PageReaderNav";
 import JsonLdSchema from "./JsonLdSchema";
@@ -19,11 +19,10 @@ interface Props {
 }
 
 export default async function PageReader( { page = 'latest' }: Props ) {
-	const pages = await getComicPages();
-
-	let pageNumber = await numeralisePageNumber( page );
-
-	const pageData = findPage( pages, pageNumber );
+	const user       = await getUser();
+	const pages      = await getComicPages( user?.roles );
+	const pageNumber = await numeralisePageNumber( page );
+	const pageData   = findPage( pages, pageNumber );
 
 	if ( ! pageData ) {
 		notFound();
@@ -38,11 +37,10 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 			);
 		}
 
-		const { roles } = user;
-		const rolesSet = new Set( roles );
-		const locksSet = new Set( pageData.locked_to_ids );
-
-		if ( rolesSet.intersection( locksSet ).size < 1 ) {
+		if ( ! arraysHaveOverlap(
+			user.roles,
+			pageData.locked_to_ids
+		) ) {
 			return (
 				<Secret redirectUrl={ `/page/${ pageNumber }` } user={ user } />
 			)
