@@ -1,8 +1,7 @@
 import '@/styles/secret.scss';
 import SignIn from "./SignIn";
 import { User } from "next-auth";
-import lockIcon from '@/../public/lock-icon.svg';
-import Image from "next/image";
+import LockIcon from './LockIcon';
 
 interface Props {
 	redirectUrl?: string
@@ -13,7 +12,7 @@ export default async function Secret( { redirectUrl, user }: Props ) {
 	return (
 		<main className="secret">
 			<h1>
-				<Image src={ lockIcon } alt="locked" width={ 40 } height={ 40 } />
+				<LockIcon width={ 40 } height={ 40 } />
 				<span>That&apos;s a secret!</span>
 			</h1>
 

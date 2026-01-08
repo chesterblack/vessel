@@ -22,6 +22,7 @@ export interface Character extends Post {
 
 export interface ComicPage extends Post {
 	locked_to_ids: string[]
+	locked?: boolean
 	content_blocks: ComicPageBlock[]
 	meta: {
 		comic_page_number?: number

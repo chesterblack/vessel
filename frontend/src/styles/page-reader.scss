@@ -34,9 +34,22 @@ main.page-reader {
 		text-decoration: none;
 		text-align: center;
 
+		svg {
+			margin-bottom: -2px;
+			margin-right: 5px;
+		}
+
+		path {
+			fill: colors.$ice-blue;
+		}
+
 		&:hover:not( :disabled ) {
 			background: colors.$ice-blue;
 			color: colors.$deep-dark;
+
+			path {
+				fill: colors.$deep-dark;
+			}
 		}
 
 		&:disabled {
@@ -45,6 +58,7 @@ main.page-reader {
 			cursor: not-allowed;
 		}
 	}
+
 }
 
 .authors-note {

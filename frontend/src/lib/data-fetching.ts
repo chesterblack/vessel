@@ -83,15 +83,28 @@ export const getComicPages = async ( roles?: string[] ) => {
 		return posts;
 	}
 
-	const allowedPosts = posts.filter( post => {
+	const allowedPosts = posts.map( post => {
 		if (
 			! post.locked_to_ids ||
 			post.locked_to_ids.length < 1
 		) {
-			return true;
+			return {
+				locked: false,
+				...post
+			}
 		}
 
-		return arraysHaveOverlap( roles, post.locked_to_ids );
+		if ( arraysHaveOverlap( roles, post.locked_to_ids ) ) {
+			return {
+				locked: false,
+				...post,
+			};
+		};
+
+		return {
+			locked: true,
+			...post
+		}
 	} );
 
 	return allowedPosts;
