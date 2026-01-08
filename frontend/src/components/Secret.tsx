@@ -5,7 +5,7 @@ import lockIcon from '@/../public/lock-icon.svg';
 import Image from "next/image";
 
 interface Props {
-	redirectUrl: string
+	redirectUrl?: string
 	user?: { roles: string[] } & User
 }
 

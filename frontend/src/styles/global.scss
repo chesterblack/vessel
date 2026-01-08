@@ -90,11 +90,9 @@ hr {
 	margin: 15px 0;
 }
 
-.discord-sign-in {
+.sign-in {
 	cursor: pointer;
-	background-color: colors.$discord-blurple;
 	border-radius: 30px;
-	color: colors.$bright-light;
 	border: none;
 	outline: none;
 	padding: 10px 25px;
@@ -104,15 +102,39 @@ hr {
 	justify-content: center;
 	gap: 10px;
 	transition: .2s ease-in-out;
+	width: 100%;
+	text-decoration: none;
 
 	&:hover {
 		box-shadow: 0 10px 20px -14px colors.$deep-dark;
 	}
 }
 
+.discord-sign-in {
+	background-color: colors.$discord-blurple;
+	color: colors.$bright-light;
+}
+
+.kofi-sign-in {
+	background-color: colors.$kofi-orange;
+	color: colors.$deep-dark;
+}
+
+.sign-in-buttons {
+	display: flex;
+	gap: 20px;
+	align-items: center;
+	justify-content: center;
+	margin-top: 25px;
+}
+
 @media screen and ( max-width: 600px ) {
 	main {
 		margin-block: 0;
 		border-radius: 0;
+	}
+
+	.sign-in-buttons {
+		flex-direction: column;
 	}
 }

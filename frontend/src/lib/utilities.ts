@@ -259,7 +259,7 @@ export async function numeralisePageNumber(
  * Is the page the most recent
  */
 export async function isLatestPage( page: ComicPage ): Promise<boolean> {
-	const pages = await getComicPages();
+	const pages = await getComicPages( [ 'all' ] );
 	return pages.length === page.meta.comic_page_number;
 }
 
@@ -271,7 +271,7 @@ export async function getComicPageMetadata(
 ): Promise<Metadata> {
 	const metadata: Metadata = {};
 
-	const pages = await getComicPages();
+	const pages = await getComicPages( [ 'all' ] );
 	const pageNumber = await numeralisePageNumber( page );
 	const pageData = findPage( pages, pageNumber );
 

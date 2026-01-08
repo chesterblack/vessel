@@ -10,7 +10,7 @@ interface Props {
 
 export default function SignIn( { redirectTo = '/' }: Props ) {
 	return (
-		<button className="discord-sign-in" onClick={ () => signIn( 'discord', { redirectTo } ) }>
+		<button className="sign-in discord-sign-in" onClick={ () => signIn( 'discord', { redirectTo } ) }>
 			<Image src={ DiscordIcon } alt="Discord" width={ 20 } height={ 20 } /> Sign in with Discord
 		</button>
 	);

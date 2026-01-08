@@ -68,7 +68,7 @@ export const getChapters = cache( async () => {
 	return chapters.filter( chapter => chapter.count > 0 );
 } );
 
-export const getComicPages = cache( async ( roles?: string[] ) => {
+export const getComicPages = async ( roles?: string[] ) => {
 	const options = {
 		orderby: 'comic_page_number',
 		_embed: 'wp:term'
@@ -78,6 +78,10 @@ export const getComicPages = cache( async ( roles?: string[] ) => {
 		'comic_page',
 		options
 	) as ComicPage[];
+
+	if ( roles && roles.includes( 'all' ) ) {
+		return posts;
+	}
 
 	const allowedPosts = posts.filter( post => {
 		if (
@@ -91,7 +95,7 @@ export const getComicPages = cache( async ( roles?: string[] ) => {
 	} );
 
 	return allowedPosts;
-} );
+};
 
 export const getCharacters = cache( ( params?: any ) => (
 	getPosts( 'character', params ) as Promise<Character[]>

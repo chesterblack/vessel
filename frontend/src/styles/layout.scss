@@ -41,10 +41,15 @@ header {
 			font-size: 1.2rem;
 			padding-inline: 25px;
 
+			&.small {
+				width: fit-content;
+			}
+
 			&:hover {
 				background: colors.$ice-blue;
 				color: colors.$deep-dark;
 			}
+
 		}
 	}
 
@@ -81,6 +86,7 @@ footer {
 	h4 {
 		border-right: 2px solid colors.$bright-light;
 		padding-right: 20px;
+		margin-block: 20px;
 	}
 
 	nav {
@@ -97,6 +103,20 @@ footer {
 
 		&:hover {
 			color: colors.$bright-light;
+		}
+	}
+
+	hr {
+		background-color: colors.$shallow-dark;
+		max-width: 600px;
+	}
+}
+
+@media screen and ( max-width: 860px ) {
+	.small {
+		img {
+			width: 40px;
+			height: 40px;
 		}
 	}
 }
@@ -128,6 +148,10 @@ footer {
 
 			a {
 				height: 100%;
+
+				&.small {
+					width: 100%;
+				}
 			}
 
 			&.show {
@@ -147,93 +171,24 @@ footer {
 	}
 }
 
-.hanging-banner {
+.ko-fi {
 	position: relative;
-	top: 0;
-	left: 15px;
-	width: fit-content;
-	border-radius: 0 0 30px 30px;
-	box-shadow: 0px 4px 9px -7px colors.$deep-dark;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 5px;
-	padding: 5px 20px 6px 15px;
-	color: colors.$bright-light;
-	overflow: hidden;
-
-	img {
-		border-radius: 100%;
-	}
-
-	@media screen and ( max-width: 860px ) {
-		position: static;
-		width: 100%;
-		left: 0;
-		border-radius: 0;
-	}
-
-	@media screen and ( max-width: 650px ) {
-		img {
-			width: 30px;
-			height: 30px;
-			padding: 0;
-		}
-	}
-}
-
-.logged-in-banner {
-	background-color: colors.$discord-blurple;
 
 	.hover {
-		transition: .1s ease-in-out;
-		position: absolute;
-		top: 0;
-		left: 0;
-		background-color: colors.$discord-blurple;
-		opacity: 0;
-		pointer-events: none;
-		width: 100%;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		button {
-			cursor: pointer;
-			display: block;
-			background: none;
-			border: none;
-			outline: none;
-			color: colors.$bright-light;
-			font-size: 18px;
-			width: 100%;
-			height: 100%;
-		}
+		display: none;
 	}
 
 	&:hover {
 		.hover {
-			opacity: 1;
-			pointer-events: all;
+			display: block;
+			position: absolute;
+			top: 100%;
+			width: fit-content;
+			white-space: nowrap;
+			right: 0;
+			background-color: colors.$ice-blue;
+			padding: 10px 15px;
+			border-radius: 0 0 0 15px;
 		}
-	}
-}
-
-.kofi-banner {
-	background-color: colors.$kofi-dark;
-	color: colors.$bright-light;
-	text-decoration: none;
-	gap: 10px;
-	
-	&:hover {
-		background-color: colors.$kofi-orange;
-		color: colors.$kofi-dark;
-	}
-}
-
-body:has( .secret ) {
-	.kofi-banner {
-		display: none;
 	}
 }
