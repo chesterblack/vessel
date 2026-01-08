@@ -11,6 +11,14 @@
 	margin-bottom: 10px;
 	transition: ease-in-out .1s;
 
+	svg {
+		position: relative;
+		transform: rotate(-8deg);
+		top: 6px;
+		left: -6px;
+		margin-top: -100%;
+	}
+
 	&:hover {
 		background-color: colors.$ice-blue
 	}

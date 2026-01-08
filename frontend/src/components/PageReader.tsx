@@ -2,7 +2,7 @@ import { PageNumber } from "@/types/types";
 
 import { notFound } from "next/navigation";
 import '@/styles/page-reader.scss';
-import { arraysHaveOverlap, findPage, numeralisePageNumber } from "@/lib/utilities";
+import { arraysHaveOverlap, findPage, numeralisePageNumber, removeLockedPosts } from "@/lib/utilities";
 import { getComicPages } from "@/lib/data-fetching";
 import PageReaderNav from "@/components/PageReaderNav";
 import JsonLdSchema from "./JsonLdSchema";
@@ -21,7 +21,7 @@ interface Props {
 export default async function PageReader( { page = 'latest' }: Props ) {
 	const user = await getUser();
 	const pages = await getComicPages( user?.roles );
-	const unlockedPages = pages.filter( p => ! p.locked );
+	const unlockedPages = removeLockedPosts( pages );
 	const pageNumber = await numeralisePageNumber( page, unlockedPages );
 	const pageData = findPage( pages, pageNumber );
 

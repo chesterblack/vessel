@@ -2,7 +2,7 @@ import { ComicPage } from "@/types/wp-post-types";
 
 import Button from "./Button";
 import PageSelector from "./PageSelector";
-import { findPage } from "@/lib/utilities";
+import { findPage, removeLockedPosts } from "@/lib/utilities";
 import Image from "next/image";
 import LockIcon from "./LockIcon";
 
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function PageReaderNav( { pages, page }: Props ) {
-	const unlockedPages = pages.filter( p => ! p.locked );
+	const unlockedPages = removeLockedPosts( pages );
 	const nextPage = findPage( pages, page + 1 )
 	const canGoBack = page > 1;
 	const canGoForward = !! nextPage;
