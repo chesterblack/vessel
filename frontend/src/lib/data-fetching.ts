@@ -1,5 +1,5 @@
 import { cache } from "react";
-import { arraysHaveOverlap, isNumeric, sendApiRequest } from "./utilities";
+import { applyLockedAttribute, arraysHaveOverlap, isNumeric, sendApiRequest } from "./utilities";
 import { Character, ComicPage, Post, WebPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { WP_REST_API_Post, WP_REST_API_Taxonomy } from "wp-types";
@@ -79,35 +79,7 @@ export const getComicPages = async ( roles?: string[] ) => {
 		options
 	) as ComicPage[];
 
-	if ( roles && roles.includes( 'all' ) ) {
-		return posts;
-	}
-
-	const allowedPosts = posts.map( post => {
-		if (
-			! post.locked_to_ids ||
-			post.locked_to_ids.length < 1
-		) {
-			return {
-				locked: false,
-				...post
-			}
-		}
-
-		if ( arraysHaveOverlap( roles, post.locked_to_ids ) ) {
-			return {
-				locked: false,
-				...post,
-			};
-		};
-
-		return {
-			locked: true,
-			...post
-		}
-	} );
-
-	return allowedPosts;
+	return applyLockedAttribute( roles, posts );
 };
 
 export const getCharacters = cache( ( params?: any ) => (

@@ -1,12 +1,13 @@
 import { PageNumber } from "@/types/types";
 import { CharacterBioData, CharacterBioDatum } from "@/types/wp-blocks";
-import { Character, ComicPage, Post } from "@/types/wp-post-types";
+import { Character, ComicPage, Post, WebPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { Metadata } from "next";
 
 import { WP_Term } from "wp-types";
 
 import { getComicPages } from "@/lib/data-fetching";
+import { User } from "next-auth";
 
 /**
  * Send a request to the backend API, include the wp/v2/
@@ -186,7 +187,7 @@ export async function getChapterPages(
 
 	chapterPages = chapterPages.map( chapterPage => ( {
 		...chapterPage,
-		pageNumber: chapterPage.content_blocks[0].attrs.pageNumber
+		pageNumber: chapterPage.meta.comic_page_number
 	} ) );
 
 	chapterPages = sortByAttribute( chapterPages, 'pageNumber' );
@@ -260,8 +261,6 @@ export async function numeralisePageNumber(
  */
 export async function isLatestPage( page: ComicPage ): Promise<boolean> {
 	const pages = await getComicPages( [ 'all' ] );
-	console.log( 'page: ', page );
-	return false;
 	return pages.length === page.meta.comic_page_number;
 }
 
@@ -353,6 +352,45 @@ export function arraysHaveOverlap(
 	return set1.intersection( set2 ).size > 0;
 }
 
-export function removeLockedPosts( posts: Post[] ) {
-	posts.filter( post => post.locked );
+export function removeLockedPosts<T extends { locked?: boolean }>( posts: T[] ): T[] {
+	return posts.filter( post => ! post.locked );
+}
+
+/**
+ * Adds the 'locked' attribute to an array of posts based on
+ * a user's role list
+ */
+export function applyLockedAttribute<T extends Post>(
+	roles: string[],
+	posts: T[]
+): T[] {
+	if ( roles && roles.includes( 'all' ) ) {
+		return posts;
+	}
+
+	const allowedPosts = posts.map( post => {
+		if (
+			! post.locked_to_ids ||
+			post.locked_to_ids.length < 1
+		) {
+			return {
+				locked: false,
+				...post
+			}
+		}
+
+		if ( arraysHaveOverlap( roles, post.locked_to_ids ) ) {
+			return {
+				locked: false,
+				...post,
+			};
+		};
+
+		return {
+			locked: true,
+			...post
+		}
+	} );
+
+	return allowedPosts;
 }

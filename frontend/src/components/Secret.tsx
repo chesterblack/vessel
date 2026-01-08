@@ -10,7 +10,7 @@ interface Props {
 
 export default async function Secret( { redirectUrl, user }: Props ) {
 	return (
-		<main className="secret">
+		<div className="secret">
 			<h1>
 				<LockIcon width={ 40 } height={ 40 } />
 				<span>That&apos;s a secret!</span>
@@ -41,6 +41,6 @@ export default async function Secret( { redirectUrl, user }: Props ) {
 				</>
 			}
 			<SignIn redirectTo={ redirectUrl } />
-		</main>
+		</div>
 	);
 }
