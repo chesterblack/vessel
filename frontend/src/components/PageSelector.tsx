@@ -26,10 +26,10 @@ export default function PageSelector( { pages, page }: Props ) {
 			} }
 		>
 			{
-				chapterPages.map( ( { content, type } ) => {
+				chapterPages.map( ( { content, type }, i ) => {
 					if ( type === 'chapter' ) {
 						return (
-							<option disabled key={ content.id }>
+							<option disabled key={ `${ content.id }-${ i }` }>
 								{ content.name }
 							</option>
 						);

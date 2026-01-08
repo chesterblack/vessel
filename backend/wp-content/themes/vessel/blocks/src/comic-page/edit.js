@@ -12,7 +12,6 @@ export default function Edit( { attributes, setAttributes } ) {
 				<ImageUpload
 					image={ attributes.pageImage }
 					callback={ ( media ) => {
-						console.log( 'media: ', media );
 						setAttributes( {
 							pageImage: {
 								url: media.url,
