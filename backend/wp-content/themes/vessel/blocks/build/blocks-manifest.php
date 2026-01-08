@@ -47,9 +47,6 @@ return array(
 			'pageImage' => array(
 				'type' => 'object'
 			),
-			'pageNumber' => array(
-				'type' => 'number'
-			),
 			'characters' => array(
 				'type' => 'array'
 			),
