@@ -186,7 +186,7 @@ export async function getChapterPages(
 
 	chapterPages = chapterPages.map( chapterPage => ( {
 		...chapterPage,
-		pageNumber: chapterPage.content_blocks[0].attrs.pageNumber
+		pageNumber: chapterPage.meta.comic_page_number
 	} ) );
 
 	chapterPages = sortByAttribute( chapterPages, 'pageNumber' );

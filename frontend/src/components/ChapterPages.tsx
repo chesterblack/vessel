@@ -16,13 +16,14 @@ export default function ChapterPages( { chapter, pages, headingLevel = 2 }: Prop
 	if ( pages.length < 1 ) {
 		notFound();
 	}
+
 	return (
 		<div className="chapter">
 			<HeadingTag>{ chapter.name }</HeadingTag>
 			<p>{ chapter.description }</p>
 			{ pages.map( page => (
 				<Link
-					href={ `/page/${ page.content_blocks[0].attrs.pageNumber }` }
+					href={ `/page/${ page.meta.comic_page_number }` }
 					key={ page.id }
 					className='page-link'
 				>
