@@ -169,7 +169,7 @@ export function findPage(
 	pageNumber: number
 ): ComicPage {
 	return pages.find(
-		page => page.content_blocks[0].attrs.pageNumber === pageNumber
+		page => page.meta.comic_page_number === pageNumber
 	);
 }
 
@@ -260,6 +260,8 @@ export async function numeralisePageNumber(
  */
 export async function isLatestPage( page: ComicPage ): Promise<boolean> {
 	const pages = await getComicPages( [ 'all' ] );
+	console.log( 'page: ', page );
+	return false;
 	return pages.length === page.meta.comic_page_number;
 }
 
@@ -274,6 +276,10 @@ export async function getComicPageMetadata(
 	const pages = await getComicPages( [ 'all' ] );
 	const pageNumber = await numeralisePageNumber( page );
 	const pageData = findPage( pages, pageNumber );
+
+	if ( ! pageData ) {
+		return {};
+	}
 
 	metadata.title = `Page ${ pageNumber } | Vessel`;
 	if ( await isLatestPage( pageData ) ) {
