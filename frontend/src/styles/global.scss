@@ -3,6 +3,16 @@
 @use '@/styles/partials/fonts.scss';
 @use '@/styles/layout.scss';
 
+@mixin inline-link {
+	color: colors.$powder-pink;
+	font-weight: bold;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
 html {
 	font-size: 18px;
 
@@ -11,12 +21,9 @@ html {
 	}
 }
 
-body,
-body:has( .next-error-h1 ) {
+body {
 	margin: 0;
 	background: linear-gradient( colors.$shallow-dark, colors.$ice-blue );
-	background-position: bottom 160px left 0;
-	background-repeat: repeat-x;
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
@@ -56,22 +63,78 @@ h2 {
 }
 
 p {
-	margin-top: 10px;
+	margin-block: 15px;
 
 	a {
-		color: colors.$powder-pink;
-		font-weight: bold;
-		text-decoration: none;
+		@include inline-link();
+	}
+}
 
-		&:hover {
-			text-decoration: underline;
+ul {
+	padding-left: 25px;
+	margin: 10px 0 15px 0;
+
+	li {
+		a {
+			@include inline-link();
 		}
 	}
+}
+
+hr {
+	border: none;
+	outline: none;
+	width: 100%;
+	height: 2px;
+	background-color: colors.$deep-dark;
+	margin: 15px 0;
+}
+
+.sign-in {
+	cursor: pointer;
+	border-radius: 30px;
+	border: none;
+	outline: none;
+	padding: 10px 25px;
+	font-size: 18px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	transition: .2s ease-in-out;
+	width: 100%;
+	text-decoration: none;
+
+	&:hover {
+		box-shadow: 0 10px 20px -14px colors.$deep-dark;
+	}
+}
+
+.discord-sign-in {
+	background-color: colors.$discord-blurple;
+	color: colors.$bright-light;
+}
+
+.kofi-sign-in {
+	background-color: colors.$kofi-orange;
+	color: colors.$deep-dark;
+}
+
+.sign-in-buttons {
+	display: flex;
+	gap: 20px;
+	align-items: center;
+	justify-content: center;
+	margin-top: 25px;
 }
 
 @media screen and ( max-width: 600px ) {
 	main {
 		margin-block: 0;
 		border-radius: 0;
+	}
+
+	.sign-in-buttons {
+		flex-direction: column;
 	}
 }

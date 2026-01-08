@@ -13,9 +13,13 @@ export default function Background( { backgroundGradient, backgroundImage }: Pro
 	let background: string;
 
 	if ( backgroundGradient && ! backgroundImage ) {
-		background = `background: ${ backgroundGradient }`;
+		background = `background: ${ backgroundGradient };`;
 	} else {
-		background = `background-image: url( ${ backgroundImage.url } ), ${ backgroundGradient };`;
+		background = `
+			background-image: url( ${ backgroundImage.url } ), ${ backgroundGradient };
+			background-position: bottom 160px left 0;
+			background-repeat: repeat-x;
+		`;
 	}
 
 	return (

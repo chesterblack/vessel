@@ -41,10 +41,15 @@ header {
 			font-size: 1.2rem;
 			padding-inline: 25px;
 
+			&.small {
+				width: fit-content;
+			}
+
 			&:hover {
 				background: colors.$ice-blue;
 				color: colors.$deep-dark;
 			}
+
 		}
 	}
 
@@ -81,6 +86,7 @@ footer {
 	h4 {
 		border-right: 2px solid colors.$bright-light;
 		padding-right: 20px;
+		margin-block: 20px;
 	}
 
 	nav {
@@ -97,6 +103,20 @@ footer {
 
 		&:hover {
 			color: colors.$bright-light;
+		}
+	}
+
+	hr {
+		background-color: colors.$shallow-dark;
+		max-width: 600px;
+	}
+}
+
+@media screen and ( max-width: 860px ) {
+	.small {
+		img {
+			width: 40px;
+			height: 40px;
 		}
 	}
 }
@@ -128,6 +148,10 @@ footer {
 
 			a {
 				height: 100%;
+
+				&.small {
+					width: 100%;
+				}
 			}
 
 			&.show {
@@ -143,6 +167,28 @@ footer {
 		h4 {
 			border-right: none;
 			display: none;
+		}
+	}
+}
+
+.ko-fi {
+	position: relative;
+
+	.hover {
+		display: none;
+	}
+
+	&:hover {
+		.hover {
+			display: block;
+			position: absolute;
+			top: 100%;
+			width: fit-content;
+			white-space: nowrap;
+			right: 0;
+			background-color: colors.$ice-blue;
+			padding: 10px 15px;
+			border-radius: 0 0 0 15px;
 		}
 	}
 }

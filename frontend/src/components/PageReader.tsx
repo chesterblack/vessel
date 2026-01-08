@@ -1,9 +1,8 @@
 import { PageNumber } from "@/types/types";
 
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import '@/styles/page-reader.scss';
-import { findPage, getImageProps, numeralisePageNumber } from "@/lib/utilities";
+import { arraysHaveOverlap, findPage, numeralisePageNumber } from "@/lib/utilities";
 import { getComicPages } from "@/lib/data-fetching";
 import PageReaderNav from "@/components/PageReaderNav";
 import JsonLdSchema from "./JsonLdSchema";
@@ -12,21 +11,40 @@ import AuthorsNote from "./AuthorsNote";
 import CharacterTags from "./CharacterTags";
 import Background from "./Background";
 import PageArea from "./PageArea";
-
+import { getUser } from "@/lib/users";
+import Secret from "./Secret";
 
 interface Props {
 	page?: PageNumber
 }
 
 export default async function PageReader( { page = 'latest' }: Props ) {
-	const pages = await getComicPages();
-
-	let pageNumber = await numeralisePageNumber( page );
-
-	const pageData = findPage( pages, pageNumber );
+	const user       = await getUser();
+	const pages      = await getComicPages( user?.roles );
+	const pageNumber = await numeralisePageNumber( page );
+	const pageData   = findPage( pages, pageNumber );
 
 	if ( ! pageData ) {
 		notFound();
+	}
+
+	if ( pageData.locked_to_ids && pageData.locked_to_ids.length > 0 ) {
+		const user = await getUser();
+
+		if ( ! user ) {
+			return (
+				<Secret redirectUrl={ `/page/${ pageNumber }` } />
+			);
+		}
+
+		if ( ! arraysHaveOverlap(
+			user.roles,
+			pageData.locked_to_ids
+		) ) {
+			return (
+				<Secret redirectUrl={ `/page/${ pageNumber }` } user={ user } />
+			)
+		}
 	}
 
 	const schema = pageData.yoast_head_json.schema;

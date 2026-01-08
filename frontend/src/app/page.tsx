@@ -8,6 +8,6 @@ export async function generateMetadata(): Promise<Metadata> {
 	return metadata;
 }
 
-export default function HomePage() {
+export default async function HomePage() {
 	return <PageReader />
 }

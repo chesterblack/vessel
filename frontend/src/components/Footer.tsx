@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SocialLinks from "./SocialLinks";
+import PolicyLinks from "./PolicyLinks";
 
 export default function Footer() {
 	return (
@@ -7,7 +8,11 @@ export default function Footer() {
 			<div className="footer-spacer"></div>
 			<footer>
 				<SocialLinks />
-				<div>Got feedback? <Link href='/contact'>Get in touch!</Link></div>
+				<div className="feedback-link">
+					Got feedback? <Link href='/contact'>Get in touch!</Link>
+				</div>
+				<hr />
+				<PolicyLinks />
 			</footer>
 		</>
 	);

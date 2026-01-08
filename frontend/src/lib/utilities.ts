@@ -259,7 +259,7 @@ export async function numeralisePageNumber(
  * Is the page the most recent
  */
 export async function isLatestPage( page: ComicPage ): Promise<boolean> {
-	const pages = await getComicPages();
+	const pages = await getComicPages( [ 'all' ] );
 	return pages.length === page.meta.comic_page_number;
 }
 
@@ -271,7 +271,7 @@ export async function getComicPageMetadata(
 ): Promise<Metadata> {
 	const metadata: Metadata = {};
 
-	const pages = await getComicPages();
+	const pages = await getComicPages( [ 'all' ] );
 	const pageNumber = await numeralisePageNumber( page );
 	const pageData = findPage( pages, pageNumber );
 
@@ -335,4 +335,23 @@ export function getCharacterBioData(
 
 export function isNumeric( number: number|string ) {
 	return typeof number === 'number' || ! isNaN( parseInt( number.toString() ) );
+}
+
+export async function makeDiscordApiCall( url: string, token: string ) {
+	return await fetch( url, {
+		method: 'GET',
+		headers: {
+			Authorization: `Bearer ${ token }`
+		}
+	} ).then( res => res.json() );
+}
+
+export function arraysHaveOverlap(
+	array1: any[],
+	array2: any[]
+) {
+	const set1 = new Set( array1 );
+	const set2 = new Set( array2 );
+
+	return set1.intersection( set2 ).size > 0;
 }
