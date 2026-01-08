@@ -19,16 +19,17 @@ interface Props {
 }
 
 export default async function PageReader( { page = 'latest' }: Props ) {
-	const user       = await getUser();
-	const pages      = await getComicPages( user?.roles );
-	const pageNumber = await numeralisePageNumber( page );
-	const pageData   = findPage( pages, pageNumber );
+	const user = await getUser();
+	const pages = await getComicPages( user?.roles );
+	const unlockedPages = pages.filter( p => ! p.locked );
+	const pageNumber = await numeralisePageNumber( page, unlockedPages );
+	const pageData = findPage( pages, pageNumber );
 
 	if ( ! pageData ) {
 		notFound();
 	}
 
-	if ( pageData.locked_to_ids && pageData.locked_to_ids.length > 0 ) {
+	if ( pageData.locked ) {
 		const user = await getUser();
 
 		if ( ! user ) {

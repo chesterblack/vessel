@@ -2,6 +2,9 @@ import { ComicPage } from "@/types/wp-post-types";
 
 import Button from "./Button";
 import PageSelector from "./PageSelector";
+import { findPage } from "@/lib/utilities";
+import Image from "next/image";
+import LockIcon from "./LockIcon";
 
 interface Props {
 	pages: ComicPage[]
@@ -9,8 +12,11 @@ interface Props {
 }
 
 export default function PageReaderNav( { pages, page }: Props ) {
+	const unlockedPages = pages.filter( p => ! p.locked );
+	const nextPage = findPage( pages, page + 1 )
 	const canGoBack = page > 1;
-	const canGoForward = page < pages.length;
+	const canGoForward = !! nextPage;
+	const nextPageLocked = nextPage && nextPage.locked;
 
 	return (
 		<nav className="page-reader-nav">
@@ -25,10 +31,13 @@ export default function PageReaderNav( { pages, page }: Props ) {
 			<PageSelector pages={ pages } page={ page } />
 
 			<Button disabled={ !canGoForward } href={ `/page/${ page + 1 }` }>
+				{ nextPageLocked &&
+					<LockIcon width={ 20 } height={ 20 } />
+				}
 				<span>Next</span> &gt;
 			</Button>
 
-			<Button disabled={ page === pages.length } href='/page/latest'>
+			<Button disabled={ page === unlockedPages.length } href='/page/latest'>
 				<span>Last</span> &gt;&gt;
 			</Button>
 		</nav>

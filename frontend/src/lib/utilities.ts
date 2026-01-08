@@ -1,10 +1,9 @@
 import { PageNumber } from "@/types/types";
 import { CharacterBioData, CharacterBioDatum } from "@/types/wp-blocks";
-import { Character, ComicPage } from "@/types/wp-post-types";
+import { Character, ComicPage, Post } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { Metadata } from "next";
 
-import { cache } from "react";
 import { WP_Term } from "wp-types";
 
 import { getComicPages } from "@/lib/data-fetching";
@@ -167,7 +166,7 @@ export function getImageProps(
 export function findPage(
 	pages: ComicPage[],
 	pageNumber: number
-): ComicPage {
+): ComicPage | undefined {
 	return pages.find(
 		page => page.meta.comic_page_number === pageNumber
 	);
@@ -245,9 +244,10 @@ export function groupPagesByChapter(
  * Turns a PageNumber into a number
  */
 export async function numeralisePageNumber(
-	pageNumber: PageNumber
+	pageNumber: PageNumber,
+	pages?: ComicPage[]
 ): Promise<number> {
-	const pages = await getComicPages();
+	pages = pages ?? await getComicPages();
 
 	let number = pageNumber === 'latest' ? pages.length : pageNumber;
 	number = typeof number !== 'number' ? parseInt( number ) : number;
@@ -343,15 +343,6 @@ export function isNumeric( number: number|string ) {
 	return typeof number === 'number' || ! isNaN( parseInt( number.toString() ) );
 }
 
-export async function makeDiscordApiCall( url: string, token: string ) {
-	return await fetch( url, {
-		method: 'GET',
-		headers: {
-			Authorization: `Bearer ${ token }`
-		}
-	} ).then( res => res.json() );
-}
-
 export function arraysHaveOverlap(
 	array1: any[],
 	array2: any[]
@@ -360,4 +351,8 @@ export function arraysHaveOverlap(
 	const set2 = new Set( array2 );
 
 	return set1.intersection( set2 ).size > 0;
+}
+
+export function removeLockedPosts( posts: Post[] ) {
+	posts.filter( post => post.locked );
 }
