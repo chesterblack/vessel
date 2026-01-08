@@ -261,8 +261,6 @@ export async function numeralisePageNumber(
  */
 export async function isLatestPage( page: ComicPage ): Promise<boolean> {
 	const pages = await getComicPages( [ 'all' ] );
-	console.log( 'page: ', page );
-	return false;
 	return pages.length === page.meta.comic_page_number;
 }
 

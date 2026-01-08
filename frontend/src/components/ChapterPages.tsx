@@ -18,8 +18,6 @@ export default async function ChapterPages( { chapter, pages, headingLevel = 2 }
 	const user = await getUser();
 	pages = applyLockedAttribute( user?.roles, pages );
 
-	console.log( 'pages: ', pages );
-
 	const HeadingTag = 'h' + headingLevel as ElementType;
 
 	if ( pages.length < 1 ) {

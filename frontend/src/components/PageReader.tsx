@@ -25,6 +25,8 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 	const pageNumber = await numeralisePageNumber( page, unlockedPages );
 	const pageData = findPage( pages, pageNumber );
 
+	let secret = null;
+
 	if ( ! pageData ) {
 		notFound();
 	}
@@ -33,18 +35,12 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 		const user = await getUser();
 
 		if ( ! user ) {
-			return (
-				<Secret redirectUrl={ `/page/${ pageNumber }` } />
-			);
-		}
-
-		if ( ! arraysHaveOverlap(
+			secret = <Secret redirectUrl={ `/page/${ pageNumber }` } />;
+		} else if ( ! arraysHaveOverlap(
 			user.roles,
 			pageData.locked_to_ids
 		) ) {
-			return (
-				<Secret redirectUrl={ `/page/${ pageNumber }` } user={ user } />
-			)
+			secret = <Secret redirectUrl={ `/page/${ pageNumber }` } user={ user } />;
 		}
 	}
 
@@ -62,18 +58,25 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 				<Background backgroundGradient={ backgroundGradient } backgroundImage={ backgroundImage } />
 				<JumpToTop />
 				<PageReaderNav pages={ pages } page={ pageNumber } />
-				<PageArea
-					pageData={ pageData }
-					pageNumber={ pageNumber }
-					canGoBack={ canGoBack }
-					canGoForward={ canGoForward }
-				/>
+				{ secret && secret }
+				{ ! secret &&
+					<PageArea
+						pageData={ pageData }
+						pageNumber={ pageNumber }
+						canGoBack={ canGoBack }
+						canGoForward={ canGoForward }
+					/>
+				}
 				<PageReaderNav pages={ pages } page={ pageNumber } />
-				<CharacterTags
-					characters={ pageData.content_blocks[0].attrs.characters }
-					pageData={ pageData }
-				/>
-				<AuthorsNote page={ pageData } />
+				{ ! secret &&
+					<>
+						<CharacterTags
+							characters={ pageData.content_blocks[0].attrs.characters }
+							pageData={ pageData }
+						/>
+						<AuthorsNote page={ pageData } />
+					</>
+				}
 			</main>
 		</>
 	)

@@ -25,8 +25,7 @@ export default function PageSelector( { pages, page }: Props ) {
 				redirect( `/page/${ e.target.value }` )
 			} }
 		>
-			{
-				chapterPages.map( ( { content, type }, i ) => {
+			{ chapterPages.map( ( { content, type }, i ) => {
 					if ( type === 'chapter' ) {
 						return (
 							<option disabled key={ `${ content.id }-${ i }` }>
