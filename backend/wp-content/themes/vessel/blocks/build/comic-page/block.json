@@ -18,9 +18,6 @@
     "pageImage": {
       "type": "object"
     },
-    "pageNumber": {
-      "type": "number"
-    },
     "characters": {
       "type": "array"
     },

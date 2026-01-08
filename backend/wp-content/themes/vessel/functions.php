@@ -39,3 +39,19 @@ function home_url_as_api_url( $url ) {
 	return $url;
 }
 add_filter( 'rest_url', 'home_url_as_api_url' );
+
+// Adds page number based on reversing menu_order
+function add_page_number() {
+	$posts = get_posts( [ 'post_type' => 'comic_page'] );
+	$reverse_posts = array_reverse( $posts );
+
+	for ( $i = 0; $i < count( $posts ); $i++ ) {
+		$post = $reverse_posts[ $i ];
+		update_post_meta(
+			$post->ID,
+			'comic_page_number',
+			$i + 1
+		);
+	}
+}
+add_action( 'init' , 'add_page_number');

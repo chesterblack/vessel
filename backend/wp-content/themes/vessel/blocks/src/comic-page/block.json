@@ -16,7 +16,6 @@
 	"editorStyle": "file:./index.css",
 	"attributes": {
 		"pageImage": { "type": "object" },
-		"pageNumber": { "type": "number" },
 		"characters": { "type": "array" },
 		"backgroundGradient": { "type": "string" },
 		"backgroundImage": { "type": "object" }
