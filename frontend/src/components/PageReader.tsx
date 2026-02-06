@@ -49,7 +49,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 	const { backgroundGradient, backgroundImage } = pageData.content_blocks[0].attrs;
 
 	const canGoBack = pageNumber > 1;
-	const canGoForward = pageNumber < pages.length;
+	const canGoForward = pageNumber < pages.length - 1;
 
 	return (
 		<>

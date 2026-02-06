@@ -37,7 +37,7 @@ export default function PageReaderNav( { pages, page }: Props ) {
 				<span>Next</span> &gt;
 			</Button>
 
-			<Button disabled={ page === unlockedPages.length || ! nextPage } href='/page/latest'>
+			<Button disabled={ page === unlockedPages.length - 1 || ! nextPage } href='/page/latest'>
 				<span>Last</span> &gt;&gt;
 			</Button>
 		</nav>
