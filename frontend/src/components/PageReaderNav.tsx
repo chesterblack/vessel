@@ -2,7 +2,7 @@ import { ComicPage } from "@/types/wp-post-types";
 
 import Button from "./Button";
 import PageSelector from "./PageSelector";
-import { findPage, removeLockedPosts } from "@/lib/utilities";
+import { findPage, getLatestPageNumber, removeLockedPosts } from "@/lib/utilities";
 import Image from "next/image";
 import LockIcon from "./LockIcon";
 
@@ -37,7 +37,7 @@ export default function PageReaderNav( { pages, page }: Props ) {
 				<span>Next</span> &gt;
 			</Button>
 
-			<Button disabled={ page === unlockedPages.length - 1 || ! nextPage } href='/page/latest'>
+			<Button disabled={ page === getLatestPageNumber( unlockedPages ) || ! nextPage } href='/page/latest'>
 				<span>Last</span> &gt;&gt;
 			</Button>
 		</nav>

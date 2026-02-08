@@ -2,7 +2,7 @@ import { PageNumber } from "@/types/types";
 
 import { notFound } from "next/navigation";
 import '@/styles/page-reader.scss';
-import { arraysHaveOverlap, findPage, numeralisePageNumber, removeLockedPosts } from "@/lib/utilities";
+import { arraysHaveOverlap, findPage, getLatestPageNumber, numeralisePageNumber, removeLockedPosts } from "@/lib/utilities";
 import { getComicPages } from "@/lib/data-fetching";
 import PageReaderNav from "@/components/PageReaderNav";
 import JsonLdSchema from "./JsonLdSchema";
@@ -49,7 +49,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 	const { backgroundGradient, backgroundImage } = pageData.content_blocks[0].attrs;
 
 	const canGoBack = pageNumber > 1;
-	const canGoForward = pageNumber < pages.length - 1;
+	const canGoForward = pageNumber < getLatestPageNumber( pages );
 
 	return (
 		<>
