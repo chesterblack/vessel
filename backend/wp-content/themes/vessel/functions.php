@@ -42,7 +42,10 @@ add_filter( 'rest_url', 'home_url_as_api_url' );
 
 // Adds page number based on reversing menu_order
 function add_page_number() {
-	$posts = get_posts( [ 'post_type' => 'comic_page'] );
+	$posts = get_posts( [
+		'post_type' => 'comic_page',
+		'numberposts' => -1
+	] );
 	$reverse_posts = array_reverse( $posts );
 
 	for ( $i = 0; $i < count( $posts ); $i++ ) {
