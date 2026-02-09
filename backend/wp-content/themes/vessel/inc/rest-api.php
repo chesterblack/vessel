@@ -46,7 +46,7 @@ add_action( 'rest_api_init', 'setup_endpoints' );
 // Add block data to REST API
 function add_custom_fields() {
 	register_rest_field(
-		[ 'comic_page', 'character' ],
+		[ 'comic_page', 'character', 'fanart' ],
 		'content_blocks',
 		[ 'get_callback' => 'get_custom_fields' ]
 	);
