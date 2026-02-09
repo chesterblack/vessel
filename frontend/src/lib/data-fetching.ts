@@ -4,7 +4,7 @@ import { Character, ComicPage, Post, WebPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { WP_REST_API_Post, WP_REST_API_Taxonomy } from "wp-types";
 
-type ContentType = 'posts' | 'pages' | 'chapters' | 'comic_page'| 'character';
+type ContentType = 'posts' | 'pages' | 'chapters' | 'comic_page'| 'character' | 'fanart';
 
 export function getPosts(
 	contentType: ContentType,

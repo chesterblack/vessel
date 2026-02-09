@@ -1,0 +1,14 @@
+@use '../shared/editor.scss';
+
+.wp-block-vessel-fanart {
+	.image-upload-preview img {
+		max-width: 100%;
+	}
+
+	.credit {
+		margin-top: 15px;
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
+}

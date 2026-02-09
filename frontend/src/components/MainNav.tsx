@@ -30,7 +30,7 @@ export default function MainNav() {
 				<Link href='/about' onClick={ () => setShowNav( false ) }>
 					About
 				</Link>
-				{/* { user &&
+				{ user &&
 					<Link href='/login' className="small">
 						<Image src={ user.image } width={ 50 } height={ 50 } alt={ `Logged in as ${ user.name }` } />
 					</Link>
@@ -42,7 +42,7 @@ export default function MainNav() {
 							Subscribe to the Ko-fi for early access!
 						</div>
 					</Link>
-				} */}
+				}
 			</nav>
 			<HamburgerButton active={ showNav } callback={ setShowNav } />
 		</>

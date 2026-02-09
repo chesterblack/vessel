@@ -1,0 +1,22 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "vessel/fanart",
+	"version": "0.1.0",
+	"title": "Fanart",
+	"category": "widgets",
+	"icon": "admin-customizer",
+	"description": "Fanart.",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "fanart",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"attributes": {
+		"pageImage": { "type": "object" },
+		"creditName": { "type": "string" },
+		"creditLink": { "type": "string" }
+	}
+}
