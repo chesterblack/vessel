@@ -57,5 +57,35 @@ return array(
 				'type' => 'object'
 			)
 		)
+	),
+	'fanart' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'vessel/fanart',
+		'version' => '0.1.0',
+		'title' => 'Fanart',
+		'category' => 'widgets',
+		'icon' => 'admin-customizer',
+		'description' => 'Fanart.',
+		'example' => array(
+			
+		),
+		'supports' => array(
+			'html' => false
+		),
+		'textdomain' => 'fanart',
+		'editorScript' => 'file:./index.js',
+		'editorStyle' => 'file:./index.css',
+		'attributes' => array(
+			'pageImage' => array(
+				'type' => 'object'
+			),
+			'creditName' => array(
+				'type' => 'string'
+			),
+			'creditLink' => array(
+				'type' => 'string'
+			)
+		)
 	)
 );

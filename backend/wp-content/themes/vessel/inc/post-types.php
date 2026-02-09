@@ -44,6 +44,26 @@ function setup_post_types() {
 			'supports' => [ 'title', 'editor', 'custom-fields' ],
 		]
 	);
+
+	// Fanart
+	register_post_type(
+		'fanart',
+		[
+			'labels' => [
+				'name' => _x( 'Fanart', 'Post Type General Name', 'text_domain' ),
+				'singular_name' => _x( 'Fanart', 'Post Type Singular Name', 'text_domain' ),
+				'menu_name' => __( 'Fanart', 'text_domain' ),
+				'add_new_item' => __( 'Add New Fanart' ),
+			],
+			'public' => true,
+			'show_ui' => true,
+			'show_in_rest' => true,
+			'menu_icon' => 'dashicons-admin-customizer',
+			'template' => [ [ 'vessel/fanart', [] ] ],
+			'template_lock' => 'all',
+			'supports' => [ 'title', 'editor', 'custom-fields' ],
+		]
+	);
 }
 add_action( 'init', 'setup_post_types' );
 
