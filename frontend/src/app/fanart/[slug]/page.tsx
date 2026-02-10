@@ -8,38 +8,37 @@ import '@/styles/fanart.scss';
 
 
 export default async function FanartPage( { params }: SluggedPageProps ) {
-  const { slug } = await params;
-  const pageData = await getPost( 'fanart', slug ) as Post;
+	const { slug } = await params;
+	const pageData = await getPost( 'fanart', slug ) as Post;
 
-  if ( ! pageData ) {
-    notFound();
-  }
+	if ( ! pageData ) {
+		notFound();
+	}
 
-  const attributes = pageData.content_blocks?.[0]?.attrs;
+	const attributes = pageData.content_blocks?.[0]?.attrs;
 
-  if ( ! attributes ) {
-    notFound();
-  }
+	if ( ! attributes ) {
+		notFound();
+	}
 
-  console.log( 'pageData: ', pageData );
-  const { pageImage, creditName, creditLink } = attributes;
+	const { pageImage, creditName, creditLink } = attributes;
 
-  return (
-    <main className="fanart-page">
-      <h1>{ pageData.title.rendered }</h1>
-      <div className="fanart-image">
-        <Image
-          src={ pageImage.url }
-          alt={ pageImage.alt }
-          width={ pageImage.width }
-          height={ pageImage.height }
-        />
-        { creditName && (
-          <p className="credit">
-            Credit: { creditLink ? <a href={ creditLink } target="_blank" rel="noopener noreferrer">{ creditName }</a> : creditName }
-          </p>
-        ) }
-      </div>
-    </main>
-  );
+	return (
+		<main className="fanart-page">
+			<h1>{ pageData.title.rendered }</h1>
+			<div className="fanart-image">
+				<Image
+					src={ pageImage.url }
+					alt={ pageImage.alt }
+					width={ pageImage.width }
+					height={ pageImage.height }
+				/>
+				{ creditName && (
+					<p className="credit">
+						Credit: { creditLink ? <a href={ creditLink } target="_blank" rel="noopener noreferrer">{ creditName }</a> : creditName }
+					</p>
+				) }
+			</div>
+		</main>
+	);
 }

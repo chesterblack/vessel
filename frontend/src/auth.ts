@@ -2,14 +2,14 @@ import NextAuth, { DefaultSession } from "next-auth"
 import Discord from "next-auth/providers/discord"
 
 declare module "next-auth" {
-  interface User {
-    roles: string[]
-  }
-  interface Session {
-    user: {
-      roles: string[]
-    } & DefaultSession["user"]
-  }
+	interface User {
+		roles: string[]
+	}
+	interface Session {
+		user: {
+			roles: string[]
+		} & DefaultSession["user"]
+	}
 }
 
 declare module "next-auth/providers/discord" {
@@ -19,7 +19,7 @@ declare module "next-auth/providers/discord" {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [
+	providers: [
 		Discord( {
 			authorization: {
 				params: { scope: "identify email guilds guilds.members.read" }
