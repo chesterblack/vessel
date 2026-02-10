@@ -78,3 +78,13 @@ function get_role_locks( $post, $attr, $request, $object_type ) {
 	return array_map( fn( $role_lock ) => $role_lock->slug, $role_locks );
 }
 add_action( 'rest_api_init', 'add_role_locks' );
+
+// Removes htmlentities from blog post titles
+function decode_title( $response, $post, $request ) {
+	if ( isset( $post ) ) {
+		$response->data['title']['rendered'] = html_entity_decode( $response->data['title']['rendered'] );
+	}
+
+	return $response;
+}
+add_filter( 'rest_prepare_post', 'decode_title', 20, 3 );
