@@ -182,7 +182,10 @@ export async function getChapterPages(
 	let chapterPages = await sendApiRequest(
 		'GET',
 		'wp/v2/comic_page',
-		{ chapters: chapter.id }
+		{
+			chapters: chapter.id,
+			per_page: 100
+		}
 	) as ComicPage[];
 
 	chapterPages = chapterPages.map( chapterPage => ( {
