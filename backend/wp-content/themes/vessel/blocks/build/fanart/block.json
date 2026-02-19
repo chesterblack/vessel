@@ -23,6 +23,9 @@
     },
     "creditLink": {
       "type": "string"
+    },
+    "characters": {
+      "type": "array"
     }
   }
 }

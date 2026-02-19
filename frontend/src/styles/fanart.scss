@@ -1,5 +1,15 @@
 @use '@/styles/partials/colors.scss';
 
+.fanart-page {
+	.character-tags {
+		h3 {
+			color: colors.$deep-dark;
+		}
+
+		margin: 15px 0;
+	}
+}
+
 .fanart-image {
 	max-width: 100%;
 	height: auto;

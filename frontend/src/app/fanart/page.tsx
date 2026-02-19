@@ -19,7 +19,6 @@ export default async function FanartArchivePage() {
 			<div className="fanart-grid">
 				{ allFanart.map( ( fanart, i ) => {
 					const attributes = fanart.content_blocks?.[0]?.attrs;
-					console.log( 'attributes: ', attributes );
 
 					if ( ! attributes ) {
 						return null;

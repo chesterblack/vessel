@@ -17,6 +17,7 @@
 	"attributes": {
 		"pageImage": { "type": "object" },
 		"creditName": { "type": "string" },
-		"creditLink": { "type": "string" }
+		"creditLink": { "type": "string" },
+		"characters": { "type": "array" }
 	}
 }

@@ -2,7 +2,7 @@ import { PageNumber } from "@/types/types";
 
 import { notFound } from "next/navigation";
 import '@/styles/page-reader.scss';
-import { arraysHaveOverlap, findPage, getLatestPageNumber, numeralisePageNumber, removeLockedPosts } from "@/lib/utilities";
+import { arraysHaveOverlap, findPage, getEmbeddedChapters, getLatestPageNumber, numeralisePageNumber, removeLockedPosts } from "@/lib/utilities";
 import { getComicPages } from "@/lib/data-fetching";
 import PageReaderNav from "@/components/PageReaderNav";
 import JsonLdSchema from "./JsonLdSchema";
@@ -24,6 +24,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 	const unlockedPages = removeLockedPosts( pages );
 	const pageNumber = await numeralisePageNumber( page, unlockedPages );
 	const pageData = findPage( pages, pageNumber );
+	const chapters = getEmbeddedChapters( pageData );
 
 	let secret = null;
 
@@ -72,7 +73,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 					<>
 						<CharacterTags
 							characters={ pageData.content_blocks[0].attrs.characters }
-							pageData={ pageData }
+							chapter={ chapters[0] }
 						/>
 						<AuthorsNote page={ pageData } />
 					</>
