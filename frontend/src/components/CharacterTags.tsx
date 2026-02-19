@@ -3,15 +3,13 @@ import { Character } from "@/types/wp-post-types";
 import { getChapter, getCharacters } from "@/lib/data-fetching";
 import { Chapter } from "@/types/wp-taxonomies";
 import '@/styles/character-tags.scss';
-import { Children } from "@/types/types";
 
 interface Props {
 	characters: string[] // Character ids
 	chapter?: Chapter
-	label?: Children
 }
 
-export default async function CharacterTags( { characters, chapter, label = <h3>Characters on this page:</h3> }: Props ) {
+export default async function CharacterTags( { characters, chapter }: Props ) {
 	if ( ! characters || characters.length < 1 ) {
 		return;
 	}
@@ -39,7 +37,6 @@ export default async function CharacterTags( { characters, chapter, label = <h3>
 
 	return (
 		<nav className="character-tags">
-			{ label }
 			{ tags }
 		</nav>
 	);

@@ -42,7 +42,7 @@ export default async function FanartPage( { params }: SluggedPageProps ) {
 				height={ pageImage.height }
 				className="fanart-image"
 			/>
-			<CharacterTags characters={ characters } label={ '' } />
+			<CharacterTags characters={ characters } />
 			{ parse( pageData.content.rendered ) }
 		</main>
 	);
