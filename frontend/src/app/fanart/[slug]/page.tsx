@@ -3,6 +3,7 @@ import { SluggedPageProps } from "@/types/types";
 import { Post } from "@/types/wp-post-types";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import parse from 'html-react-parser';
 
 import '@/styles/fanart.scss';
 
@@ -25,20 +26,22 @@ export default async function FanartPage( { params }: SluggedPageProps ) {
 
 	return (
 		<main className="fanart-page">
-			<h1>{ pageData.title.rendered }</h1>
-			<div className="fanart-image">
-				<Image
-					src={ pageImage.url }
-					alt={ pageImage.alt }
-					width={ pageImage.width }
-					height={ pageImage.height }
-				/>
+			<div className="fanart-single-title">
+				<h1>{ pageData.title.rendered }</h1>
 				{ creditName && (
-					<p className="credit">
-						Credit: { creditLink ? <a href={ creditLink } target="_blank" rel="noopener noreferrer">{ creditName }</a> : creditName }
+					<p className="fanart-single-credit">
+						by { creditLink ? <a href={ creditLink } target="_blank" rel="noopener noreferrer">{ creditName }</a> : creditName }
 					</p>
 				) }
 			</div>
+			<Image
+				src={ pageImage.url }
+				alt={ pageImage.alt }
+				width={ pageImage.width }
+				height={ pageImage.height }
+				className="fanart-image"
+			/>
+			{ parse( pageData.content.rendered ) }
 		</main>
 	);
 }

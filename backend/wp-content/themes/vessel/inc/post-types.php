@@ -59,7 +59,10 @@ function setup_post_types() {
 			'show_ui' => true,
 			'show_in_rest' => true,
 			'menu_icon' => 'dashicons-admin-customizer',
-			'template' => [ [ 'vessel/fanart', [] ] ],
+			'template' => [
+				[ 'vessel/fanart', [] ],
+				[ 'core/paragraph', [] ],
+			],
 			'template_lock' => 'all',
 			'supports' => [ 'title', 'editor', 'custom-fields' ],
 		]

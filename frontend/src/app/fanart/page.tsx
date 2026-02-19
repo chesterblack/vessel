@@ -1,3 +1,4 @@
+import parse from 'html-react-parser';
 import { getPosts } from "@/lib/data-fetching";
 import { Post } from "@/types/wp-post-types";
 import Image from "next/image";
@@ -8,13 +9,6 @@ import '@/styles/fanart.scss';
 
 export default async function FanartArchivePage() {
 	const allFanart = await getPosts( 'fanart', { _embed: true } ) as Post[];
-
-	const testImages = [
-		"https://admin.vesselcomic.com/wp-content/uploads/2025/09/cass.png",
-		"https://admin.vesselcomic.com/wp-content/uploads/2025/09/mica-sketches-chester.jpg",
-		"https://admin.vesselcomic.com/wp-content/uploads/2025/09/vessel-icon.png",
-		"https://admin.vesselcomic.com/wp-content/uploads/2026/01/00cover.png",
-	];
 
 	return (
 		<main className="fanart-archive">
@@ -36,16 +30,17 @@ export default async function FanartArchivePage() {
 					return (
 						<Link key={ fanart.id } href={ `/fanart/${ fanart.slug }` } className="fanart-piece">
 							<div className="fanart-image-window">
-								<img src={ pageImage.sizes.medium.url } />
-								{/* <Image
-									src={ testImages[i] }
+								<Image
+									src={ pageImage.url }
 									alt={ pageImage.alt }
 									width={ pageImage.width }
 									height={ pageImage.height }
-								/> */}
+								/>
 							</div>
-							<div className="fanart-title">
-								{ fanart.title.rendered }
+							<div className="fanart-info">
+								<div className="fanart-title">
+									{ parse( fanart.title.rendered ) }
+								</div>
 								{ creditName && <div className="fanart-credit">by { creditName }</div> }
 							</div>
 						</Link>
