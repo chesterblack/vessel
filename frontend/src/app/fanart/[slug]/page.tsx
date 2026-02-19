@@ -35,14 +35,13 @@ export default async function FanartPage( { params }: SluggedPageProps ) {
 					</p>
 				) }
 			</div>
-			<img src={ pageImage.url } className="fanart-image" />
-			{/* <Image
+			<Image
 				src={ pageImage.url }
 				alt={ pageImage.alt }
 				width={ pageImage.width }
 				height={ pageImage.height }
 				className="fanart-image"
-			/> */}
+			/>
 			<CharacterTags characters={ characters } label={ '' } />
 			{ parse( pageData.content.rendered ) }
 		</main>
