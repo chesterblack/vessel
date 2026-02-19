@@ -85,6 +85,9 @@ return array(
 			),
 			'creditLink' => array(
 				'type' => 'string'
+			),
+			'characters' => array(
+				'type' => 'array'
 			)
 		)
 	)

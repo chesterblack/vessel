@@ -6,9 +6,19 @@
 	}
 
 	.credit {
-		margin-top: 15px;
 		display: flex;
 		flex-direction: column;
 		gap: 5px;
+	}
+	
+	.info {
+		margin-block: 15px;
+		display: flex;
+		gap: 20px;
+		width: 100%;
+
+		& > * {
+			width: 100%;
+		}
 	}
 }

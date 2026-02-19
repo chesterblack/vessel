@@ -33,7 +33,7 @@ export default async function BlogPostPage( { params }: Props ) {
 		notFound();
 	}
 
-	const title   = blogPost.title;
+	const title   = parse( blogPost.title.rendered );
 	const content = parse( blogPost.content.rendered );
 	const schema  = blogPost.yoast_head_json.schema;
 	const author  = blogPost._embedded.author[0] as Author;
@@ -45,7 +45,7 @@ export default async function BlogPostPage( { params }: Props ) {
 			<link rel='stylesheet' type='text/css' href={`${ process.env.BACKEND_URL }/wp-includes/css/dist/block-library/style.min.css`} precedence='low' />
 
 			<main className='blog-single'>
-				<h1>{ title.rendered }</h1>
+				<h1>{ title }</h1>
 				<div className="content">
 					{ content }
 				</div>

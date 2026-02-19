@@ -1,6 +1,7 @@
 import { useBlockProps } from '@wordpress/block-editor';
 import ImageUpload from '../shared/components/ImageUpload';
 import './editor.scss';
+import CharacterTags from '../shared/components/CharacterTags';
 
 export default function Edit( { attributes, setAttributes } ) {
 	return (
@@ -25,22 +26,26 @@ export default function Edit( { attributes, setAttributes } ) {
 					} }
 				/>
 
-				<div className="credit">
-					<label>Credit</label>
+				<div className='info'>
+					<div className="credit">
+						<label>Credit</label>
 
-					<input
-						type='text'
-						value={ attributes.creditName }
-						onChange={ ( e ) => setAttributes( { creditName: e.target.value } ) }
-						placeholder='Name'
-					/>
+						<input
+							type='text'
+							value={ attributes.creditName }
+							onChange={ ( e ) => setAttributes( { creditName: e.target.value } ) }
+							placeholder='Name'
+						/>
 
-					<input
-						type='text'
-						value={ attributes.creditLink }
-						onChange={ ( e ) => setAttributes( { creditLink: e.target.value } ) }
-						placeholder='URL'
-					/>
+						<input
+							type='text'
+							value={ attributes.creditLink }
+							onChange={ ( e ) => setAttributes( { creditLink: e.target.value } ) }
+							placeholder='URL'
+						/>
+					</div>
+
+					<CharacterTags attributes={ attributes } setAttributes={ setAttributes } />
 				</div>
 			</div>
 		</div>

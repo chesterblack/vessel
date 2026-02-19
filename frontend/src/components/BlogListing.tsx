@@ -1,6 +1,7 @@
 import { Author } from "@/types/types";
 import { Post } from "@/types/wp-post-types"
 import AuthorImage from "./AuthorImage";
+import parse from 'html-react-parser';
 
 interface Props {
 	blogData: Post
@@ -19,7 +20,7 @@ export default function BlogListing( { blogData }: Props ) {
 					{ new Date( modified ).toDateString() }
 				</span>
 				<h3>
-					{ title.rendered }
+					{ parse( title.rendered ) }
 				</h3>
 			</div>
 		</a>

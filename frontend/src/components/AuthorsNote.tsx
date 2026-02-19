@@ -1,6 +1,5 @@
 import { ComicPage } from '@/types/wp-post-types';
 import parse from 'html-react-parser';
-import Image from 'next/image';
 import AuthorImage from './AuthorImage';
 
 interface Props {

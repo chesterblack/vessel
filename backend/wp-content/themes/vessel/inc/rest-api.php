@@ -87,4 +87,7 @@ function decode_title( $response, $post, $request ) {
 
 	return $response;
 }
-add_filter( 'rest_prepare_post', 'decode_title', 20, 3 );
+
+foreach ( [ 'post', 'fanart' ] as $post_type ) {
+	// add_filter( 'rest_prepare_' . $post_type, 'decode_title', 20, 3 );
+}

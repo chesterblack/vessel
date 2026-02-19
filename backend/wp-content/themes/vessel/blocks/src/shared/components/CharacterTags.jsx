@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import apiFetch from '@wordpress/api-fetch';
-import { SelectControl, PanelBody } from '@wordpress/components';
-import './editor.scss';
+import { SelectControl } from '@wordpress/components';
 
 export default function CharacterTags( { attributes, setAttributes } ) {
 	const [ characters, setCharacters ] = useState([]);
@@ -28,14 +27,12 @@ export default function CharacterTags( { attributes, setAttributes } ) {
 	}, [] );
 
 	return (
-		<PanelBody title='Characters'>
-			<SelectControl
-				multiple
-				label="Characters"
-				value={ attributes.characters }
-				options={ characters }
-				onChange={ c => setAttributes( { characters: c } ) }
-			/>
-		</PanelBody>
+		<SelectControl
+			multiple
+			label="Characters"
+			value={ attributes.characters }
+			options={ characters }
+			onChange={ c => setAttributes( { characters: c } ) }
+		/>
 	);
 };

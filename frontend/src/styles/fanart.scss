@@ -1,13 +1,22 @@
 @use '@/styles/partials/colors.scss';
 
 .fanart-page {
-	img {
-		max-width: 100%;
-		height: auto;
-		display: block;
-		margin-top: 10px;
-		border-radius: 5px;
+	.character-tags {
+		h3 {
+			color: colors.$deep-dark;
+		}
+
+		margin: 15px 0;
 	}
+}
+
+.fanart-image {
+	max-width: 100%;
+	height: auto;
+	display: block;
+	margin-top: 10px;
+	border-radius: 5px;
+	margin-inline: auto;
 }
 
 .fanart-grid {
@@ -15,6 +24,7 @@
 	flex-wrap: wrap;
 	gap: 20px;
 	margin-top: 10px;
+	justify-content: center;
 }
 
 .fanart-piece {
@@ -26,6 +36,8 @@
 	border-radius: 10px;
 	color: inherit;
 	text-decoration: none;
+	width: 30%;
+	gap: 15px;
 
 	&:hover {
 		background-color: colors.$ice-blue;
@@ -33,29 +45,72 @@
 }
 
 .fanart-image-window {
+	background: white;
 	width: 100%;
+	height: 150px;
 	min-height: 150px;
 	border-radius: 5px;
 	overflow: hidden;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
 
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 }
 
-.fanart-title {
+.fanart-info {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	margin-top: 5px;
+	gap: 5px;
+}
+
+.fanart-title {
 	font-size: 19px;
 	font-weight: bold;
+	line-height: 16px;
+}
+
+.fanart-single-title {
+	display: flex;
+	align-items: flex-end;
+	flex-wrap: wrap;
+	text-align: center;
 }
 
 .fanart-credit {
 	font-size: 14px;
 	font-style: italic;
 	font-weight: normal;
+}
+
+.fanart-single-credit {
+	font-style: italic;
+	margin: 0 0 5px 5px;
+}
+
+@media screen and ( max-width: 640px ) {
+	.fanart-piece {
+		width: 45%;
+	}
+
+	.fanart-single-title {
+		flex-direction: column;
+		align-items: center;
+	}
+}
+
+
+@media screen and ( max-width: 420px ) {
+	.fanart-piece {
+		width: 100%;
+	}
+
+	.fanart-image-window {
+		height: 250px;
+		min-height: 250px;
+	}
 }

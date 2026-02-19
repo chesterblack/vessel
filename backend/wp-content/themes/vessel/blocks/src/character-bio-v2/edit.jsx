@@ -82,13 +82,13 @@ export default function Edit( { attributes, setAttributes } ) {
 						onChange={ value => setJsonAttribute( 'name', value ) }
 					/>
 
-						<label>Description</label>
-						<RichText
-							className='description'
-							tagName='p'
-							value={ description }
-							onChange={ value => setJsonAttribute( 'description', value ) }
-						/>
+					<label>Description</label>
+					<RichText
+						className='description'
+						tagName='p'
+						value={ description }
+						onChange={ value => setJsonAttribute( 'description', value ) }
+					/>
 				</div>
 			</div>
 		</div>

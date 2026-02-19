@@ -1,14 +1,15 @@
-import { getEmbeddedChapters } from "@/lib/utilities";
 import CharacterTag from "./CharacterTag";
-import { Character, ComicPage } from "@/types/wp-post-types";
-import { getCharacters } from "@/lib/data-fetching";
+import { Character } from "@/types/wp-post-types";
+import { getChapter, getCharacters } from "@/lib/data-fetching";
+import { Chapter } from "@/types/wp-taxonomies";
+import '@/styles/character-tags.scss';
 
 interface Props {
-	characters: string[]
-	pageData: ComicPage
+	characters: string[] // Character ids
+	chapter?: Chapter
 }
 
-export default async function CharacterTags( { characters, pageData }: Props ) {
+export default async function CharacterTags( { characters, chapter }: Props ) {
 	if ( ! characters || characters.length < 1 ) {
 		return;
 	}
@@ -21,22 +22,21 @@ export default async function CharacterTags( { characters, pageData }: Props ) {
 		return;
 	}
 
+	chapter = chapter ?? await getChapter( 'intro' );
+
 	const tags = [];
 	characterData.forEach( ( character: Character ) => {
-		const chapters = getEmbeddedChapters( pageData );
-
 		tags.push(
 			<CharacterTag
 				key={ character.id }
 				character={ character }
-				chapter={ chapters[0] }
+				chapter={ chapter }
 			/>
 		);
 	} );
 
 	return (
 		<nav className="character-tags">
-			<h3>Characters on this page:</h3>
 			{ tags }
 		</nav>
 	);
