@@ -65,7 +65,10 @@ export async function getPost(
 
 export const getChapters = cache( async () => {
 	const chapters = await getPosts( 'chapters' ) as Chapter[];
-	return chapters.filter( chapter => chapter.count > 0 );
+	const notEmpty = chapters.filter( chapter => chapter.count > 0 );
+	const reversed = notEmpty.reverse();
+
+	return reversed;
 } );
 
 export const getComicPages = async ( roles?: string[] ) => {
