@@ -1,10 +1,9 @@
-import { GradientPicker, PanelBody } from '@wordpress/components';
-import { useState } from 'react';
+import { GradientPicker } from '@wordpress/components';
 import ImageUpload from '../shared/components/ImageUpload';
 
 export default function BackgroundGradientPicker( { setAttributes, attributes } ) {
 	return (
-		<PanelBody title='Background'>
+		<>
 			<div className='background-gradient-picker'>
 				<GradientPicker
 					onChange={ g => setAttributes( { backgroundGradient: g } ) }
@@ -45,6 +44,6 @@ export default function BackgroundGradientPicker( { setAttributes, attributes } 
 					setAttributes( { backgroundImage: null } );
 				} }
 			/>
-		</PanelBody>
+		</>
 	);
 }

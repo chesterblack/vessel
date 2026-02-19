@@ -1,6 +1,7 @@
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { PanelBody } from '@wordpress/components';
 import ImageUpload from '../shared/components/ImageUpload';
-import CharacterTags from './CharacterTags';
+import CharacterTags from '../shared/components/CharacterTags';
 import './editor.scss';
 import BackgroundGradientPicker from './BackgroundGradientPicker';
 
@@ -29,8 +30,12 @@ export default function Edit( { attributes, setAttributes } ) {
 			</div>
 
 			<InspectorControls key='inspector'>
-				<CharacterTags attributes={ attributes } setAttributes={ setAttributes } />
-				<BackgroundGradientPicker attributes={ attributes } setAttributes={ setAttributes } />
+				<PanelBody title='Characters'>
+					<CharacterTags attributes={ attributes } setAttributes={ setAttributes } />
+				</PanelBody>
+				<PanelBody title='Background'>
+					<BackgroundGradientPicker attributes={ attributes } setAttributes={ setAttributes } />
+				</PanelBody>
 			</InspectorControls>
 		</div>
 	);
