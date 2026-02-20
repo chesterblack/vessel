@@ -78,7 +78,7 @@
 	display: flex;
 	align-items: flex-end;
 	flex-wrap: wrap;
-	text-align: center;
+	text-align: left;
 }
 
 .fanart-credit {
@@ -100,6 +100,7 @@
 	.fanart-single-title {
 		flex-direction: column;
 		align-items: center;
+		text-align: center;
 	}
 }
 
