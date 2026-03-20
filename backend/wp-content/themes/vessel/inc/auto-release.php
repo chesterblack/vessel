@@ -3,9 +3,13 @@
 require_once( WP_PLUGIN_DIR . '/action-scheduler/action-scheduler.php' );
 
 function setup_automation( $new_status, $old_status, $post ) {
-	if ( ! as_has_scheduled_action( 'auto_release_' . $post->ID ) && $new_status === 'publish' ) {
+	if (
+		! as_has_scheduled_action( 'auto_release_action' ) &&
+		$old_status !== 'publish' &&
+		$new_status === 'publish'
+	) {
 		as_schedule_single_action(
-			time() + 60,
+			time() + 60 * 60 * 24 * 30,
 			'auto_release_action',
 			[ $post->ID ]
 		);
