@@ -7,6 +7,7 @@ require_once( __DIR__ . '/inc/rest-api.php' );
 require_once( __DIR__ . '/inc/meta-fields.php' );
 require_once( __DIR__ . '/inc/remove-comments.php' );
 require_once( __DIR__ . '/inc/rewrites.php' );
+require_once( __DIR__ . '/inc/auto-release.php' );
 require_once( __DIR__ . '/blocks/blocks.php' );
 
 
