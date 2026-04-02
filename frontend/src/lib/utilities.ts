@@ -376,6 +376,11 @@ export function applyLockedAttribute<T extends Post>(
 		return posts;
 	}
 
+	if ( ! posts ) {
+		console.error( 'No posts found when locking' );
+		return;
+	}
+
 	const allowedPosts = posts.map( post => {
 		if (
 			! post.locked_to_ids ||

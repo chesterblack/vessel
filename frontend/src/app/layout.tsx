@@ -7,6 +7,7 @@ import "@/styles/global.scss";
 import ComingSoon from "@/components/ComingSoon";
 import Header from "@/components/Header";
 import Footer from '@/components/Footer';
+import { InstallPrompt } from './Install';
 
 export const metadata: Metadata = {
 	title: 'Vessel',
@@ -23,6 +24,7 @@ export default function RootLayout( { children } ) {
 		<html lang="en">
 			<head>
 				<link rel="preconnect" href={ process.env.BACKEND_URL } />
+				<link rel="manifest" href="/manifest.webmanifest" />
 			</head>
 			<body>
 				<Header />
