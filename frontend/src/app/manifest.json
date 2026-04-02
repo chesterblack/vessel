@@ -1,0 +1,23 @@
+{
+	"name": "Vessel Webcomic",
+	"short_name": "Vessel",
+	"description": "A medieval fantasy webcomic about a man on a journey to deliver a world-healing vessel of magic to a powerful mage. Who is this mage? He doesn't really know yet. Where are they? That's also up in the air. Does he want to do this? Not really.",
+	"icons": [
+		{
+			"src": "/public/vessel-icon-512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		},
+		{
+			"src": "/public/vessel-icon-192.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		}
+	],
+	"background_color": "#0B101C",
+	"categories": [ "books" ],
+	"display": "minimal-ui",
+	"orientation": "portrait",
+	"start_url": "https://vesselcomic.com",
+	"theme_color": "#0B101C"
+}
