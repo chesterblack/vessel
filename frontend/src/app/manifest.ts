@@ -1,28 +1,29 @@
 import type { MetadataRoute } from 'next'
  
 export default function manifest(): MetadataRoute.Manifest {
-  return {
+	return {
+		id: "vesselcomic",
 		name: "Read Vessel",
 		short_name: "Vessel",
 		description: "A medieval fantasy webcomic about a man on a journey to deliver a world-healing vessel of magic to a powerful mage. Who is this mage? He doesn't really know yet. Where are they? That's also up in the air. Does he want to do this? Not really.",
 		icons: [
 			{
-				src: `${ process.env.NEXT_PUBLIC_FRONTEND_URL }/vessel-icon-855.png`,
+				src: `${ process.env.NEXT_PUBLIC_FRONTEND_URL }/vessel-icon-512.png`,
 				type: "image/png",
-				sizes: "855x855",
-				purpose: 'any'
+				sizes: "512x512",
+				purpose: "any"
 			},
 			{
 				src: `${ process.env.NEXT_PUBLIC_FRONTEND_URL }/vessel-icon-512.png`,
 				type: "image/png",
 				sizes: "512x512",
-				purpose: 'any'
+				purpose: "any"
 			},
 			{
 				src: `${ process.env.NEXT_PUBLIC_FRONTEND_URL }/vessel-icon-192.png`,
 				type: "image/png",
 				sizes: "192x192",
-				purpose: 'any'
+				purpose: "any"
 			},
 			{
 				src: `${ process.env.NEXT_PUBLIC_FRONTEND_URL }/vessel-icon-maskable.png`,
