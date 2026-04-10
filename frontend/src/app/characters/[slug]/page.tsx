@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Inner from "./inner";
 import { getCharacter } from "@/lib/data-fetching";
+import "@/styles/characters.scss";
 
 export async function generateMetadata( { params }: SluggedPageProps ): Promise<Metadata> {
 	const { slug }      = await params;
