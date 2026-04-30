@@ -79,6 +79,50 @@ function get_role_locks( $post, $attr, $request, $object_type ) {
 }
 add_action( 'rest_api_init', 'add_role_locks' );
 
+function add_auto_unlock_endpoint() {
+	register_rest_route(
+		'vessel/v1',
+		'/check-unlocks',
+		[
+			'methods' => 'GET',
+			'callback' => 'check_unlocks',
+		]
+	);
+}
+
+function check_unlocks( WP_REST_Request $request ) {
+	$posts = get_posts( [
+		'post_type' => 'comic_page',
+		'posts_per_page' => -1,
+		'tax_query' => [
+			[
+				'taxonomy' => 'role_locks',
+				'field' => 'slug',
+				'terms' => '1447593084727726282',
+				'operator' => 'IN',
+			],
+		],
+	] );
+	$early_reader_role = get_term_by( 'slug', '1447593084727726282', 'role_locks' );
+
+	$response = [];
+
+	$a_month_ago = new DateTime( '1 month ago' );
+	foreach ( $posts as $post ) {
+		if (
+			new DateTime( $post->post_date ) < $a_month_ago &&
+			has_term( $early_reader_role->term_id, 'role_locks', $post->ID )
+		) {
+			wp_remove_object_terms( $post->ID, $early_reader_role->term_id, 'role_locks' );
+			$response[] = "Removed $post->ID from Early Readers";
+		}
+	}
+
+	return $response;
+}
+add_action( 'rest_api_init', 'add_auto_unlock_endpoint' );
+
+
 // Removes htmlentities from blog post titles
 function decode_title( $response, $post, $request ) {
 	if ( isset( $post ) ) {
