@@ -13,6 +13,7 @@ import Background from "./Background";
 import PageArea from "./PageArea";
 import { getUser } from "@/lib/users";
 import Secret from "./Secret";
+import SubscribeBanner from "./SubscribeBanner";
 
 interface Props {
 	page?: PageNumber
@@ -54,6 +55,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 
 	return (
 		<>
+			{ !user && <SubscribeBanner /> }
 			<JsonLdSchema schema={ schema } />
 			<main className={`page-reader ${ pageData.class_list.join(' ') }`}>
 				<Background backgroundGradient={ backgroundGradient } backgroundImage={ backgroundImage } />

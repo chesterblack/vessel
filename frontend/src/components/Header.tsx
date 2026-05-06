@@ -2,7 +2,6 @@ import Link from "next/link";
 import MainNav from "./MainNav";
 import TextLogo from "./TextLogo";
 import { SessionProvider } from "next-auth/react";
-import SubscribeBanner from "./SubscribeBanner";
 
 export default async function Header() {
 	return (
@@ -14,7 +13,6 @@ export default async function Header() {
 					</Link>
 					<MainNav />
 				</header>
-				<SubscribeBanner />
 			</SessionProvider>
 		</>
 	);
