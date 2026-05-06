@@ -1,6 +1,5 @@
 "use client"
 
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -10,8 +9,6 @@ interface Props {
 
 export default function SubscribeBanner( { setCookie }: Props ) {
 	const [ open, setOpen ] = useState( true );
-	const { data: session } = useSession();
-	const user = session?.user;
 
 	if ( typeof document === 'undefined' ) {
 		return;
@@ -19,7 +16,7 @@ export default function SubscribeBanner( { setCookie }: Props ) {
 
 	const closedCookie = document?.cookie.split(";").some( i => i.trim().startsWith("kofi-banner-closed="));
 
-	if ( user || !open || closedCookie ) {
+	if ( !open || closedCookie ) {
 		return;
 	}
 
