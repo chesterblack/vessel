@@ -52,7 +52,8 @@ export async function getPost(
 
 	const response = await sendApiRequest( 'GET', url, params );
 	if ( response.length < 1 ) {
-		throw new Error( 'No posts found' );
+		// throw new Error( 'No posts found' );
+		return
 	}
 
 	return response[ 0 ];

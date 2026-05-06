@@ -192,3 +192,30 @@ footer {
 		}
 	}
 }
+
+.subscribe-banner {
+	width: fit-content;
+	position: relative;
+	margin: 15px auto;
+
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+
+	button {
+		border: none;
+		background: colors.$bright-light;
+		border-radius: 100%;
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 30px;
+		height: 30px;
+		cursor: pointer;
+
+		&:hover {
+			background-color: colors.$ice-blue;
+		}
+	}
+}
