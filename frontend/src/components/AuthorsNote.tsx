@@ -1,13 +1,14 @@
 import { ComicPage } from '@/types/wp-post-types';
 import parse from 'html-react-parser';
 import AuthorImage from './AuthorImage';
+import { isContentEmpty } from '@/lib/utilities';
 
 interface Props {
 	page: ComicPage
 }
 
 export default function AuthorsNote( { page }: Props ) {
-	if ( ! page.content || page.content.rendered.trim() === '<p></p>' ) {
+	if ( isContentEmpty( page ) ) {
 		return <></>;
 	}
 

@@ -407,3 +407,13 @@ export function applyLockedAttribute<T extends Post>(
 
 	return allowedPosts;
 }
+
+export function isContentEmpty( page: ComicPage ) {
+	if ( !page?.content?.rendered ) {
+		return true;
+	}
+
+	const isEmptyParagraph = !!page.content.rendered.match( /^(\\n)*?<p ?.*?><\/p>(\\n)*$/gm )?.length;
+
+	return isEmptyParagraph;
+}
