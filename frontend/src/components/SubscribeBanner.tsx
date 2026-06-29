@@ -27,7 +27,7 @@ export default function SubscribeBanner( { setCookie }: Props ) {
 		date.setTime(expireTime);
 
 		setOpen( false );
-		document.cookie = `kofi-banner-closed=true;expires=${ date.toUTCString() }`;
+		document.cookie = `kofi-banner-closed=true;expires=${ date.toUTCString() };path=/`;
 	}
 
 	return (
