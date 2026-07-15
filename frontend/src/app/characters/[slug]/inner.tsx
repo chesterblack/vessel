@@ -17,7 +17,7 @@ export default function Inner( { character, chapters }: Props ) {
 
 	const characterData = getCharacterBioData( character );
 
-	let { name, description, portrait } = getLatestCharacterBioData(
+	let { name, pronouns, description, portrait } = getLatestCharacterBioData(
 		chapters,
 		currentChapter,
 		characterData
@@ -38,6 +38,7 @@ export default function Inner( { character, chapters }: Props ) {
 				<CharacterPortrait portrait={ portrait } characterName={ name } />
 				<div>
 					<h1>{ name }</h1>
+					{ pronouns && <span className="pronouns">{ pronouns }</span> }
 					<p>{ description }</p>
 				</div>
 			</div>

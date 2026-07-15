@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function CharacterBio( { character, characterBio }: Props ) {
-	const { portrait, name, description } = characterBio;
+	const { portrait, name, description, pronouns } = characterBio;
 
 	const parsedDescription = parse( description ?? '' );
 
@@ -23,6 +23,7 @@ export default function CharacterBio( { character, characterBio }: Props ) {
 			/>
 			<div>
 				<h2>{ name ? name : character.title.rendered }</h2>
+				{ pronouns && <span className="pronouns">{ pronouns }</span> }
 				<p>{ parsedDescription }</p>
 			</div>
 		</Link>
