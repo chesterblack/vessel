@@ -123,9 +123,19 @@ main.page-reader {
 		.button {
 			width: 100%;
 			text-align: center;
-	
-			span {
+
+			.lock-icon {
+				margin-right: 0;
+			}
+			
+			.label {
 				display: none;
+			}
+
+			&.locked {
+				.arrow {
+					display: none;
+				}
 			}
 		}
 	}
