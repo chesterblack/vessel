@@ -48,8 +48,9 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	const thisChapter = JSON.parse( attributes.chapters )?.[ selectedChapter ];
 	const name        = thisChapter?.name ?? '';
+	const pronouns    = thisChapter?.pronouns ?? '';
 	const description = thisChapter?.description ?? '';
-	const portrait       = thisChapter?.portrait ?? {};
+	const portrait    = thisChapter?.portrait ?? {};
 
 	return (
 		<div { ...useBlockProps() }>
@@ -75,12 +76,24 @@ export default function Edit( { attributes, setAttributes } ) {
 				</div>
 
 				<div style={{ width: '100%' }}>
-					<TextControl
-						className='name'
-						label='Name'
-						value={ name }
-						onChange={ value => setJsonAttribute( 'name', value ) }
-					/>
+					<div className='inner'>
+						<div style={{width: '100%'}}>
+							<TextControl
+								className='name'
+								label='Name'
+								value={ name }
+								onChange={ value => setJsonAttribute( 'name', value ) }
+							/>
+						</div>
+						
+						<TextControl
+							className='pronouns'
+							label='Pronouns'
+							value={ pronouns }
+							onChange={ value => setJsonAttribute( 'pronouns', value ) }
+						/>
+						
+					</div>
 
 					<label>Description</label>
 					<RichText

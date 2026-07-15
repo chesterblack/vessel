@@ -46,7 +46,7 @@ function Edit({
   attributes,
   setAttributes
 }) {
-  var _thisChapter$name, _thisChapter$descript, _thisChapter$portrait;
+  var _thisChapter$name, _thisChapter$pronouns, _thisChapter$descript, _thisChapter$portrait;
   const [chapters, setChapters] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [selectedChapter, setSelectedChapter] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)();
   function setJsonAttribute(key, value) {
@@ -86,6 +86,7 @@ function Edit({
   }
   const thisChapter = JSON.parse(attributes.chapters)?.[selectedChapter];
   const name = (_thisChapter$name = thisChapter?.name) !== null && _thisChapter$name !== void 0 ? _thisChapter$name : '';
+  const pronouns = (_thisChapter$pronouns = thisChapter?.pronouns) !== null && _thisChapter$pronouns !== void 0 ? _thisChapter$pronouns : '';
   const description = (_thisChapter$descript = thisChapter?.description) !== null && _thisChapter$descript !== void 0 ? _thisChapter$descript : '';
   const portrait = (_thisChapter$portrait = thisChapter?.portrait) !== null && _thisChapter$portrait !== void 0 ? _thisChapter$portrait : {};
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
@@ -125,11 +126,24 @@ function Edit({
         style: {
           width: '100%'
         },
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-          className: "name",
-          label: "Name",
-          value: name,
-          onChange: value => setJsonAttribute('name', value)
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+          className: "inner",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+            style: {
+              width: '100%'
+            },
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              className: "name",
+              label: "Name",
+              value: name,
+              onChange: value => setJsonAttribute('name', value)
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            className: "pronouns",
+            label: "Pronouns",
+            value: pronouns,
+            onChange: value => setJsonAttribute('pronouns', value)
+          })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
           children: "Description"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {

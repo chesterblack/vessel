@@ -14,7 +14,7 @@ export default async function CharacterTag( { character, chapter }: Props ) {
 	const chapters   = await getChapters() ?? [];
 	const allBioData = getCharacterBioData( character );
 
-	const { name, portrait, description } = getLatestCharacterBioData( chapters, chapter.slug, allBioData );
+	const { name, portrait, description, pronouns } = getLatestCharacterBioData( chapters, chapter.slug, allBioData );
 
 	if ( ! description ) {
 		return;
@@ -36,6 +36,7 @@ export default async function CharacterTag( { character, chapter }: Props ) {
 				}
 				<div>
 					<h4>{ name ?? character.title.rendered }</h4>
+					{ pronouns && <span className="pronouns">{ pronouns }</span> }
 					<span>
 						{ description }
 					</span>

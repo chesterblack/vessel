@@ -23,6 +23,7 @@ export interface CharacterBioDatum {
 	name?: string
 	description?: string
 	portrait?: ImageAttributes
+	pronouns?: string
 }
 
 export interface CharacterBioData {

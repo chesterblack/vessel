@@ -64,10 +64,14 @@ export function getLatestCharacterBioData(
 			continue;
 		}
 
-		const { name, description, portrait } = characterInfo[ slug ];
+		const { name, description, portrait, pronouns } = characterInfo[ slug ];
 
 		if ( name && name !== '' ) {
 			info.name = characterInfo[ slug ].name;
+		}
+
+		if ( pronouns && pronouns !== '' ) {
+			info.pronouns = characterInfo[slug].pronouns;
 		}
 
 		if ( description && description !== '' ) {
