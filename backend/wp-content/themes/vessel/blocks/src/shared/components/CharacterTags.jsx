@@ -26,8 +26,6 @@ export default function CharacterTags( { attributes, setAttributes } ) {
 				} ) ),
 			];
 
-			console.log( 'options: ', options );
-
 			setCharacters( options );
 
 			if ( !currentPostMeta?.comic_page_number ) {
@@ -35,7 +33,7 @@ export default function CharacterTags( { attributes, setAttributes } ) {
 			}
 
 			const prevPageData = await apiFetch( {
-				path: `/wp/v2/comic_page?meta_key=comic_page_number&meta_value=${parseInt(currentPostMeta.comic_page_number) - 1}`,
+				path: `/wp/v2/comic_page?meta_key=comic_page_number&meta_value=${ parseInt( currentPostMeta.comic_page_number ) - 1 }`,
 				method: 'GET',
 				headers: { 'Content-Type': 'application/json' }
 			} );
@@ -47,7 +45,6 @@ export default function CharacterTags( { attributes, setAttributes } ) {
 			}
 			
 			const characterOptions = options.filter( option => prevPageCharacters.includes( option.value.toString() ) );
-			console.log( 'characterOptions: ', characterOptions );
 			setPrevCharacters( characterOptions );
 		} )();
 	}, [] );

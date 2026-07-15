@@ -217,7 +217,6 @@ function CharacterTags({
         label: character.title.rendered,
         value: character.id
       }))];
-      console.log('options: ', options);
       setCharacters(options);
       if (!currentPostMeta?.comic_page_number) {
         return;
@@ -234,7 +233,6 @@ function CharacterTags({
         return;
       }
       const characterOptions = options.filter(option => prevPageCharacters.includes(option.value.toString()));
-      console.log('characterOptions: ', characterOptions);
       setPrevCharacters(characterOptions);
     })();
   }, []);
