@@ -112,9 +112,15 @@ main.page-reader {
 		margin-block: 0;
 		border-radius: 0;
 	}
+
+	.page-reader-nav {
+		.unlock-icon {
+			display: none;
+		}
+	}
 }
 
-@media screen and ( max-width: 500px ) {
+@media screen and ( max-width: 530px ) {
 	.page-reader-nav {
 		select {
 			padding-inline: 25px;
@@ -123,9 +129,19 @@ main.page-reader {
 		.button {
 			width: 100%;
 			text-align: center;
-	
-			span {
+
+			.lock-icon {
+				margin-right: 0;
+			}
+			
+			.label {
 				display: none;
+			}
+
+			&.locked {
+				.arrow {
+					display: none;
+				}
 			}
 		}
 	}

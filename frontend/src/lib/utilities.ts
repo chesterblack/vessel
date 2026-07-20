@@ -44,14 +44,14 @@ export function getLatestCharacterBioData(
 	chapters: Chapter[],
 	currentChapter: string,
 	characterInfo: CharacterBioData
-): CharacterBioDatum {
+) {
 	const chapterSlugs = chapters.map( ( c: { slug: string } ) => c.slug );
 
-	let info = {
+	let info: CharacterBioDatum = {
 		name: null,
 		description: null,
 		portrait: null,
-	} as CharacterBioDatum;
+	};
 
 	for ( let i = 0; i < chapterSlugs.length; i++ ) {
 		const slug = chapterSlugs[i];
@@ -93,18 +93,26 @@ export function getLatestCharacterBioData(
 /**
  * Get the first available description for a character
  */
-export function getFirstDescription(
-	character: Character
-): string {
-	const chapterData = getCharacterBioData( character );
-
-	const firstDatum = chapterData[
-		Object.keys( chapterData )[0]
-	];
-
-	return firstDatum.description ?? '';
+export function getFirstDescription( character: Character ) {
+	const firstChapter = getFirstChapter( character );
+	return firstChapter.description ?? '';
 }
 
+/**
+ * Get the first chapter the character shows up in
+ */
+export function getFirstChapter( character: Character ) {
+	const chapterData = getCharacterBioData( character );
+	return chapterData[ Object.keys( chapterData )[0] ];
+}
+
+/**
+ * Get the slug of the first chapter the character shows up in
+ */
+export function getFirstChapterSlug( character: Character ) {
+	const chapterData = getCharacterBioData( character );
+	return Object.keys( chapterData )[0];
+}
 
 /**
  * Sort an array of objects or arrays by one of it's attributes
@@ -183,14 +191,14 @@ export function findPage(
 export async function getChapterPages(
 	chapter: Chapter
 ): Promise<ComicPage[]> {
-	let chapterPages = await sendApiRequest(
+	let chapterPages: ComicPage[] = await sendApiRequest(
 		'GET',
 		'wp/v2/comic_page',
 		{
 			chapters: chapter.id,
 			per_page: 100
 		}
-	) as ComicPage[];
+	);
 
 	chapterPages = chapterPages.map( chapterPage => ( {
 		...chapterPage,
@@ -336,16 +344,14 @@ export function getEmbeddedChapters(
  * Extract all data from the JSON attribute in the
  * character block
  */
-export function getCharacterBioData(
-	character: Character
-): CharacterBioData {
+export function getCharacterBioData( character: Character ) {
 	if ( ! character.content_blocks[0].attrs?.chapters ) {
 		return;
 	}
 	
-	const characterBlockData = JSON.parse(
+	const characterBlockData: CharacterBioData = JSON.parse(
 		character.content_blocks[0].attrs.chapters
-	) as CharacterBioData;
+	);
 
 	return characterBlockData;
 }

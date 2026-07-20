@@ -1,7 +1,7 @@
 import CharacterTag from "./CharacterTag";
-import { Character } from "@/types/wp-post-types";
 import { getChapter, getCharacters } from "@/lib/data-fetching";
 import { Chapter } from "@/types/wp-taxonomies";
+import { getFirstChapterSlug } from "@/lib/utilities";
 import '@/styles/character-tags.scss';
 
 interface Props {
@@ -22,18 +22,19 @@ export default async function CharacterTags( { characters, chapter }: Props ) {
 		return;
 	}
 
-	chapter = chapter ?? await getChapter( 'intro' );
-
 	const tags = [];
-	characterData.forEach( ( character: Character ) => {
+	for (let i = 0; i < characterData.length; i++) {
+		const character = characterData[i];
+		const chapterToUse = chapter ?? await getChapter( getFirstChapterSlug( character ) );
+
 		tags.push(
 			<CharacterTag
 				key={ character.id }
 				character={ character }
-				chapter={ chapter }
+				chapter={ chapterToUse }
 			/>
 		);
-	} );
+	}
 
 	return (
 		<nav className="character-tags">
