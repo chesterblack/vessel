@@ -137,6 +137,12 @@ hr {
 	display: block;
 }
 
+.wp-block-gallery {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
 @media screen and ( max-width: 600px ) {
 	main {
 		margin-block: 0;
