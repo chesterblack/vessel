@@ -2,14 +2,14 @@ import CharacterTag from "./CharacterTag";
 import { getChapters, getCharacters } from "@/lib/data-fetching";
 import { getFirstChapterSlug } from "@/lib/utilities";
 import '@/styles/character-tags.scss';
-import { Suspense } from "react";
 import { cookies } from "next/headers";
 
 interface Props {
 	characters: string[] // Character ids
+	chapter?: string // Chapter slug
 }
 
-export default async function CharacterTags( { characters }: Props ) {
+export default async function CharacterTags( { characters, chapter }: Props ) {
 	const cookieStore = await cookies();
 
 	if ( ! characters || characters.length < 1 ) {
@@ -30,7 +30,7 @@ export default async function CharacterTags( { characters }: Props ) {
 	for ( let i = 0; i < characterData.length; i++ ) {
 		const character = characterData[i];
 		const firstChapter = getFirstChapterSlug( character );
-		const chapterToUse = cookieStore.get('last-read-chapter')?.value ?? firstChapter;
+		const chapterToUse = chapter ?? cookieStore.get('last-read-chapter')?.value ?? firstChapter;
 
 		tags.push(
 			<CharacterTag
