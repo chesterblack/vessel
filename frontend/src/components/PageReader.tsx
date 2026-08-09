@@ -77,7 +77,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 					<>
 						<CharacterTags
 							characters={ pageData.content_blocks[0].attrs.characters }
-							chapter={ chapters[0] }
+							chapter={ chapters[0].slug }
 						/>
 						<AuthorsNote page={ pageData } />
 					</>

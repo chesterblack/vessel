@@ -29,8 +29,7 @@ export default async function CharacterTags( { characters, chapter }: Props ) {
 	const tags = [];
 	for ( let i = 0; i < characterData.length; i++ ) {
 		const character = characterData[i];
-		const firstChapter = getFirstChapterSlug( character );
-		const chapterToUse = chapter ?? cookieStore.get('last-read-chapter')?.value ?? firstChapter;
+		const chapterToUse = chapter ?? cookieStore.get('last-read-chapter')?.value ?? getFirstChapterSlug( character );
 
 		tags.push(
 			<CharacterTag
