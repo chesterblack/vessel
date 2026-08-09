@@ -19,7 +19,7 @@ export default function PageReaderNav( { pages, page }: Props ) {
 	const { isLoading, loadedPages } = useGivenComicPages( pages );
 
 	if ( isLoading ) {
-		return "Loading...";
+		return <Skeleton />;
 	}
 
 	const unlockedPages = removeLockedPosts( loadedPages );
@@ -68,6 +68,34 @@ export default function PageReaderNav( { pages, page }: Props ) {
 			</Button>
 
 			<Button disabled={ page === filterLatestPageNumber( unlockedPages ) || ! nextPage } href='/page/latest'>
+				<span className="label">Last</span>
+				<span className="arrow"> &gt;&gt;</span>
+			</Button>
+		</nav>
+	);
+}
+
+export function Skeleton() {
+	return (
+		<nav className="page-reader-nav">
+			<Button disabled>
+				<span className="arrow">&lt;&lt; </span>
+				<span className="label">First</span>
+			</Button>
+			<Button disabled>
+				<span className="arrow">&lt; </span>
+				<span className="label">Back</span>
+			</Button>
+
+			<Button disabled>
+				Loading...
+			</Button>
+
+			<Button disabled>
+				<span className="label">Next</span>
+				<span className="arrow"> &gt;</span>
+			</Button>
+			<Button disabled>
 				<span className="label">Last</span>
 				<span className="arrow"> &gt;&gt;</span>
 			</Button>
