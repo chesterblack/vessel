@@ -14,6 +14,7 @@ import PageArea from "./PageArea";
 import { getUser } from "@/lib/users";
 import Secret from "./Secret";
 import SubscribeBanner from "./SubscribeBanner";
+import SetPageCookies from "./SetPageCookies";
 
 interface Props {
 	page?: PageNumber
@@ -55,6 +56,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 
 	return (
 		<>
+			<SetPageCookies chapter={chapters[0].slug} />
 			{ !user && <SubscribeBanner /> }
 			<JsonLdSchema schema={ schema } />
 			<main className={`page-reader ${ pageData.class_list.join(' ') }`}>

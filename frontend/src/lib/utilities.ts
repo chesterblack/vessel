@@ -427,3 +427,51 @@ export function isContentEmpty( page: ComicPage ) {
 
 	return isEmptyParagraph;
 }
+
+export function getCookie( key: string ) {
+	if ( typeof document === 'undefined' ) {
+		console.error('Trying to get cookie on server');
+		return;
+	}
+
+	const fullString = document?.cookie.split(";").find( i => i.trim().startsWith(`${key}=`));
+	if (!fullString) {
+		return;
+	}
+
+	return fullString.split('=')[1];
+}
+
+export function hasCookie( key: string ) {
+	if ( typeof document === 'undefined' ) {
+		console.error('Trying to get cookie on server');
+		return;
+	}
+
+	document?.cookie.split(";").some( i => i.trim().startsWith(`${key}=`));
+}
+
+export function setCookie(
+	key: string,
+	value: string,
+	expiryDate: Date|string = null,
+	path: string = '/'
+) {
+	if ( typeof document === 'undefined' ) {
+		console.error('Trying to set cookie on server');
+		return;
+	}
+
+	if ( !expiryDate ) {
+		expiryDate = new Date();
+		const time = expiryDate.getTime();
+		const expireTime = time + 60000 * 60 * 24 * 30 // 30 days
+		expiryDate.setTime( expireTime );
+	}
+
+	if ( typeof expiryDate !== 'string' ) {
+		expiryDate = expiryDate.toUTCString();
+	}
+
+	document.cookie = `${ key }=${ value };expires=${ expiryDate };path=${ path }`;
+}

@@ -2,7 +2,7 @@ import { ImageAttributes } from "@/types/wp-blocks"
 
 interface Props {
 	backgroundGradient: string
-	backgroundImage: ImageAttributes
+	backgroundImage?: ImageAttributes
 }
 
 export default function Background( { backgroundGradient, backgroundImage }: Props ) {
