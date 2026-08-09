@@ -4,10 +4,9 @@ import { Character } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 
 import { useState } from "react";
-import { getCharacterBioData, getLatestCharacterBioData } from "@/lib/utilities";
+import { getCharacterBioData, getCookie, getLatestCharacterBioData } from "@/lib/utilities";
 import CharacterBio from "@/components/CharacterBio";
 import ChapterSelector from "@/components/ChapterSelector";
-import { CharacterBioBlock, CharacterBioData } from "@/types/wp-blocks";
 
 interface Props {
 	chapters: Chapter[]
@@ -15,7 +14,9 @@ interface Props {
 }
 
 export default function CharacterList( { chapters, characters }: Props ) {
-	const [ currentChapter, setCurrentChapter ] = useState( chapters[0].slug );
+	const [ currentChapter, setCurrentChapter ] = useState(
+		getCookie('last-read-chapter') ?? chapters[0].slug
+	);
 
 	return (
 		<>

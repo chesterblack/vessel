@@ -2,7 +2,7 @@
 
 import ChapterSelector from "@/components/ChapterSelector";
 import CharacterPortrait from "@/components/CharacterPortrait";
-import { getCharacterBioData, getLatestCharacterBioData } from "@/lib/utilities";
+import { getCharacterBioData, getCookie, getLatestCharacterBioData } from "@/lib/utilities";
 import { Character } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { useState } from "react";
@@ -13,7 +13,9 @@ interface Props {
 }
 
 export default function Inner( { character, chapters }: Props ) {
-	const [ currentChapter, setCurrentChapter ] = useState( chapters[0].slug );
+	const [ currentChapter, setCurrentChapter ] = useState(
+		getCookie('last-read-chapter') ?? chapters[0].slug
+	);
 
 	const characterData = getCharacterBioData( character );
 
