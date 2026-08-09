@@ -104,10 +104,45 @@ export const getChapter = cache(
 	)
 );
 
+export const getLatestPageNumber = cache(
+	async () => {
+		const response = await sendApiRequest(
+			'GET',
+			'wp/v2/comic_page',
+			{
+				per_page: 1,
+				orderby: 'comic_page_number',
+				_embed: 'wp:term'
+			}
+		) as ComicPage[];
+		
+		if ( response.length < 1 ) {
+			return;
+		}
+
+		return response[0]?.meta?.comic_page_number;
+	}
+)
+
 export const getComicPage = cache(
-	( identifier: number|string, params?: any ) => (
-		getPost( 'comic_page', identifier, params ) as Promise<ComicPage>
-	)
+	async ( comicPageNumber: number ) => {
+		const response = await sendApiRequest(
+			'GET',
+			'wp/v2/comic_page',
+			{
+				meta_key: 'comic_page_number',
+				meta_value: comicPageNumber,
+				orderby: 'comic_page_number',
+				_embed: 'wp:term'
+			}
+		) as ComicPage[];
+
+		if ( response.length < 1 ) {
+			return;
+		}
+
+		return response[0];
+	}
 );
 
 export const getCharacter = cache(

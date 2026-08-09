@@ -1,22 +1,31 @@
+'use client';
+
 import { ComicPage } from "@/types/wp-post-types";
 
 import Button from "./Button";
 import PageSelector from "../client/PageSelector";
-import { findPage, getLatestPageNumber, removeLockedPosts } from "@/lib/utilities";
+import { findPage, filterLatestPageNumber, removeLockedPosts } from "@/lib/utilities";
 import { VESSEL_EARLY_READER } from "@/lib/constants";
 import LockIcon from "./svg/LockIcon";
 import UnlockIcon from "./svg/UnlockIcon";
+import useGivenComicPages from "@/app/hooks/useGivenComicPages";
 
 type Props = {
-	pages: ComicPage[]
+	pages: Promise<ComicPage[]>
 	page: number
 }
 
 export default function PageReaderNav( { pages, page }: Props ) {
-	const unlockedPages = removeLockedPosts( pages );
+	const { isLoading, loadedPages } = useGivenComicPages( pages );
 
-	const nextPage = findPage( pages, page + 1 );
-	const prevPage = findPage( pages, page - 1 );
+	if ( isLoading ) {
+		return "Loading...";
+	}
+
+	const unlockedPages = removeLockedPosts( loadedPages );
+
+	const nextPage = findPage( loadedPages, page + 1 );
+	const prevPage = findPage( loadedPages, page - 1 );
 
 	const canGoBack = page > 1;
 	const canGoForward = !! nextPage;
@@ -45,7 +54,7 @@ export default function PageReaderNav( { pages, page }: Props ) {
 				<span className="label">Back</span>
 			</Button>
 
-			<PageSelector pages={ pages } page={ page } />
+			<PageSelector pages={ loadedPages } page={ page } />
 
 			<Button
 				disabled={ !canGoForward }
@@ -58,7 +67,7 @@ export default function PageReaderNav( { pages, page }: Props ) {
 				<span className="arrow"> &gt;</span>
 			</Button>
 
-			<Button disabled={ page === getLatestPageNumber( unlockedPages ) || ! nextPage } href='/page/latest'>
+			<Button disabled={ page === filterLatestPageNumber( unlockedPages ) || ! nextPage } href='/page/latest'>
 				<span className="label">Last</span>
 				<span className="arrow"> &gt;&gt;</span>
 			</Button>

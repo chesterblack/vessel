@@ -1,9 +1,18 @@
 import { getImageProps } from "@/lib/utilities";
+import { ComicPage } from "@/types/wp-post-types";
 import Image from "next/image";
 import Link from "next/link";
 
+
+type Props = {
+	pageData: ComicPage,
+	pageNumber: number,
+	canGoBack?: boolean,
+	canGoForward?: boolean
+}
+
 /** The page image, including clickable areas for back and forward */
-export default function PageArea( { pageData, pageNumber, canGoBack, canGoForward } ) {
+export default function PageArea( { pageData, pageNumber, canGoBack, canGoForward }: Props ) {
 	const { src, width, height, alt } = getImageProps( pageData );
 
 	return (
