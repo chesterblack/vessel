@@ -1,5 +1,4 @@
 import { getCharacterBioData, getLatestCharacterBioData } from "@/lib/utilities";
-import { getChapters } from "@/lib/data-fetching";
 import { Character } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import CharacterPortrait from "./CharacterPortrait";
@@ -7,14 +6,14 @@ import Link from "next/link";
 
 interface Props {
 	character: Character
-	chapter: Chapter
+	chapter: string
+	chapterData: Chapter[]
 }
 
-export default async function CharacterTag( { character, chapter }: Props ) {
-	const chapters   = await getChapters() ?? [];
+export default function CharacterTag( { character, chapter, chapterData }: Props ) {
 	const allBioData = getCharacterBioData( character );
 
-	const { name, portrait, description, pronouns } = getLatestCharacterBioData( chapters, chapter.slug, allBioData );
+	const { name, portrait, description, pronouns } = getLatestCharacterBioData( chapterData, chapter, allBioData );;
 
 	if ( ! description ) {
 		return;

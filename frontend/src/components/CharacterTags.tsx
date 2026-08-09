@@ -1,15 +1,17 @@
 import CharacterTag from "./CharacterTag";
-import { getChapter, getCharacters } from "@/lib/data-fetching";
-import { Chapter } from "@/types/wp-taxonomies";
+import { getChapters, getCharacters } from "@/lib/data-fetching";
 import { getFirstChapterSlug } from "@/lib/utilities";
 import '@/styles/character-tags.scss';
+import { Suspense } from "react";
+import { cookies } from "next/headers";
 
 interface Props {
 	characters: string[] // Character ids
-	chapter?: Chapter
 }
 
-export default async function CharacterTags( { characters, chapter }: Props ) {
+export default async function CharacterTags( { characters }: Props ) {
+	const cookieStore = await cookies();
+
 	if ( ! characters || characters.length < 1 ) {
 		return;
 	}
@@ -22,16 +24,20 @@ export default async function CharacterTags( { characters, chapter }: Props ) {
 		return;
 	}
 
+	const chapterData = await getChapters() ?? [];
+
 	const tags = [];
-	for (let i = 0; i < characterData.length; i++) {
+	for ( let i = 0; i < characterData.length; i++ ) {
 		const character = characterData[i];
-		const chapterToUse = chapter ?? await getChapter( getFirstChapterSlug( character ) );
+		const firstChapter = getFirstChapterSlug( character );
+		const chapterToUse = cookieStore.get('last-read-chapter')?.value ?? firstChapter;
 
 		tags.push(
 			<CharacterTag
 				key={ character.id }
 				character={ character }
-				chapter={ chapterToUse }
+				chapter={chapterToUse}
+				chapterData={ chapterData }
 			/>
 		);
 	}
