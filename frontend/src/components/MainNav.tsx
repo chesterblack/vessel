@@ -34,12 +34,12 @@ export default function MainNav() {
 					About
 				</Link>
 				{ user &&
-					<Link href='/login' className="small">
+					<Link href='/login'>
 						<Image src={ user.image } width={ 50 } height={ 50 } alt={ `Logged in as ${ user.name }` } />
 					</Link>
 				}
 				{ ! user &&
-					<Link href='/login' className="ko-fi small">
+					<Link href='/login' className="ko-fi">
 						<Image src={ KofiLogo } alt="Ko-fi" width={ 50 } height={ 50 } />
 						<div className="hover">
 							Subscribe to the Ko-fi for early access!

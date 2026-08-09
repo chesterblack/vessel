@@ -28,8 +28,10 @@ export default function RootLayout( { children } ) {
 			</head>
 			<body>
 				<Header />
-				{ children }
-				<Footer />
+				<div className='content-wrapper'>
+					{ children }
+					<Footer />
+				</div>
 
 				<Analytics />
 				<SpeedInsights />
