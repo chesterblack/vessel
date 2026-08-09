@@ -1,4 +1,4 @@
-export interface Block {
+export type Block = {
 	blockName: string
 	innerBlocks: Block[]
 	innerHTML: string
@@ -6,31 +6,31 @@ export interface Block {
 	attrs: any
 }
 
-export interface ImageAttributes {
+export type ImageAttributes = {
 	url: string
 	width: number
 	height: number
 	alt: string
 }
 
-export interface CharacterBioBlock extends Block {
+export type CharacterBioBlock = Block & {
 	attrs: {
 		chapters: string
 	}
 }
 
-export interface CharacterBioDatum {
+export type CharacterBioDatum = {
 	name?: string
 	description?: string
 	portrait?: ImageAttributes
 	pronouns?: string
 }
 
-export interface CharacterBioData {
+export type CharacterBioData = {
 	[ chapterName: string ]: CharacterBioDatum
 }
 
-export interface ComicPageBlock extends Block {
+export type ComicPageBlock = Block & {
 	attrs: {
 		backgroundGradient: string
 		backgroundImage: ImageAttributes | null

@@ -12,7 +12,7 @@ export type ImageSize = [ number, number ] | number;
 
 export type SluggedPageProps = { params: Promise<{ slug: string }> };
 
-export interface YoastHead {
+export type YoastHead = {
 	title: string,
 	robots: Robots,
 	canonical: string,
@@ -28,17 +28,17 @@ export interface YoastHead {
 	schema: Graph,
 };
 
-export interface OgImage {
+export type OgImage = {
 	url: string,
 	type: string,
 	width: string,
 	height: string,
 }
 
-export interface Author {
+export type Author = {
 	description: string
 	id: number
 	link: string
 	name: string
-	slug: string
+	slug: 'kip'|'chester'
 }
