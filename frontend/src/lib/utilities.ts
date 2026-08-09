@@ -418,6 +418,9 @@ export function applyLockedAttribute<T extends Post>(
 	return allowedPosts;
 }
 
+/**
+ * Checks if a comic page has either no written content or just empty paragraphs
+ */
 export function isContentEmpty( page: ComicPage ) {
 	if ( !page?.content?.rendered ) {
 		return true;
@@ -448,7 +451,7 @@ export function hasCookie( key: string ) {
 		return;
 	}
 
-	document?.cookie.split(";").some( i => i.trim().startsWith(`${key}=`));
+	return document?.cookie.split(";").some( i => i.trim().startsWith(`${key}=`));
 }
 
 export function setCookie(

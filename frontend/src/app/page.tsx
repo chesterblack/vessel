@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import PageReader from "@/components/PageReader";
+import PageReader from "@/components/server/PageReader";
 import { getComicPageMetadata } from "@/lib/utilities";
 
 export async function generateMetadata(): Promise<Metadata> {

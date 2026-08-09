@@ -1,6 +1,6 @@
 import '@/styles/archive.scss';
 import { getChapterPages } from '@/lib/utilities';
-import ChapterPages from '@/components/ChapterPages';
+import ChapterPages from '@/components/server/ChapterPages';
 import { getChapter } from '@/lib/data-fetching';
 import { notFound } from 'next/navigation';
 

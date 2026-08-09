@@ -4,10 +4,8 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import "@/styles/global.scss";
-import ComingSoon from "@/components/ComingSoon";
-import Header from "@/components/Header";
-import Footer from '@/components/Footer';
-import { InstallPrompt } from './Install';
+import Header from "@/components/server/Header";
+import Footer from '@/components/server/Footer';
 
 export const metadata: Metadata = {
 	title: 'Vessel',
@@ -16,10 +14,6 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout( { children } ) {
-	if ( process.env.COMING_SOON !== 'false' ) {
-		return <ComingSoon />;
-	}
-
 	return (
 		<html lang="en">
 			<head>

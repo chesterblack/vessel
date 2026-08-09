@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import parse from 'html-react-parser';
 
 import '@/styles/fanart.scss';
-import CharacterTags from "@/components/CharacterTags";
+import CharacterTags from "@/components/server/CharacterTags";
 
 
 export default async function FanartPage( { params }: SluggedPageProps ) {

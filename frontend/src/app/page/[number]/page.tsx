@@ -2,11 +2,11 @@ import { Metadata } from 'next';
 import { PageNumber } from '@/types/types';
 
 import { notFound } from 'next/navigation'
-import PageReader from '@/components/PageReader';
+import PageReader from '@/components/server/PageReader';
 import { getComicPageMetadata } from '@/lib/utilities';
 
 
-interface Props {
+type Props = {
 	params: Promise<{ number: PageNumber }>
 }
 

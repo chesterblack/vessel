@@ -6,6 +6,7 @@ header {
 	display: flex;
 	background-color: colors.$med-dark;
 	justify-content: space-between;
+	z-index: 1;
 
 	@media screen and (min-width: 650px) {
 		flex-direction: column;
@@ -197,13 +198,13 @@ footer {
 		.hover {
 			display: block;
 			position: absolute;
-			top: 100%;
 			width: fit-content;
 			white-space: nowrap;
-			right: 0;
+			left: 100%;
+			bottom: 0;
 			background-color: colors.$ice-blue;
 			padding: 10px 15px;
-			border-radius: 0 0 0 15px;
+			border-radius: 0 15px 0 0;
 		}
 	}
 }

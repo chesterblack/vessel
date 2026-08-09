@@ -5,7 +5,7 @@ import { ComicPage } from "@/types/wp-post-types";
 import '@/styles/archive.scss';
 import { getChapterPages } from "@/lib/utilities";
 import { getChapters } from "@/lib/data-fetching";
-import ChapterPages from "@/components/ChapterPages";
+import ChapterPages from "@/components/server/ChapterPages";
 
 
 export const metadata: Metadata = {

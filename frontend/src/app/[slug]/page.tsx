@@ -5,7 +5,7 @@ import { SluggedPageProps } from "@/types/types";
 import { notFound } from "next/navigation";
 import parse from 'html-react-parser';
 import { getYoastMetadata } from "@/lib/seo";
-import JsonLdSchema from "@/components/JsonLdSchema";
+import JsonLdSchema from "@/components/server/JsonLdSchema";
 import { getWebPage } from "@/lib/data-fetching";
 
 export async function generateMetadata( { params }: SluggedPageProps ): Promise<Metadata> {
