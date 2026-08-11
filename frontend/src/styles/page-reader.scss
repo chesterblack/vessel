@@ -19,6 +19,11 @@ main.page-reader {
 	display: block;
 }
 
+.page-selector {
+	width: 200px;
+	max-width: 100%;
+}
+
 .page-reader-nav {
 	display: flex;
 	justify-content: center;

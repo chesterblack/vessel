@@ -20,6 +20,7 @@ export default function PageSelector( { pages, page }: Props ) {
 
 	return (
 		<select
+			className='page-selector'
 			aria-label='Page select'
 			defaultValue={ page }
 			onChange={ ( e ) => {

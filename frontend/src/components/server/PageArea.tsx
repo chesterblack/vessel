@@ -40,8 +40,8 @@ export default function PageArea( { pageData, pageNumber, canGoBack, canGoForwar
 
 export function Skeleton() {
 	return (
-		<div className="page">
-			<div className="page-image" style={{ height: 1300, width: 860 }}></div>
+		<div className="page placeholder-page">
+			<div className="page-image"></div>
 		</div>
 	)
 }

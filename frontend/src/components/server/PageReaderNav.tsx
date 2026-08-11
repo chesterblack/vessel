@@ -8,7 +8,8 @@ import { findPage, filterLatestPageNumber, removeLockedPosts } from "@/lib/utili
 import { VESSEL_EARLY_READER } from "@/lib/constants";
 import LockIcon from "./svg/LockIcon";
 import UnlockIcon from "./svg/UnlockIcon";
-import useGivenComicPages from "@/app/hooks/useGivenComicPages";
+import useGivenComicPages from "@/hooks/useGivenComicPages";
+
 
 type Props = {
 	pages: Promise<ComicPage[]>
