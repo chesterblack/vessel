@@ -27,5 +27,5 @@ jobs:
             cd ../
             rm -rf /var/www/admin.vesselcomic.com/wp-content/themes/vessel
             mv /var/www/admin.vesselcomic.com/temp-vessel/backend/wp-content/themes/vessel /var/www/admin.vesselcomic.com/wp-content/themes/vessel
-
+            rm -rf temp-vessel
             echo "Done"
