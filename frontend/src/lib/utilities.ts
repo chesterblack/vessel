@@ -7,7 +7,6 @@ import { Metadata } from "next";
 import { WP_Term } from "wp-types";
 
 import { getComicPages } from "@/lib/data-fetching";
-import { User } from "next-auth";
 
 /**
  * Send a request to the backend API, include the wp/v2/
@@ -313,6 +312,15 @@ export async function getComicPageMetadata(
 		metadata.description = pageData.yoast_head_json.og_description;
 	} else if ( getImageProps( pageData ).alt !== '' ) {
 		metadata.description = getImageProps( pageData ).alt;
+	}
+
+	metadata.openGraph = {
+		type: "website",
+		url: "https://vesselcomic.com",
+		title: "Vessel",
+		description: "A medieval fantasy webcomic about a man on a journey to deliver a world-healing vessel of magic to a powerful mage. Who is this mage? He doesn\'t really know yet. Where are they? That\'s also up in the air. Does he want to do this? Not really.",
+		siteName: "Vessel",
+		images: [{ url: "https://kipbite-assets.fra1.digitaloceanspaces.com/vessel/opengraph-image.jpg" }]
 	}
 
 	return metadata;
