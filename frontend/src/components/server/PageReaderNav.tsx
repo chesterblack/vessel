@@ -7,21 +7,25 @@ import { ComicIndexWithLock } from "@/types/types";
 type Props = {
 	currentPageNumber: number
 	pageIndexes: ComicIndexWithLock[]
-	latestPageNumber: number
+	latest: ComicIndexWithLock
 }
 
-export default function PageReaderNav({ currentPageNumber, pageIndexes, latestPageNumber}: Props) {
+export default function PageReaderNav({ currentPageNumber, pageIndexes, latest}: Props) {
+	const latestPageNumber = latest.page_number;
+
 	const canGoBack = currentPageNumber !== 1;
-	const prevPageLocked = pageIndexes.find(
+	const prevPage = pageIndexes.find(
 		c => c.page_number === currentPageNumber - 1
-	).locked;
+	);
+	const prevPageLocked = prevPage && prevPage.locked;
 
 	const canGoForward = currentPageNumber < latestPageNumber;
-	const nextPageLocked = pageIndexes.find(
+	const nextPage = pageIndexes.find(
 		c => c.page_number === currentPageNumber + 1
-	).locked;
+	);
+	const nextPageLocked = nextPage && nextPage.locked;
 
-	const lastPageLocked = pageIndexes[pageIndexes.length - 1].locked;
+	const lastPageLocked = latestPageNumber !== currentPageNumber && latest.locked;
 
 	return (
 		<nav className="page-reader-nav">

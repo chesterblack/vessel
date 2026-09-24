@@ -40,6 +40,11 @@ export default async function PageReader( { comicReaderData, user }: Props ) {
 		} )
 	);
 
+	const lockedLatest = {
+		...latest,
+		locked: isLocked( latest, user )
+	};
+
 	const latestPageNumber = latest.page_number;
 	const pageData = applyLockedAttribute(user?.roles ?? [], [current])[0];
 
@@ -76,7 +81,7 @@ export default async function PageReader( { comicReaderData, user }: Props ) {
 			<main className={`page-reader ${ pageData.class_list.join(' ') }`}>
 				<Background backgroundGradient={ backgroundGradient } backgroundImage={ backgroundImage } />
 				<JumpToTop />
-				<PageReaderNav currentPageNumber={pageNumber} pageIndexes={indexesWithLock} latestPageNumber={latestPageNumber} />
+				<PageReaderNav currentPageNumber={pageNumber} pageIndexes={indexesWithLock} latest={lockedLatest} />
 				{ secret && secret }
 				{ ! secret &&
 					<PageArea
@@ -86,7 +91,7 @@ export default async function PageReader( { comicReaderData, user }: Props ) {
 						canGoForward={ canGoForward }
 					/>
 				}
-				<PageReaderNav currentPageNumber={pageNumber} pageIndexes={indexesWithLock} latestPageNumber={latestPageNumber} />
+				<PageReaderNav currentPageNumber={pageNumber} pageIndexes={indexesWithLock} latest={lockedLatest} />
 				{ ! secret &&
 					<>
 						<CharacterTags
