@@ -1,6 +1,7 @@
 import { Robots } from "next/dist/lib/metadata/types/metadata-types";
 import { ReactElement } from "react";
 import { Graph } from "schema-dts";
+import { ComicPage } from "./wp-post-types";
 
 export type Children = ReactElement | string | ( string | ReactElement )[];
 
@@ -12,7 +13,7 @@ export type ImageSize = [ number, number ] | number;
 
 export type SluggedPageProps = { params: Promise<{ slug: string }> };
 
-export interface YoastHead {
+export type YoastHead = {
 	title: string,
 	robots: Robots,
 	canonical: string,
@@ -28,17 +29,34 @@ export interface YoastHead {
 	schema: Graph,
 };
 
-export interface OgImage {
+export type OgImage = {
 	url: string,
 	type: string,
 	width: string,
 	height: string,
 }
 
-export interface Author {
+export type Author = {
 	description: string
 	id: number
 	link: string
 	name: string
+	slug: 'kip'|'chester'
+}
+
+export type HeadingLevel = 1|2|3|4|5|6;
+
+export type ComicIndex = {
 	slug: string
+	title: string
+	page_number: number
+	role_locks: string[]
+}
+
+export type ComicIndexWithLock = ComicIndex & { locked: boolean }
+
+export type ComicReaderData = {
+	current: ComicPage
+	latest: ComicIndex
+	indexes: ComicIndex[]
 }

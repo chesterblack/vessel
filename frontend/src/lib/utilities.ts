@@ -1,4 +1,4 @@
-import { PageNumber } from "@/types/types";
+import { ComicIndex, PageNumber } from "@/types/types";
 import { CharacterBioData, CharacterBioDatum } from "@/types/wp-blocks";
 import { Character, ComicPage, Post, WebPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
@@ -31,6 +31,8 @@ export async function sendApiRequest(
 	}
 
 	const url = `${ process.env.NEXT_PUBLIC_BACKEND_API_BASE }/${ endpoint }?${ urlParams }`;
+
+	console.log( 'findme: url: ', url );
 
 	return await fetch( url, options )
 		.then( res => res.json() )
@@ -265,13 +267,13 @@ export async function numeralisePageNumber(
 ): Promise<number> {
 	pages = pages ?? await getComicPages();
 
-	let number = pageNumber === 'latest' ? getLatestPageNumber( pages ) : pageNumber;
+	let number = pageNumber === 'latest' ? filterLatestPageNumber( pages ) : pageNumber;
 	number = typeof number !== 'number' ? parseInt( number ) : number;
 
 	return number;
 }
 
-export function getLatestPageNumber( pages: ComicPage[] ): number {
+export function filterLatestPageNumber( pages: ComicPage[] ): number {
 	const pageNumbers = pages.map( page => page.meta.comic_page_number );
 	return Math.max( ...pageNumbers );
 }
@@ -288,31 +290,29 @@ export async function isLatestPage( page: ComicPage ): Promise<boolean> {
  * Generate the metadata required for a read page
  */
 export async function getComicPageMetadata(
-	page: PageNumber
+	pageData: ComicPage
 ): Promise<Metadata> {
 	const metadata: Metadata = {};
 
-	const pages = await getComicPages( [ 'all' ] );
-	const pageNumber = await numeralisePageNumber( page );
-	const pageData = findPage( pages, pageNumber );
+	const imageProps = getImageProps( pageData );
 
-	if ( ! pageData ) {
-		return {};
-	}
-
-	metadata.title = `Page ${ pageNumber } | Vessel`;
-	if ( await isLatestPage( pageData ) ) {
-		metadata.title = `Latest | Vessel`;
-		metadata.alternates = {
-			canonical: `${ process.env.NEXT_PUBLIC_FRONTEND_URL }`
-		};
-	}
-
-	metadata.description = `Read page ${ pageNumber } of Vessel here!`;
+	metadata.description = `Read page ${ pageData.meta.comic_page_number } of Vessel here!`;
+	metadata.title = `Vessel | ${pageData.title.rendered}`;
 	if ( pageData?.yoast_head_json?.og_description ) {
 		metadata.description = pageData.yoast_head_json.og_description;
-	} else if ( getImageProps( pageData ).alt !== '' ) {
-		metadata.description = getImageProps( pageData ).alt;
+	} else if ( imageProps.alt !== '' ) {
+		metadata.description = imageProps.alt;
+	}
+
+	metadata.openGraph = {
+		type: "website",
+		url: "https://vesselcomic.com",
+		title: `Vessel | ${pageData.title.rendered}`,
+		description: "A medieval fantasy webcomic about a man on a journey to deliver a world-healing vessel of magic to a powerful mage. Who is this mage? He doesn\'t really know yet. Where are they? That\'s also up in the air. Does he want to do this? Not really.",
+		siteName: "Vessel",
+		images: [
+			{ url: "https://kipbite-assets.fra1.digitaloceanspaces.com/vessel/opengraph-image.jpg" }
+		]
 	}
 
 	return metadata;
@@ -418,6 +418,9 @@ export function applyLockedAttribute<T extends Post>(
 	return allowedPosts;
 }
 
+/**
+ * Checks if a comic page has either no written content or just empty paragraphs
+ */
 export function isContentEmpty( page: ComicPage ) {
 	if ( !page?.content?.rendered ) {
 		return true;
@@ -426,4 +429,66 @@ export function isContentEmpty( page: ComicPage ) {
 	const isEmptyParagraph = !!page.content.rendered.match( /^(\\n)*?<p ?.*?><\/p>(\\n)*$/gm )?.length;
 
 	return isEmptyParagraph;
+}
+
+export function getCookie( key: string ) {
+	if ( typeof document === 'undefined' ) {
+		console.error('Trying to get cookie on server');
+		return;
+	}
+
+	const fullString = document?.cookie.split(";").find( i => i.trim().startsWith(`${key}=`));
+	if (!fullString) {
+		return;
+	}
+
+	return fullString.split('=')[1];
+}
+
+export function hasCookie( key: string ) {
+	if ( typeof document === 'undefined' ) {
+		console.error('Trying to get cookie on server');
+		return;
+	}
+
+	return document?.cookie.split(";").some( i => i.trim().startsWith(`${key}=`));
+}
+
+export function setCookie(
+	key: string,
+	value: string,
+	expiryDate: Date|string = null,
+	path: string = '/'
+) {
+	if ( typeof document === 'undefined' ) {
+		console.error('Trying to set cookie on server');
+		return;
+	}
+
+	if ( !expiryDate ) {
+		expiryDate = new Date();
+		const time = expiryDate.getTime();
+		const expireTime = time + 60000 * 60 * 24 * 30 // 30 days
+		expiryDate.setTime( expireTime );
+	}
+
+	if ( typeof expiryDate !== 'string' ) {
+		expiryDate = expiryDate.toUTCString();
+	}
+
+	document.cookie = `${ key }=${ value };expires=${ expiryDate };path=${ path }`;
+}
+
+export function isLocked(
+	post: { role_locks: string[] },
+	user?: { roles: string[] }
+) {
+	if ( post && post.role_locks.length === 0 ) {
+		return false;
+	}
+
+	return !arraysHaveOverlap(
+		post?.role_locks ?? [],
+		user?.roles ?? []
+	);
 }

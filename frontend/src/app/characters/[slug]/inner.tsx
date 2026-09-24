@@ -1,46 +1,33 @@
 "use client"
 
-import ChapterSelector from "@/components/ChapterSelector";
-import CharacterPortrait from "@/components/CharacterPortrait";
-import { getCharacterBioData, getLatestCharacterBioData } from "@/lib/utilities";
+import ChapterSelector from "@/components/server/ChapterSelector";
 import { Character } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { useState } from "react";
+import CharacterBio from "@/components/server/CharacterBio";
 
 interface Props {
 	character: Character
 	chapters: Chapter[]
+	defaultChapter: string
 }
 
-export default function Inner( { character, chapters }: Props ) {
-	const [ currentChapter, setCurrentChapter ] = useState( chapters[0].slug );
-
-	const characterData = getCharacterBioData( character );
-
-	let { name, pronouns, description, portrait } = getLatestCharacterBioData(
-		chapters,
-		currentChapter,
-		characterData
-	);
-
-	name = name ?? character.title.rendered;
-	description = description ?? 'Read on to find out more about this character';
+export default function Inner( { character, chapters, defaultChapter }: Props ) {
+	const [ currentChapter, setCurrentChapter ] = useState( defaultChapter );
 
 	return (
 		<>
 			<ChapterSelector
 				chapters={ chapters }
 				currentChapter={ currentChapter }
-				setCurrentChapter={ setCurrentChapter }
+				selectCallback={ setCurrentChapter }
 			/>
-
 			<div className="character-profile">
-				<CharacterPortrait portrait={ portrait } characterName={ name } />
-				<div>
-					<h1>{ name }</h1>
-					{ pronouns && <span className="pronouns">{ pronouns }</span> }
-					<p>{ description }</p>
-				</div>
+				<CharacterBio
+					character={ character }
+					chapters={ chapters }
+					currentChapter={ currentChapter }
+				/>
 			</div>
 		</>
 	)

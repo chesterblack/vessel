@@ -1,4 +1,4 @@
-import SignIn from "@/components/SignIn";
+import SignIn from "@/components/client/SignIn";
 import Image from "next/image";
 import Link from "next/link";
 import KofiLogo from "../../../public/kofi-logo.svg";

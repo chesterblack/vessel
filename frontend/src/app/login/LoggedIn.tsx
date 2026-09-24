@@ -1,7 +1,7 @@
-import { SignOut } from "@/components/SignOut";
+import { SignOut } from "@/components/client/SignOut";
 import { User } from "next-auth";
 
-interface Props {
+type Props = {
 	user: User
 };
 

@@ -1,4 +1,4 @@
-import JsonLdSchema from "@/components/JsonLdSchema";
+import JsonLdSchema from "@/components/server/JsonLdSchema";
 import { getYoastMetadata } from "@/lib/seo";
 import { getChapters } from "@/lib/data-fetching";
 import { SluggedPageProps } from "@/types/types";
@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import Inner from "./inner";
 import { getCharacter } from "@/lib/data-fetching";
 import "@/styles/characters.scss";
+import { cookies } from "next/headers";
 
 export async function generateMetadata( { params }: SluggedPageProps ): Promise<Metadata> {
 	const { slug }      = await params;
@@ -22,6 +23,7 @@ export async function generateMetadata( { params }: SluggedPageProps ): Promise<
 export default async function CharacterProfilePage( { params }: SluggedPageProps ) {
 	const { slug }      = await params;
 	const characterData = await getCharacter( slug );
+	const cookieStore = await cookies();
 
 	if ( ! characterData ) {
 		notFound();
@@ -32,6 +34,7 @@ export default async function CharacterProfilePage( { params }: SluggedPageProps
 		notFound();
 	}
 
+	const defaultChapter = cookieStore.get('last-read-chapter')?.value ?? chapterData[0].slug;
 	const schema = characterData.yoast_head_json.schema;
 
 	return (
@@ -40,6 +43,7 @@ export default async function CharacterProfilePage( { params }: SluggedPageProps
 			<Inner
 				character={ characterData }
 				chapters={ chapterData }
+				defaultChapter={ defaultChapter }
 			/>
 		</main>
 	);

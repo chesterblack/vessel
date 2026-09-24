@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 import "@/styles/blog.scss";
 import { blogDescription } from "@/lib/seo";
-import BlogListing from "@/components/BlogListing";
+import BlogListing from "@/components/server/BlogListing";
 import { getBlogPosts } from "@/lib/data-fetching";
 
 

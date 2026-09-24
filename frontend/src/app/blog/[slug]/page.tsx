@@ -1,15 +1,15 @@
 import parse from 'html-react-parser';
-import JsonLdSchema from '@/components/JsonLdSchema';
+import JsonLdSchema from '@/components/server/JsonLdSchema';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getYoastMetadata } from '@/lib/seo';
 import { Author } from '@/types/types';
 
 import "@/styles/blog.scss";
-import AuthorImage from '@/components/AuthorImage';
+import AuthorImage from '@/components/server/AuthorImage';
 import { getBlogPost } from '@/lib/data-fetching';
 
-export interface Props {
+export type Props = {
 	params: Promise<{ slug: string }>
 }
 

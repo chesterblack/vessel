@@ -3,6 +3,7 @@ import { applyLockedAttribute, arraysHaveOverlap, isNumeric, sendApiRequest } fr
 import { Character, ComicPage, Post, WebPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { WP_REST_API_Post, WP_REST_API_Taxonomy } from "wp-types";
+import { ComicIndex, ComicReaderData } from "@/types/types";
 
 type ContentType = 'posts' | 'pages' | 'chapters' | 'comic_page'| 'character' | 'fanart';
 
@@ -72,6 +73,23 @@ export const getChapters = cache( async () => {
 	return reversed;
 } );
 
+export const getPageIndexes = async (currentPageNumber: number, chapter?: string) => {
+	const response = await sendApiRequest(
+		'GET',
+		'vessel/v1/page-indexes',
+		{
+			chapter: chapter ?? '',
+			current: currentPageNumber
+		}
+	) as ComicIndex[];
+	
+	if ( response.length < 1 ) {
+		return;
+	}
+
+	return response;
+}
+
 export const getComicPages = async ( roles?: string[] ) => {
 	const options = {
 		orderby: 'comic_page_number',
@@ -104,10 +122,54 @@ export const getChapter = cache(
 	)
 );
 
+export const getComicReaderData = cache(
+	async ( pageNumber?: number, unlockedOnly?: boolean ) => {
+		const url = pageNumber ?
+			`vessel/v1/read-page/${pageNumber}` :
+			`vessel/v1/read-page?unlocked_only=${unlockedOnly}`;
+		return await sendApiRequest( 'GET', url ) as ComicReaderData;
+	}
+)
+
+export const getLatestPageNumber = cache(
+	async () => {
+		const response = await sendApiRequest(
+			'GET',
+			'wp/v2/comic_page',
+			{
+				per_page: 1,
+				orderby: 'comic_page_number',
+				_embed: 'wp:term'
+			}
+		) as ComicPage[];
+		
+		if ( response.length < 1 ) {
+			return;
+		}
+
+		return response[0]?.meta?.comic_page_number;
+	}
+)
+
 export const getComicPage = cache(
-	( identifier: number|string, params?: any ) => (
-		getPost( 'comic_page', identifier, params ) as Promise<ComicPage>
-	)
+	async ( comicPageNumber: number ) => {
+		const response = await sendApiRequest(
+			'GET',
+			'wp/v2/comic_page',
+			{
+				meta_key: 'comic_page_number',
+				meta_value: comicPageNumber,
+				orderby: 'comic_page_number',
+				_embed: 'wp:term'
+			}
+		) as ComicPage[];
+
+		if ( response.length < 1 ) {
+			return;
+		}
+
+		return response[0];
+	}
 );
 
 export const getCharacter = cache(
