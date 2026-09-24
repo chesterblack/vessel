@@ -64,7 +64,7 @@ function setup_endpoints() {
 	// Everything you need for a page read
 	register_rest_route(
 		'vessel/v1',
-		'/read-page/(?P<page_number>\d+)',
+		'/read-page(?:/(?P<page_number>\d+))?',
 		[
 			'methods' => 'GET',
 			'callback' => 'get_page_read',
@@ -74,13 +74,23 @@ function setup_endpoints() {
 }
 
 function get_page_read( $data ) {
-	$page_number = (int)$data['page_number'];
 	$chapter = $data->get_param( 'chapter' );
-	
+	$unlocked_only = $data->get_param( 'unlocked_only' );
+
+	$latest = get_latest_comic_page( false );
+	$latest_unlocked = get_latest_comic_page( true );
+
+	$page_number = $data->get_param( 'page_number' ) ?: (
+		$unlocked_only ? $latest_unlocked['page_number'] : $latest['page_number']
+	);
+
+	$current = get_current_comic_page( (int)$page_number );
+	$indexes = get_comic_page_indexes( (int)$page_number, $chapter );
+
 	$response = [
-		'current' => get_current_comic_page($page_number),
-		'latest' => get_latest_comic_page(),
-		'indexes' => get_comic_page_indexes($page_number, $chapter),
+		'current' => $current,
+		'latest' => $latest,
+		'indexes' => $indexes,
 	];
 
 	return $response;
@@ -94,25 +104,36 @@ function build_page_index( WP_Post $post ) {
 	$post_object['title'] = $post->post_title;
 	$post_object['page_number'] = $post_page_number;
 	$post_object['role_locks'] = array_map(
-		fn($rl) => $rl->slug,
+		fn($role_lock) => $role_lock->slug,
 		get_the_terms( $post, 'role_locks' ) ?: []
 	);
 
 	return $post_object;
 }
 
-function get_latest_comic_page() {
-	$posts = new WP_Query([
+function get_latest_comic_page( bool $unlocked_only ) {
+	$query_options = [
 		'per_page' => 1,
 		'post_type' => 'comic_page',
 		'meta_key' => 'comic_page_number',
 		'orderby' => 'meta_value_num',
 		'order' => 'DESC',
-	]);
+	];
 
-	while ($posts->have_posts($posts)) {
+	if ( $unlocked_only ) {
+		$query_options['tax_query'] = [[
+			'taxonomy' => 'role_locks',
+			'field' => 'slug',
+			'terms' => '1447593084727726282',
+			'operator' => 'NOT IN',
+		]];
+	}
+
+	$posts = new WP_Query( $query_options );
+
+	while ( $posts->have_posts( $posts ) ) {
 		$posts->the_post();
-		return build_page_index($posts->post);
+		return build_page_index( $posts->post );
 	}
 }
 
@@ -145,9 +166,15 @@ function get_comic_page_indexes( int $page_number, string $chapter = null ) {
 }
 
 function get_current_comic_page(int $page_number) {
-	$current_response = wp_remote_get( get_site_url() . "/wp-json/wp/v2/comic_page?meta_key=comic_page_number&meta_value=$page_number&_embed=wp%3Aterm" );
+	$url = "https://admin.vesselcomic.com/wp-json/wp/v2/comic_page?meta_key=comic_page_number&meta_value=$page_number&_embed=wp%3Aterm";
 
-	if ($current_response['response']['code'] !== 200 || $current_response['body'] === '[]') {
+	$current_response = wp_remote_get( $url );
+
+	if (
+		is_wp_error( $current_response ) ||
+		$current_response['response']['code'] !== 200 ||
+		$current_response['body'] === '[]'
+	) {
 		return [];
 	}
 

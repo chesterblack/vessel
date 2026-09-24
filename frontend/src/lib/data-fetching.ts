@@ -123,13 +123,11 @@ export const getChapter = cache(
 );
 
 export const getComicReaderData = cache(
-	async ( pageNumber: number ) => {
-		const response = await sendApiRequest(
-			'GET',
-			`vessel/v1/read-page/${pageNumber}`
-		);
-
-		return response as ComicReaderData;
+	async ( pageNumber?: number, unlockedOnly?: boolean ) => {
+		const url = pageNumber ?
+			`vessel/v1/read-page/${pageNumber}` :
+			`vessel/v1/read-page?unlocked_only=${unlockedOnly}`;
+		return await sendApiRequest( 'GET', url ) as ComicReaderData;
 	}
 )
 

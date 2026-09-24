@@ -2,19 +2,26 @@ import Button from "./Button";
 import PageSelector from "../client/PageSelector";
 import LockIcon from "./svg/LockIcon";
 import { ComicIndexWithLock } from "@/types/types";
-import { isLocked } from "@/lib/utilities";
 
 
 type Props = {
 	currentPageNumber: number
 	pageIndexes: ComicIndexWithLock[]
+	latestPageNumber: number
 }
 
-export default function PageReaderNav({currentPageNumber, pageIndexes}: Props) {
+export default function PageReaderNav({ currentPageNumber, pageIndexes, latestPageNumber}: Props) {
 	const canGoBack = currentPageNumber !== 1;
-	const prevPageLocked = isLocked( pageIndexes.find(
+	const prevPageLocked = pageIndexes.find(
 		c => c.page_number === currentPageNumber - 1
-	) );
+	).locked;
+
+	const canGoForward = currentPageNumber < latestPageNumber;
+	const nextPageLocked = pageIndexes.find(
+		c => c.page_number === currentPageNumber + 1
+	).locked;
+
+	const lastPageLocked = pageIndexes[pageIndexes.length - 1].locked;
 
 	return (
 		<nav className="page-reader-nav">
@@ -38,21 +45,25 @@ export default function PageReaderNav({currentPageNumber, pageIndexes}: Props) {
 				currentPageNumber={ currentPageNumber }
 			/>
 
-			{/* <Button
+			<Button
 				disabled={ !canGoForward }
-				href={ `/page/${ page + 1 }` }
-				classes={ `${ nextPageLocked ? 'locked' : '' } ${ nextPageUnlocked ? 'unlocked' : '' }` }
+				href={ `/page/${ currentPageNumber + 1 }` }
+				classes={ `${ nextPageLocked ? 'locked' : '' }` }
 			>
 				{ nextPageLocked && <LockIcon width={ 20 } height={ 20 } /> }
-				{ nextPageUnlocked && <UnlockIcon width={ 20 } height={ 20 } /> }
 				<span className="label">Next</span>
 				<span className="arrow"> &gt;</span>
-			</Button> */}
+			</Button>
 
-			{/* <Button disabled={ page === filterLatestPageNumber( unlockedPages ) || ! nextPage } href='/page/latest'>
+			<Button
+				disabled={ !canGoForward }
+				href={`/page/${latestPageNumber}`}
+				classes={ `${ lastPageLocked ? 'locked' : '' }` }
+			>
+				{ lastPageLocked && <LockIcon width={ 20 } height={ 20 } /> }
 				<span className="label">Last</span>
 				<span className="arrow"> &gt;&gt;</span>
-			</Button> */}
+			</Button>
 		</nav>
 	);
 }

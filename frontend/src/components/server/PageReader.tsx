@@ -1,9 +1,8 @@
-import { ComicIndexWithLock, PageNumber } from "@/types/types";
+import { ComicIndexWithLock, ComicReaderData } from "@/types/types";
 
 import { notFound } from "next/navigation";
 import '@/styles/page-reader.scss';
 import { arraysHaveOverlap, getEmbeddedChapters,applyLockedAttribute, isLocked } from "@/lib/utilities";
-import { getComicPage, getComicReaderData, getLatestPageNumber } from "@/lib/data-fetching";
 import PageReaderNav from "@/components/server/PageReaderNav";
 import JsonLdSchema from "./JsonLdSchema";
 import JumpToTop from "../client/JumpToTop";
@@ -11,28 +10,37 @@ import AuthorsNote from "./AuthorsNote";
 import CharacterTags from "./CharacterTags";
 import Background from "./Background";
 import PageArea from "./PageArea";
-import { getUser } from "@/lib/users";
 import Secret from "./Secret";
 import SubscribeBanner from "../client/SubscribeBanner";
 import SetPageCookies from "../client/SetPageCookies";
 import { SessionProvider } from "next-auth/react";
+import { User } from "next-auth";
 
 type Props = {
-	page?: PageNumber
+	comicReaderData: ComicReaderData
+	user: User & {roles: string[]}
 }
 
-/** Core part of any page where you can read comic pages, including t
- * he page itself and the navigation */
-export default async function PageReader( { page = 'latest' }: Props ) {
-	const user = await getUser();
-	const {current, latest, indexes} = await getComicReaderData(56);
+/** 
+ Core part of any page where you can read comic pages, including
+ the page itself and the navigation
+ */
+export default async function PageReader( { comicReaderData, user }: Props ) {
+	const {current, latest, indexes} = comicReaderData;
 
+	if (!current || !latest || !indexes) {
+		notFound();
+	}
+
+	const pageNumber = current.meta.comic_page_number;
 	const indexesWithLock: ComicIndexWithLock[] = indexes.map(
-		page => ( { ...page, locked: isLocked( page, user ) } )
+		page => ( {
+			...page,
+			locked: isLocked( page, user )
+		} )
 	);
 
 	const latestPageNumber = latest.page_number;
-	const pageNumber = page === 'latest' ? latestPageNumber : typeof page !== 'number' ? parseInt( page ) : page;
 	const pageData = applyLockedAttribute(user?.roles ?? [], [current])[0];
 
 	if ( ! pageData ) {
@@ -68,7 +76,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 			<main className={`page-reader ${ pageData.class_list.join(' ') }`}>
 				<Background backgroundGradient={ backgroundGradient } backgroundImage={ backgroundImage } />
 				<JumpToTop />
-				<PageReaderNav currentPageNumber={pageNumber} pageIndexes={indexesWithLock} />
+				<PageReaderNav currentPageNumber={pageNumber} pageIndexes={indexesWithLock} latestPageNumber={latestPageNumber} />
 				{ secret && secret }
 				{ ! secret &&
 					<PageArea
@@ -78,7 +86,7 @@ export default async function PageReader( { page = 'latest' }: Props ) {
 						canGoForward={ canGoForward }
 					/>
 				}
-				<PageReaderNav currentPageNumber={pageNumber} pageIndexes={indexesWithLock} />
+				<PageReaderNav currentPageNumber={pageNumber} pageIndexes={indexesWithLock} latestPageNumber={latestPageNumber} />
 				{ ! secret &&
 					<>
 						<CharacterTags

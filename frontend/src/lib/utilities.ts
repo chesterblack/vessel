@@ -290,40 +290,29 @@ export async function isLatestPage( page: ComicPage ): Promise<boolean> {
  * Generate the metadata required for a read page
  */
 export async function getComicPageMetadata(
-	page: PageNumber
+	pageData: ComicPage
 ): Promise<Metadata> {
 	const metadata: Metadata = {};
 
-	const pages = await getComicPages( [ 'all' ] );
-	const pageNumber = await numeralisePageNumber( page );
-	const pageData = findPage( pages, pageNumber );
+	const imageProps = getImageProps( pageData );
 
-	if ( ! pageData ) {
-		return {};
-	}
-
-	metadata.title = `Page ${ pageNumber } | Vessel`;
-	if ( await isLatestPage( pageData ) ) {
-		metadata.title = `Latest | Vessel`;
-		metadata.alternates = {
-			canonical: `${ process.env.NEXT_PUBLIC_FRONTEND_URL }`
-		};
-	}
-
-	metadata.description = `Read page ${ pageNumber } of Vessel here!`;
+	metadata.description = `Read page ${ pageData.meta.comic_page_number } of Vessel here!`;
+	metadata.title = `Vessel | ${pageData.title.rendered}`;
 	if ( pageData?.yoast_head_json?.og_description ) {
 		metadata.description = pageData.yoast_head_json.og_description;
-	} else if ( getImageProps( pageData ).alt !== '' ) {
-		metadata.description = getImageProps( pageData ).alt;
+	} else if ( imageProps.alt !== '' ) {
+		metadata.description = imageProps.alt;
 	}
 
 	metadata.openGraph = {
 		type: "website",
 		url: "https://vesselcomic.com",
-		title: "Vessel",
+		title: `Vessel | ${pageData.title.rendered}`,
 		description: "A medieval fantasy webcomic about a man on a journey to deliver a world-healing vessel of magic to a powerful mage. Who is this mage? He doesn\'t really know yet. Where are they? That\'s also up in the air. Does he want to do this? Not really.",
 		siteName: "Vessel",
-		images: [{ url: "https://kipbite-assets.fra1.digitaloceanspaces.com/vessel/opengraph-image.jpg" }]
+		images: [
+			{ url: "https://kipbite-assets.fra1.digitaloceanspaces.com/vessel/opengraph-image.jpg" }
+		]
 	}
 
 	return metadata;
@@ -498,7 +487,7 @@ export function isLocked(
 		return false;
 	}
 
-	return arraysHaveOverlap(
+	return !arraysHaveOverlap(
 		post?.role_locks ?? [],
 		user?.roles ?? []
 	);

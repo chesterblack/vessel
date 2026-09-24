@@ -23,7 +23,7 @@ export default function PageSelector( { pageIndexes, currentPageNumber }: Props 
 				redirect( `/page/${ e.target.value }` )
 			} }
 		>
-			{ pageIndexes.map( ( { slug, title, page_number, locked }, i ) => {
+			{ pageIndexes.map( ( { slug, title, page_number, locked } ) => {
 					return (
 						<option value={ page_number } key={ slug } disabled={ locked }>
 							{ title }
