@@ -1,4 +1,4 @@
-import { PageNumber } from "@/types/types";
+import { ComicIndex, PageNumber } from "@/types/types";
 import { CharacterBioData, CharacterBioDatum } from "@/types/wp-blocks";
 import { Character, ComicPage, Post, WebPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
@@ -7,6 +7,7 @@ import { Metadata } from "next";
 import { WP_Term } from "wp-types";
 
 import { getComicPages } from "@/lib/data-fetching";
+import { User } from "next-auth";
 
 /**
  * Send a request to the backend API, include the wp/v2/
@@ -30,6 +31,8 @@ export async function sendApiRequest(
 	}
 
 	const url = `${ process.env.NEXT_PUBLIC_BACKEND_API_BASE }/${ endpoint }?${ urlParams }`;
+
+	console.log( 'findme: url: ', url );
 
 	return await fetch( url, options )
 		.then( res => res.json() )
@@ -485,4 +488,18 @@ export function setCookie(
 	}
 
 	document.cookie = `${ key }=${ value };expires=${ expiryDate };path=${ path }`;
+}
+
+export function isLocked(
+	post: { role_locks: string[] },
+	user?: { roles: string[] }
+) {
+	if ( post && post.role_locks.length === 0 ) {
+		return false;
+	}
+
+	return arraysHaveOverlap(
+		post?.role_locks ?? [],
+		user?.roles ?? []
+	);
 }

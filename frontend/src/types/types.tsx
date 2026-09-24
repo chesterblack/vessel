@@ -1,6 +1,7 @@
 import { Robots } from "next/dist/lib/metadata/types/metadata-types";
 import { ReactElement } from "react";
 import { Graph } from "schema-dts";
+import { ComicPage } from "./wp-post-types";
 
 export type Children = ReactElement | string | ( string | ReactElement )[];
 
@@ -44,3 +45,18 @@ export type Author = {
 }
 
 export type HeadingLevel = 1|2|3|4|5|6;
+
+export type ComicIndex = {
+	slug: string
+	title: string
+	page_number: number
+	role_locks: string[]
+}
+
+export type ComicIndexWithLock = ComicIndex & { locked: boolean }
+
+export type ComicReaderData = {
+	current: ComicPage
+	latest: ComicIndex
+	indexes: ComicIndex[]
+}

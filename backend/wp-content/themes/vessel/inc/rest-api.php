@@ -1,5 +1,4 @@
 <?php
-
 // Allows comic_pages to be sorted by the comic_page_number meta
 add_filter(
 	'rest_comic_page_collection_params',
@@ -58,16 +57,127 @@ function setup_endpoints() {
 		[
 			'methods' => 'GET',
 			'callback' => 'get_page_indexes',
-			'permission_callback' => '__return_true'
+			'permission_callback' => '__return_true',
+		]
+	);
+
+	// Everything you need for a page read
+	register_rest_route(
+		'vessel/v1',
+		'/read-page/(?P<page_number>\d+)',
+		[
+			'methods' => 'GET',
+			'callback' => 'get_page_read',
+			'permission_callback' => '__return_true',
 		]
 	);
 }
 
-function get_page_indexes() {
+function get_page_read( $data ) {
+	$page_number = (int)$data['page_number'];
+	$chapter = $data->get_param( 'chapter' );
+	
+	$response = [
+		'current' => get_current_comic_page($page_number),
+		'latest' => get_latest_comic_page(),
+		'indexes' => get_comic_page_indexes($page_number, $chapter),
+	];
+
+	return $response;
+}
+
+function build_page_index( WP_Post $post ) {
+	$post_object = [];
+
+	$post_page_number = (int)$post->__get( 'comic_page_number' );
+	$post_object['slug'] = $post->post_name;
+	$post_object['title'] = $post->post_title;
+	$post_object['page_number'] = $post_page_number;
+	$post_object['role_locks'] = array_map(
+		fn($rl) => $rl->slug,
+		get_the_terms( $post, 'role_locks' ) ?: []
+	);
+
+	return $post_object;
+}
+
+function get_latest_comic_page() {
 	$posts = new WP_Query([
+		'per_page' => 1,
 		'post_type' => 'comic_page',
-		'posts_per_page' => -1
+		'meta_key' => 'comic_page_number',
+		'orderby' => 'meta_value_num',
+		'order' => 'DESC',
 	]);
+
+	while ($posts->have_posts($posts)) {
+		$posts->the_post();
+		return build_page_index($posts->post);
+	}
+}
+
+function get_comic_page_indexes( int $page_number, string $chapter = null ) {
+	$query_options = [
+		'post_type' => 'comic_page',
+		'posts_per_page' => 20,
+		'offset' => $page_number > 10 ? $page_number - 10 : 0,
+		'order' => 'ASC',
+		'meta_key' => 'comic_page_number',
+		'orderby' => 'meta_value_num',
+	];
+
+	if ( $chapter ) {
+		$query_options['tax_query'] = [[
+			'taxonomy' => 'chapters',
+			'field' => 'slug',
+			'terms' => $chapter,
+		]];
+	}
+
+	$response = [];
+	$posts = new WP_Query( $query_options );
+	while ($posts->have_posts($posts)) {
+		$posts->the_post();
+		$response[] = build_page_index($posts->post);
+	}
+
+	return $response;
+}
+
+function get_current_comic_page(int $page_number) {
+	$current_response = wp_remote_get( get_site_url() . "/wp-json/wp/v2/comic_page?meta_key=comic_page_number&meta_value=$page_number&_embed=wp%3Aterm" );
+
+	if ($current_response['response']['code'] !== 200 || $current_response['body'] === '[]') {
+		return [];
+	}
+
+	$current = json_decode($current_response['body']);
+
+	return $current[0];
+}
+
+function get_page_indexes( $data ) {
+	$current = $data->get_param( 'current' );
+	$chapter = $data->get_param( 'chapter' );
+
+	$query_options = [
+		'post_type' => 'comic_page',
+		'posts_per_page' => 20,
+		'offset' => (int)$current > 10 ? (int)$current - 10 : 0,
+		'order' => 'ASC',
+		'meta_key' => 'comic_page_number',
+		'orderby' => 'meta_value_num',
+	];
+
+	if ( $chapter ) {
+		$query_options['tax_query'] = [[
+			'taxonomy' => 'chapters',
+			'field' => 'slug',
+			'terms' => $chapter,
+		]];
+	}
+
+	$posts = new WP_Query( $query_options );
 
 	$response = [];
 
@@ -75,7 +185,13 @@ function get_page_indexes() {
 		$posts->the_post();
 		$post_object = [];
 		$post_object['slug'] = $posts->post->post_name;
-		$post_object['page_number'] = $posts->post->__get('comic_page_number');
+		$post_object['title'] = $posts->post->post_title;
+		$post_object['page_number'] = (int)$posts->post->__get( 'comic_page_number' );
+		$post_object['role_locks'] = array_map(
+			fn($rl) => $rl->slug,
+			get_the_terms( $posts->post, 'role_locks' ) ?: []
+		);
+
 		$response[] = $post_object;
 	}
 

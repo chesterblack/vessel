@@ -3,6 +3,7 @@ import { applyLockedAttribute, arraysHaveOverlap, isNumeric, sendApiRequest } fr
 import { Character, ComicPage, Post, WebPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { WP_REST_API_Post, WP_REST_API_Taxonomy } from "wp-types";
+import { ComicIndex, ComicReaderData } from "@/types/types";
 
 type ContentType = 'posts' | 'pages' | 'chapters' | 'comic_page'| 'character' | 'fanart';
 
@@ -72,6 +73,23 @@ export const getChapters = cache( async () => {
 	return reversed;
 } );
 
+export const getPageIndexes = async (currentPageNumber: number, chapter?: string) => {
+	const response = await sendApiRequest(
+		'GET',
+		'vessel/v1/page-indexes',
+		{
+			chapter: chapter ?? '',
+			current: currentPageNumber
+		}
+	) as ComicIndex[];
+	
+	if ( response.length < 1 ) {
+		return;
+	}
+
+	return response;
+}
+
 export const getComicPages = async ( roles?: string[] ) => {
 	const options = {
 		orderby: 'comic_page_number',
@@ -103,6 +121,17 @@ export const getChapter = cache(
 		getPost( 'chapters', identifier, params ) as Promise<Chapter>
 	)
 );
+
+export const getComicReaderData = cache(
+	async ( pageNumber: number ) => {
+		const response = await sendApiRequest(
+			'GET',
+			`vessel/v1/read-page/${pageNumber}`
+		);
+
+		return response as ComicReaderData;
+	}
+)
 
 export const getLatestPageNumber = cache(
 	async () => {
