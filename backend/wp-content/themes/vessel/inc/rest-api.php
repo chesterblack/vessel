@@ -50,7 +50,38 @@ function setup_endpoints() {
 			'permission_callback' => '__return_true'
 		]
 	);
+
+	// Page names and numbers
+	register_rest_route(
+		'vessel/v1',
+		'/page-indexes',
+		[
+			'methods' => 'GET',
+			'callback' => 'get_page_indexes',
+			'permission_callback' => '__return_true'
+		]
+	);
 }
+
+function get_page_indexes() {
+	$posts = new WP_Query([
+		'post_type' => 'comic_page',
+		'posts_per_page' => -1
+	]);
+
+	$response = [];
+
+	while ($posts->have_posts($posts)) {
+		$posts->the_post();
+		$post_object = [];
+		$post_object['slug'] = $posts->post->post_name;
+		$post_object['page_number'] = $posts->post->__get('comic_page_number');
+		$response[] = $post_object;
+	}
+
+	return $response;
+}
+
 add_action( 'rest_api_init', 'setup_endpoints' );
 
 
