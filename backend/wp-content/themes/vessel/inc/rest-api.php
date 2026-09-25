@@ -75,7 +75,7 @@ function setup_endpoints() {
 
 function get_page_read( $data ) {
 	$chapter = $data->get_param( 'chapter' );
-	$unlocked_only = $data->get_param( 'unlocked_only' );
+	$unlocked_only = filter_var($data->get_param( 'unlocked_only' ), FILTER_VALIDATE_BOOLEAN);
 
 	$latest = get_latest_comic_page( false );
 	$latest_unlocked = get_latest_comic_page( true );
