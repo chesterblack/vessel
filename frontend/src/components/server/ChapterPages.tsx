@@ -36,7 +36,7 @@ export default async function ChapterPages( { chapter, pages, headingLevel = 2 }
 			<div className="archive-pages">
 				{ pages.map( page => {
 					const {src, width, height, alt} = getImageProps( page );
-					const date = new Date( page.modified );
+					const date = new Date( page.date );
 
 					return (
 						<Button

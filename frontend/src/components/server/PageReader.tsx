@@ -73,7 +73,7 @@ export default async function PageReader( { comicReaderData, user }: Props ) {
 	const canGoBack = pageNumber > 1;
 	const canGoForward = pageNumber < latestPageNumber;
 
-	const date = new Date( pageData.modified );
+	const date = new Date( pageData.date );
 
 	return (
 		<SessionProvider>
