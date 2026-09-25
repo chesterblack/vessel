@@ -1,5 +1,18 @@
 @use '@/styles/partials/colors.scss';
 
+.archive-pages {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+
+	@media screen and (max-width: 980px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	@media screen and (max-width: 770px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
 .page-link {
 	display: inline-block;
 	text-decoration: none;
@@ -10,6 +23,8 @@
 	margin-right: 10px;
 	margin-bottom: 10px;
 	transition: ease-in-out .1s;
+	text-align: center;
+	position: relative;
 
 	svg {
 		position: relative;
@@ -19,7 +34,24 @@
 		margin-top: -100%;
 	}
 
+	.preview-image {
+		background-color: colors.$shallow-dark;
+		border-radius: 5px;
+		width: 100px;
+		height: auto;
+		padding: 5px;
+		display: none;
+		position: absolute;
+		transform: translate(-50%, calc(-100% - 15px));
+		left: 50%;
+		z-index: 1;
+	}
+
 	&:hover {
-		background-color: colors.$ice-blue
+		background-color: colors.$ice-blue;
+
+		.preview-image {
+			display: inline-block;
+		}
 	}
 }
