@@ -36,22 +36,27 @@ export default async function ChapterPages( { chapter, pages, headingLevel = 2 }
 			<div className="archive-pages">
 				{ pages.map( page => {
 					const {src, width, height, alt} = getImageProps( page );
+					const date = new Date( page.modified );
+
 					return (
 						<Button
 							href={`/page/${page.meta.comic_page_number}`}
 							key={page.id}
 							classes='page-link'
 						>
-							<Image
-								className='preview-image'
-								src={ src }
-								width={ width }
-								height={ height }
-								alt={ alt }
-								priority={ true }
-								fetchPriority='high'
-							/>
-							{page.locked && <LockIcon width={25} height={25} />}
+							<div className={`preview-image-container ${page.locked ? 'preview-image-container--locked' : ''}`}>
+								{page.locked && <LockIcon width={25} height={25} />}
+								<Image
+									className={`preview-image`}
+									src={ src }
+									width={ width }
+									height={ height }
+									alt={ alt }
+									priority={ true }
+									fetchPriority='high'
+								/>
+							</div>
+							<div className="date">{ `${ date.toDateString() }` }</div>
 							{page.title.rendered}
 						</Button>
 					);

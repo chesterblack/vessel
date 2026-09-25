@@ -2,7 +2,7 @@ import { ComicIndexWithLock, ComicReaderData } from "@/types/types";
 
 import { notFound } from "next/navigation";
 import '@/styles/page-reader.scss';
-import { arraysHaveOverlap, getEmbeddedChapters,applyLockedAttribute, isLocked } from "@/lib/utilities";
+import { arraysHaveOverlap, getEmbeddedChapters,applyLockedAttribute, isLocked, isContentEmpty } from "@/lib/utilities";
 import PageReaderNav from "@/components/server/PageReaderNav";
 import JsonLdSchema from "./JsonLdSchema";
 import JumpToTop from "../client/JumpToTop";
@@ -73,6 +73,8 @@ export default async function PageReader( { comicReaderData, user }: Props ) {
 	const canGoBack = pageNumber > 1;
 	const canGoForward = pageNumber < latestPageNumber;
 
+	const date = new Date( pageData.modified );
+
 	return (
 		<SessionProvider>
 			<SetPageCookies chapter={chapters[0].slug} />
@@ -100,6 +102,12 @@ export default async function PageReader( { comicReaderData, user }: Props ) {
 						/>
 						<AuthorsNote page={ pageData } />
 					</>
+				}
+				{
+					isContentEmpty(pageData) &&
+					<span className="date">
+						{ `${ date.toDateString() }, ${ date.toLocaleTimeString() }` }
+					</span>
 				}
 			</main>
 		</SessionProvider>
