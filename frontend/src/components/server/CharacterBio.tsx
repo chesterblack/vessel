@@ -5,6 +5,7 @@ import { getCharacterBioData, getLatestCharacterBioData } from "@/lib/utilities"
 import { Chapter } from "@/types/wp-taxonomies";
 import Heading from "./Heading";
 import { HeadingLevel } from "@/types/types";
+import Link from "next/link";
 
 
 type Props = {
@@ -12,12 +13,13 @@ type Props = {
 	chapters: Chapter[]
 	currentChapter: string
 	headingLevel?: HeadingLevel
+	link?: boolean
 }
 
 /**
  * A bio (name, picture, description) of a single given character during the given chapter.
  */
-export default function CharacterBio( { character, chapters, currentChapter, headingLevel = 1 }: Props ) {
+export default function CharacterBio( { character, chapters, currentChapter, headingLevel = 1, link = false }: Props ) {
 	const characterBlockData = getCharacterBioData( character );
 
 	const characterBio = getLatestCharacterBioData(
@@ -32,7 +34,7 @@ export default function CharacterBio( { character, chapters, currentChapter, hea
 
 	const parsedDescription = parse( description ?? description ?? 'Read on to find out more about this character' );
 
-	return (
+	const inner = (
 		<>
 			<CharacterPortrait
 				portrait={ portrait }
@@ -47,4 +49,18 @@ export default function CharacterBio( { character, chapters, currentChapter, hea
 			</div>
 		</>
 	);
+
+	if (link) {
+		return (
+			<Link
+				href={`/characters/${ character.slug }`}
+				className='character-bio'
+				key={ character.id }
+			>
+				{inner}
+			</Link>
+		)
+	}
+
+	return inner;
 }

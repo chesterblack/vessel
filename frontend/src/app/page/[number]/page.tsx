@@ -27,5 +27,9 @@ export default async function NumberedPage( { params }: Props ) {
 		parseInt(number)
 	);
 
+	if (!comicReaderData?.current) {
+		throw new Error('Invalid data received from server');
+	}
+
 	return <PageReader comicReaderData={ comicReaderData } user={ user } />;
 }
