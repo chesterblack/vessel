@@ -28,20 +28,18 @@ export default function CharacterList( { chapters, characters, defaultChapter }:
 				selectCallback={ setCurrentChapter }
 			/>
 
-			{ characters.map( ( character ) =>
-				<Link
-					href={`/characters/${ character.slug }`}
-					className='character-bio'
-					key={ character.id }
-				>
+			{ characters.map( ( character ) => {
+				return (
 					<CharacterBio
+						key={ character.id }
 						character={ character }
 						chapters={ chapters }
 						currentChapter={ currentChapter }
 						headingLevel={ 2 }
+						link={ true }
 					/>
-				</Link>
-			) }
+				);
+			} ) }
 		</>
 	)
 }
