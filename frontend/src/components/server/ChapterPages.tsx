@@ -28,7 +28,7 @@ export default async function ChapterPages( { chapter, pages, headingLevel = 2 }
 
 	return (
 		<div className="chapter">
-			<Heading level={ headingLevel }>
+			<Heading level={ headingLevel } id={ chapter.slug }>
 				{ chapter.name }
 			</Heading>
 			<p>{ chapter.description }</p>

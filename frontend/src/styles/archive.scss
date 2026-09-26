@@ -84,3 +84,17 @@
 		background-color: colors.$ice-blue;
 	}
 }
+
+.chapter-link {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: colors.$med-light;
+	color: colors.$deep-dark;
+	text-decoration: none;
+	border-radius: 15px;
+	margin-right: 15px;
+
+	&:hover {
+		background-color: colors.$ice-blue;
+	}
+}

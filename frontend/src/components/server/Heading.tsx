@@ -1,17 +1,18 @@
 import { Children, HeadingLevel } from "@/types/types";
-import { ElementType } from "react";
+import { ElementType, HTMLProps } from "react";
 
-interface Props {
+type Props = {
 	level?: HeadingLevel
 	children: Children
-};
+} & HTMLProps<HTMLHeadingElement>;
 
 /** A heading tag of the specified level */
-export default function Heading( { level = 1, children }: Props ) {
+export default function Heading( props: Props ) {
+	const { level, children } = props;
 	const HeadingTag = 'h' + level as ElementType;
 
 	return (
-		<HeadingTag>
+		<HeadingTag { ...props }>
 			{ children }
 		</HeadingTag>
 	);
