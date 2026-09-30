@@ -2,9 +2,9 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/comic-page/BackgroundGradientPicker.jsx":
+/***/ "./src/comic-page/BackgroundGradientPicker.tsx":
 /*!*****************************************************!*\
-  !*** ./src/comic-page/BackgroundGradientPicker.jsx ***!
+  !*** ./src/comic-page/BackgroundGradientPicker.tsx ***!
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -21,17 +21,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function BackgroundGradientPicker({
-  setAttributes,
-  attributes
+  meta,
+  setMeta
 }) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: "background-gradient-picker",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.GradientPicker, {
-        onChange: g => setAttributes({
-          backgroundGradient: g
-        }),
-        value: attributes.backgroundGradient,
+        onChange: gradient => {
+          setMeta('background_gradient', gradient);
+        },
+        value: meta.background_gradient,
         gradients: [{
           gradient: 'linear-gradient( 0deg, #b2e2f4 0%, #51596C 100%)',
           name: 'Illosian Blue',
@@ -47,22 +47,27 @@ function BackgroundGradientPicker({
         }]
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_1__["default"], {
-      image: attributes.backgroundImage,
-      callback: media => {
-        setAttributes({
-          backgroundImage: {
-            url: media.url,
-            sizes: media.sizes,
-            width: media.width,
-            height: media.height,
-            alt: media.alt
-          }
+      label: "Image",
+      image: meta.background_image,
+      callback: ({
+        id,
+        url,
+        sizes,
+        width,
+        height,
+        alt
+      }) => {
+        setMeta('background_image', {
+          id,
+          url,
+          sizes,
+          width,
+          height,
+          alt
         });
       },
       deleteCallback: () => {
-        setAttributes({
-          backgroundImage: null
-        });
+        setMeta('background_image', null);
       }
     })]
   });
@@ -97,11 +102,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/components/ImageUpload */ "./src/shared/components/ImageUpload.tsx");
 /* harmony import */ var _shared_components_CharacterTags__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/components/CharacterTags */ "./src/shared/components/CharacterTags.tsx");
-/* harmony import */ var _BackgroundGradientPicker__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./BackgroundGradientPicker */ "./src/comic-page/BackgroundGradientPicker.jsx");
+/* harmony import */ var _BackgroundGradientPicker__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./BackgroundGradientPicker */ "./src/comic-page/BackgroundGradientPicker.tsx");
 /* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
 /* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__);
+
 
 
 
@@ -128,21 +136,24 @@ function Edit({
       ...newValue
     });
   }
-  if ((!meta.characters || meta.characters.length === 0) && attributes.characters) {
-    setMeta('characters', attributes.characters);
-  }
-  if ((!meta.page_image || meta.page_image.length === 0) && attributes.pageImage) {
-    setMeta('page_image', attributes.pageImage);
-  }
-  console.log('findme: meta: ', meta);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+  (0,react__WEBPACK_IMPORTED_MODULE_7__.useEffect)(() => {
+    const legacyAttributes = [['characters', 'characters'], ['page_image', 'pageImage'], ['background_gradient', 'backgroundGradient'], ['background_image', 'backgroundImage']];
+    for (const keys of legacyAttributes) {
+      const [metaKey, attrKey] = keys;
+      const metaValue = meta[metaKey];
+      const attrValue = attributes[attrKey];
+      if ((!metaValue || typeof metaValue === 'object' && 'length' in metaValue && metaValue.length === 0) && attrValue) {
+        setMeta(metaKey, attrValue);
+      }
+    }
+  }, []);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)(),
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
       className: "inner",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("label", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("label", {
         children: "Comic Page"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        label: "",
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_3__["default"], {
         image: meta.page_image,
         callback: ({
           id,
@@ -165,18 +176,18 @@ function Edit({
           setMeta('page_image', null);
         }
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
         title: "Characters",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_shared_components_CharacterTags__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_shared_components_CharacterTags__WEBPACK_IMPORTED_MODULE_4__["default"], {
           meta: meta,
           updateMeta: updateMeta
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
         title: "Background",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_BackgroundGradientPicker__WEBPACK_IMPORTED_MODULE_5__["default"], {
-          attributes: attributes,
-          setAttributes: setAttributes
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_BackgroundGradientPicker__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          meta: meta,
+          setMeta: setMeta
         })
       })]
     }, 'inspector')]

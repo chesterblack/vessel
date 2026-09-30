@@ -7,7 +7,7 @@ type Props = {
 		id?: number
 	}
 	callback: MediaUpload.Props<false>['onSelect']
-	label: string
+	label?: string
 	deleteCallback: () => void
 }
 

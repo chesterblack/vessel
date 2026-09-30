@@ -6,6 +6,7 @@ import CharacterTags from '../shared/components/CharacterTags';
 import BackgroundGradientPicker from './BackgroundGradientPicker';
 import { useEntityProp } from '@wordpress/core-data';
 import { Image } from '../types';
+import { useEffect } from 'react';
 
 type Attributes = {
 	pageImage?: Image
@@ -42,28 +43,37 @@ export default function Edit( {
 		updateMeta({...newValue});
 	}
 
-	if (
-		(!meta.characters || meta.characters.length === 0) &&
-		attributes.characters
-	) {
-		setMeta('characters', attributes.characters);
-	}
-	
-	if (
-		(!meta.page_image || meta.page_image.length === 0) &&
-		attributes.pageImage
-	) {
-		setMeta('page_image', attributes.pageImage);
-	}
+	useEffect( () => {
+		const legacyAttributes: [
+			keyof typeof meta,
+			keyof typeof attributes
+		][] = [
+			['characters', 'characters'],
+			['page_image', 'pageImage'],
+			['background_gradient', 'backgroundGradient'],
+			['background_image', 'backgroundImage'],
+		];
 
-	console.log( 'findme: meta: ', meta );
+		for ( const keys of legacyAttributes ) {
+			const [ metaKey, attrKey ] = keys;
+			const metaValue = meta[ metaKey ];
+			const attrValue = attributes[ attrKey ];
+	
+			if ( ( !metaValue || (
+				typeof metaValue === 'object' &&
+				'length' in metaValue &&
+				metaValue.length === 0
+			) ) && attrValue ) {
+				setMeta( metaKey, attrValue );
+			}
+		}
+	}, [] );
 
 	return (
 		<div { ...useBlockProps() }>
 			<div className='inner'>
 				<label>Comic Page</label>
 				<ImageUpload
-					label=''
 					image={ meta.page_image }
 					callback={ ( { id, url, sizes, width, height, alt } ) => {
 						setMeta('page_image', { id, url, sizes, width, height, alt });
@@ -79,7 +89,7 @@ export default function Edit( {
 					<CharacterTags meta={ meta } updateMeta={ updateMeta } />
 				</PanelBody>
 				<PanelBody title='Background'>
-					<BackgroundGradientPicker attributes={ attributes } setAttributes={ setAttributes } />
+					<BackgroundGradientPicker meta={ meta } setMeta={ setMeta } />
 				</PanelBody>
 			</InspectorControls>
 		</div>

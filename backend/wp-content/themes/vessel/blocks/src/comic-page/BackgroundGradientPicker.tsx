@@ -1,13 +1,24 @@
 import { GradientPicker } from '@wordpress/components';
 import ImageUpload from '../shared/components/ImageUpload';
+import { Image } from '../types';
 
-export default function BackgroundGradientPicker( { setAttributes, attributes } ) {
+type Props = {
+	meta: {
+		background_gradient: string
+		background_image: Image
+	}
+	setMeta: Function
+}
+
+export default function BackgroundGradientPicker( { meta, setMeta }: Props ) {
 	return (
 		<>
 			<div className='background-gradient-picker'>
 				<GradientPicker
-					onChange={ g => setAttributes( { backgroundGradient: g } ) }
-					value={ attributes.backgroundGradient }
+					onChange={ gradient => {
+						setMeta('background_gradient', gradient);
+					} }
+					value={ meta.background_gradient }
 					gradients={ [
 						{
 							gradient: 'linear-gradient( 0deg, #b2e2f4 0%, #51596C 100%)',
@@ -28,20 +39,13 @@ export default function BackgroundGradientPicker( { setAttributes, attributes } 
 				/>
 			</div>
 			<ImageUpload
-				image={ attributes.backgroundImage }
-				callback={ ( media ) => {
-					setAttributes( {
-						backgroundImage: {
-							url: media.url,
-							sizes: media.sizes,
-							width: media.width,
-							height: media.height,
-							alt: media.alt
-						}
-					} );
+				label='Image'
+				image={ meta.background_image }
+				callback={ ( { id, url, sizes, width, height, alt } ) => {
+					setMeta('background_image', { id, url, sizes, width, height, alt });
 				} }
 				deleteCallback={ () => {
-					setAttributes( { backgroundImage: null } );
+					setMeta( 'background_image', null );
 				} }
 			/>
 		</>
