@@ -5,22 +5,7 @@ import ImageUpload from '../shared/components/ImageUpload';
 import CharacterTags from '../shared/components/CharacterTags';
 import BackgroundGradientPicker from './BackgroundGradientPicker';
 import { useEntityProp } from '@wordpress/core-data';
-
-type ImageSize = {
-	height: number
-	width: number
-	url: string
-	orientation: 'portrait'|'landscape'
-}
-
-type Image = {
-	id?: number
-	alt: string
-	height: number
-	sizes: Record<string, ImageSize>
-	url: string
-	width: number
-}
+import { Image } from '../types';
 
 type Attributes = {
 	pageImage?: Image
@@ -48,15 +33,30 @@ export default function Edit( {
 }: Props ) {
 	const [ meta, updateMeta ] = useEntityProp( 'postType', postType, 'meta', postId );
 
+	function setMeta<T extends keyof typeof meta>(
+		key: T,
+		data: typeof meta[T]
+	) {
+		const newValue = {...meta};
+		newValue[key] = data;
+		updateMeta({...newValue});
+	}
+
 	if (
 		(!meta.characters || meta.characters.length === 0) &&
 		attributes.characters
 	) {
-		updateMeta({
-			...meta,
-			characters: attributes.characters
-		});
+		setMeta('characters', attributes.characters);
 	}
+	
+	if (
+		(!meta.page_image || meta.page_image.length === 0) &&
+		attributes.pageImage
+	) {
+		setMeta('page_image', attributes.pageImage);
+	}
+
+	console.log( 'findme: meta: ', meta );
 
 	return (
 		<div { ...useBlockProps() }>
@@ -64,21 +64,12 @@ export default function Edit( {
 				<label>Comic Page</label>
 				<ImageUpload
 					label=''
-					image={ attributes.pageImage }
-					callback={ ( media ) => {
-						setAttributes( {
-							pageImage: {
-								id: media.id,
-								url: media.url,
-								sizes: media.sizes,
-								width: media.width,
-								height: media.height,
-								alt: media.alt
-							}
-						} );
+					image={ meta.page_image }
+					callback={ ( { id, url, sizes, width, height, alt } ) => {
+						setMeta('page_image', { id, url, sizes, width, height, alt });
 					} }
 					deleteCallback={ () => {
-						setAttributes( { pageImage: undefined } );
+						setMeta( 'page_image', null );
 					} }
 				/>
 			</div>

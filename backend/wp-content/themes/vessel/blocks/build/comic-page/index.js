@@ -119,12 +119,22 @@ function Edit({
   }
 }) {
   const [meta, updateMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_6__.useEntityProp)('postType', postType, 'meta', postId);
-  if ((!meta.characters || meta.characters.length === 0) && attributes.characters) {
+  function setMeta(key, data) {
+    const newValue = {
+      ...meta
+    };
+    newValue[key] = data;
     updateMeta({
-      ...meta,
-      characters: attributes.characters
+      ...newValue
     });
   }
+  if ((!meta.characters || meta.characters.length === 0) && attributes.characters) {
+    setMeta('characters', attributes.characters);
+  }
+  if ((!meta.page_image || meta.page_image.length === 0) && attributes.pageImage) {
+    setMeta('page_image', attributes.pageImage);
+  }
+  console.log('findme: meta: ', meta);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)(),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
@@ -133,23 +143,26 @@ function Edit({
         children: "Comic Page"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_3__["default"], {
         label: "",
-        image: attributes.pageImage,
-        callback: media => {
-          setAttributes({
-            pageImage: {
-              id: media.id,
-              url: media.url,
-              sizes: media.sizes,
-              width: media.width,
-              height: media.height,
-              alt: media.alt
-            }
+        image: meta.page_image,
+        callback: ({
+          id,
+          url,
+          sizes,
+          width,
+          height,
+          alt
+        }) => {
+          setMeta('page_image', {
+            id,
+            url,
+            sizes,
+            width,
+            height,
+            alt
           });
         },
         deleteCallback: () => {
-          setAttributes({
-            pageImage: undefined
-          });
+          setMeta('page_image', null);
         }
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
