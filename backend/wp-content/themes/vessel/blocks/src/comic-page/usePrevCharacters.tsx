@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import apiFetch from '@wordpress/api-fetch';
-import { useSelect } from '@wordpress/data';
-import { store as coreDataStore } from '@wordpress/core-data';
-import { SelectControl } from '@wordpress/components';
-import { Button } from '@wordpress/components';
 
-export default function CharacterTags( { attributes, setAttributes } ) {
-	const [ characters, setCharacters ] = useState([]);
+export default function usePrevCharacters(
+	meta: {
+		comic_page_number?: number
+		characters?: string[]
+	}
+) {
 	const [ prevCharacters, setPrevCharacters ] = useState([]);
 
 	useEffect( () => {
@@ -18,15 +18,6 @@ export default function CharacterTags( { attributes, setAttributes } ) {
 				method: 'GET',
 				headers: { 'Content-Type': 'application/json' }
 			} );
-
-			const options = [
-				...characterData.map( ( character ) => ( {
-					label: character.title.rendered,
-					value: character.id
-				} ) ),
-			];
-
-			setCharacters( options );
 
 			if ( !currentPostMeta?.comic_page_number ) {
 				return;
@@ -54,32 +45,24 @@ export default function CharacterTags( { attributes, setAttributes } ) {
 			return;
 		}
 
-		setAttributes( { characters: prevCharacters.map( c => c.value ) } );
+		updateMeta( {
+			...meta,
+			characters: prevCharacters.map( c => c.value )
+		} );
 	}
 
-	return (
+	const addPrevButton = (
 		<>
-			<SelectControl
-				multiple
-				label="Who is on this page?"
-				value={ attributes.characters }
-				options={ characters }
-				onChange={ c => setAttributes( { characters: c } ) }
-			/>
-
-			{ prevCharacters && prevCharacters.length > 0 &&
-				<>
-					<label>Previous page's characters:</label>
-					<ul style={{display: 'flex', gap: 5, margin: 0}}>
-						{ prevCharacters.map( character => <li>
-							{ character.label }
-						</li> ) }
-					</ul>
-					<Button variant='primary' onClick={ addPrev }>
-						Set to previous page
-					</Button>
-				</>
-			}
+			<label>Previous page's characters:</label>
+			<ul style={{display: 'flex', gap: 5, margin: 0}}>
+				{ prevCharacters.map( character => <li>
+					{ character.label }
+				</li> ) }
+			</ul>
+			<Button variant='primary' onClick={ addPrev }>
+				Set to previous page
+			</Button>
 		</>
 	);
-};
+
+}

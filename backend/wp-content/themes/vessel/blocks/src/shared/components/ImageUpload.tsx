@@ -1,8 +1,17 @@
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
-import { Icon } from '@wordpress/components';
 import { Button } from '@wordpress/components';
 
-export default function ImageUpload( { image, callback, label, deleteCallback } ) {
+type Props = {
+	image?: {
+		url: string
+		id?: number
+	}
+	callback: MediaUpload.Props<false>['onSelect']
+	label: string
+	deleteCallback: () => void
+}
+
+export default function ImageUpload( { image, callback, label, deleteCallback }: Props ) {
 	return (
 		<div className='image-upload'>
 			{ label && <label>{ label }</label> }

@@ -38,7 +38,8 @@ return array(
 			
 		),
 		'supports' => array(
-			'html' => false
+			'html' => false,
+			'multiple' => false
 		),
 		'textdomain' => 'comic-page',
 		'editorScript' => 'file:./index.js',
@@ -56,6 +57,10 @@ return array(
 			'backgroundImage' => array(
 				'type' => 'object'
 			)
+		),
+		'usesContext' => array(
+			'postId',
+			'postType'
 		)
 	),
 	'fanart' => array(

@@ -11,6 +11,23 @@ function setup_meta_fields() {
 			'default' => 0,
 		]
 	);
+
+	register_post_meta(
+		'comic_page',
+		'characters',
+		[
+			'single' => true,
+			'type' => 'array',
+			'show_in_rest' => [
+				'schema' => [
+					'type' => 'array',
+					'items' => [
+						'type' => 'integer',
+					],
+				],
+			],
+		],
+	);
 }
 
 add_action( 'init', 'setup_meta_fields' );
