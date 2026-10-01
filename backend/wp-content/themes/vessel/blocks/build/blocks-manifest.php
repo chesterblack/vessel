@@ -23,6 +23,10 @@ return array(
 			'chapters' => array(
 				'type' => 'string'
 			)
+		),
+		'usesContext' => array(
+			'postId',
+			'postType'
 		)
 	),
 	'comic-page' => array(

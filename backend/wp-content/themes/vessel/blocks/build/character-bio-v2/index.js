@@ -8,13 +8,13 @@
   \*****************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"vessel/character-bio-v2","version":"0.1.0","title":"Character Bio","category":"widgets","icon":"universal-access","description":"Info panel for a character.","example":{},"supports":{"html":false},"textdomain":"character-bio-v2","editorScript":"file:./index.js","editorStyle":"file:./index.css","attributes":{"chapters":{"type":"string"}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"vessel/character-bio-v2","version":"0.1.0","title":"Character Bio","category":"widgets","icon":"universal-access","description":"Info panel for a character.","example":{},"supports":{"html":false},"textdomain":"character-bio-v2","editorScript":"file:./index.js","editorStyle":"file:./index.css","attributes":{"chapters":{"type":"string"}},"usesContext":["postId","postType"]}');
 
 /***/ }),
 
-/***/ "./src/character-bio-v2/edit.jsx":
+/***/ "./src/character-bio-v2/edit.tsx":
 /*!***************************************!*\
-  !*** ./src/character-bio-v2/edit.jsx ***!
+  !*** ./src/character-bio-v2/edit.tsx ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -28,12 +28,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./editor.scss */ "./src/character-bio-v2/editor.scss");
-/* harmony import */ var _shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/components/ImageUpload */ "./src/shared/components/ImageUpload.tsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./editor.scss */ "./src/character-bio-v2/editor.scss");
+/* harmony import */ var _shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/components/ImageUpload */ "./src/shared/components/ImageUpload.tsx");
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _shared_utilities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../shared/utilities */ "./src/shared/utilities.ts");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__);
+
 
 
 
@@ -44,65 +46,99 @@ __webpack_require__.r(__webpack_exports__);
 
 function Edit({
   attributes,
-  setAttributes
+  setAttributes,
+  context: {
+    postType,
+    postId
+  }
 }) {
-  var _thisChapter$name, _thisChapter$pronouns, _thisChapter$descript, _thisChapter$portrait;
-  const [chapters, setChapters] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  const [selectedChapter, setSelectedChapter] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)();
-  function setJsonAttribute(key, value) {
-    var _allData$selectedChap;
-    const allData = JSON.parse(attributes.chapters);
-    const chapterData = (_allData$selectedChap = allData[selectedChapter]) !== null && _allData$selectedChap !== void 0 ? _allData$selectedChap : {};
-    chapterData[key] = value;
-    const newAttributes = {
-      chapters: allData
-    };
-    newAttributes.chapters[selectedChapter] = chapterData;
-    setAttributes({
-      chapters: JSON.stringify(newAttributes.chapters)
+  var _thisChapterBio$name, _thisChapterBio$prono, _thisChapterBio$descr, _thisChapterBio$portr;
+  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
+  const [meta, updateMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.useEntityProp)('postType', postType, 'meta', postId);
+  console.log('findme: meta: ', meta);
+  const {
+    hasResolved,
+    records: chapters
+  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.useEntityRecords)('taxonomy', 'chapters', {
+    per_page: 40
+  });
+  const [selectedChapterSlug, setSelectedChapterSlug] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (chapters && chapters.length > 0) {
+      setSelectedChapterSlug(chapters[chapters.length - 1].slug);
+    }
+  }, [chapters]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if ((!meta.chapters || meta.chapters.length === 0) && attributes.chapters) {
+      const attributeObject = JSON.parse(attributes.chapters);
+      const newChapterBioData = [];
+      for (const key in attributeObject) {
+        const typedKey = key;
+        const chapterData = attributeObject[typedKey];
+        if (chapterData) {
+          newChapterBioData.push({
+            chapter: key,
+            ...chapterData
+          });
+        }
+      }
+      (0,_shared_utilities__WEBPACK_IMPORTED_MODULE_6__.setMeta)('chapters', newChapterBioData, meta, updateMeta);
+    }
+  }, []);
+  function setChapterAttribute(key, value) {
+    const foundBioIndex = meta.chapters.findIndex(x => x.chapter === selectedChapterSlug);
+    const newChapterBioData = [];
+    for (const object of meta.chapters) {
+      newChapterBioData.push({
+        ...object
+      });
+    }
+    if (foundBioIndex >= 0) {
+      if (!value) {
+        delete newChapterBioData[foundBioIndex][key];
+      } else {
+        newChapterBioData[foundBioIndex][key] = value;
+      }
+    } else if (value) {
+      const newBio = {
+        chapter: selectedChapterSlug
+      };
+      newBio[key] = value;
+      newChapterBioData.push(newBio);
+    }
+    (0,_shared_utilities__WEBPACK_IMPORTED_MODULE_6__.setMeta)('chapters', newChapterBioData, meta, updateMeta);
+  }
+  if (!hasResolved) {
+    return 'Loading...';
+  }
+  if (!chapters || chapters.length === 0) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      ...blockProps,
+      children: "Could not find chapters"
     });
   }
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    (async () => {
-      const data = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default()({
-        path: '/wp/v2/chapters',
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const options = data.map(chapter => ({
+  const thisChapterBio = meta.chapters ? meta.chapters.find(x => x.chapter === selectedChapterSlug) : {};
+  const name = (_thisChapterBio$name = thisChapterBio?.name) !== null && _thisChapterBio$name !== void 0 ? _thisChapterBio$name : '';
+  const pronouns = (_thisChapterBio$prono = thisChapterBio?.pronouns) !== null && _thisChapterBio$prono !== void 0 ? _thisChapterBio$prono : '';
+  const description = (_thisChapterBio$descr = thisChapterBio?.description) !== null && _thisChapterBio$descr !== void 0 ? _thisChapterBio$descr : '';
+  const portrait = (_thisChapterBio$portr = thisChapterBio?.portrait) !== null && _thisChapterBio$portr !== void 0 ? _thisChapterBio$portr : {};
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+    ...blockProps,
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+      label: "Chapter Selector",
+      value: selectedChapterSlug,
+      options: chapters.map(chapter => ({
         label: chapter.name,
         value: chapter.slug
-      }));
-      setChapters(options);
-      setSelectedChapter(options[0].value);
-    })();
-  }, []);
-  if (!attributes?.chapters) {
-    setAttributes({
-      chapters: '{}'
-    });
-  }
-  const thisChapter = JSON.parse(attributes.chapters)?.[selectedChapter];
-  const name = (_thisChapter$name = thisChapter?.name) !== null && _thisChapter$name !== void 0 ? _thisChapter$name : '';
-  const pronouns = (_thisChapter$pronouns = thisChapter?.pronouns) !== null && _thisChapter$pronouns !== void 0 ? _thisChapter$pronouns : '';
-  const description = (_thisChapter$descript = thisChapter?.description) !== null && _thisChapter$descript !== void 0 ? _thisChapter$descript : '';
-  const portrait = (_thisChapter$portrait = thisChapter?.portrait) !== null && _thisChapter$portrait !== void 0 ? _thisChapter$portrait : {};
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)(),
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-      label: "Chapter Selector",
-      value: selectedChapter,
-      options: chapters,
-      onChange: v => setSelectedChapter(v)
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+      })),
+      onChange: v => setSelectedChapterSlug(v)
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
       className: "inner",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
         style: {
           minWidth: '150px'
         },
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_4__["default"], {
           label: "Portrait",
           image: portrait,
           callback: ({
@@ -111,7 +147,7 @@ function Edit({
             height,
             alt
           }) => {
-            setJsonAttribute('portrait', {
+            setChapterAttribute('portrait', {
               url,
               width,
               height,
@@ -119,38 +155,38 @@ function Edit({
             });
           },
           deleteCallback: () => {
-            setJsonAttribute('portrait', null);
+            setChapterAttribute('portrait', null);
           }
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         style: {
           width: '100%'
         },
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
           className: "inner",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
             style: {
               width: '100%'
             },
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
               className: "name",
               label: "Name",
               value: name,
-              onChange: value => setJsonAttribute('name', value)
+              onChange: value => setChapterAttribute('name', value)
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
             className: "pronouns",
             label: "Pronouns",
             value: pronouns,
-            onChange: value => setJsonAttribute('pronouns', value)
+            onChange: value => setChapterAttribute('pronouns', value)
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("label", {
           children: "Description"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
           className: "description",
           tagName: "p",
           value: description,
-          onChange: value => setJsonAttribute('description', value)
+          onChange: value => setChapterAttribute('description', value)
         })]
       })]
     })]
@@ -230,13 +266,38 @@ function ImageUpload({
 
 /***/ }),
 
-/***/ "@wordpress/api-fetch":
-/*!**********************************!*\
-  !*** external ["wp","apiFetch"] ***!
-  \**********************************/
-/***/ ((module) => {
+/***/ "./src/shared/utilities.ts":
+/*!*********************************!*\
+  !*** ./src/shared/utilities.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = window["wp"]["apiFetch"];
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   copyLegacyAttributes: () => (/* binding */ copyLegacyAttributes),
+/* harmony export */   setMeta: () => (/* binding */ setMeta)
+/* harmony export */ });
+function setMeta(key, data, meta, updateMeta) {
+  console.log('setMeta: ', meta, key, data);
+  const newValue = {
+    ...meta
+  };
+  newValue[key] = data;
+  console.log('findme: newValue: ', newValue);
+  updateMeta({
+    ...newValue
+  });
+}
+function copyLegacyAttributes(attributes, keyMap, meta, updateMeta) {
+  for (const keys of keyMap) {
+    const [metaKey, attrKey] = keys;
+    const metaValue = meta[metaKey];
+    const attrValue = attributes[attrKey];
+    if ((!metaValue || typeof metaValue === 'object' && 'length' in metaValue && metaValue.length === 0) && attrValue) {
+      setMeta(metaKey, attrValue, meta, updateMeta);
+    }
+  }
+}
 
 /***/ }),
 
@@ -267,6 +328,16 @@ module.exports = window["wp"]["blocks"];
 /***/ ((module) => {
 
 module.exports = window["wp"]["components"];
+
+/***/ }),
+
+/***/ "@wordpress/core-data":
+/*!**********************************!*\
+  !*** external ["wp","coreData"] ***!
+  \**********************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["coreData"];
 
 /***/ }),
 
@@ -367,7 +438,7 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./src/character-bio-v2/edit.jsx");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./src/character-bio-v2/edit.tsx");
 /* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./block.json */ "./src/character-bio-v2/block.json");
 
 

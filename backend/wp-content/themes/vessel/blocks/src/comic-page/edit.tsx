@@ -5,8 +5,9 @@ import ImageUpload from '../shared/components/ImageUpload';
 import CharacterTags from '../shared/components/CharacterTags';
 import BackgroundGradientPicker from './BackgroundGradientPicker';
 import { useEntityProp } from '@wordpress/core-data';
-import { Image } from '../types';
+import { Image, KeyMap } from '../types';
 import { useEffect } from 'react';
+import { copyLegacyAttributes, setMeta } from '../shared/utilities';
 
 type Attributes = {
 	pageImage?: Image
@@ -17,7 +18,6 @@ type Attributes = {
 
 type Props = {
 	attributes: Attributes,
-	setAttributes: ( attrs: Partial<Attributes> ) => void,
 	context: {
 		postId: string
 		postType: string
@@ -26,7 +26,6 @@ type Props = {
 
 export default function Edit( {
 	attributes,
-	setAttributes,
 	context: {
 		postType,
 		postId
@@ -34,39 +33,17 @@ export default function Edit( {
 }: Props ) {
 	const [ meta, updateMeta ] = useEntityProp( 'postType', postType, 'meta', postId );
 
-	function setMeta<T extends keyof typeof meta>(
-		key: T,
-		data: typeof meta[T]
-	) {
-		const newValue = {...meta};
-		newValue[key] = data;
-		updateMeta({...newValue});
-	}
+	console.log( 'findme: meta: ', meta );
 
 	useEffect( () => {
-		const legacyAttributes: [
-			keyof typeof meta,
-			keyof typeof attributes
-		][] = [
+		const legacyAttributes: KeyMap<typeof meta, typeof attributes> = [
 			['characters', 'characters'],
 			['page_image', 'pageImage'],
 			['background_gradient', 'backgroundGradient'],
 			['background_image', 'backgroundImage'],
 		];
 
-		for ( const keys of legacyAttributes ) {
-			const [ metaKey, attrKey ] = keys;
-			const metaValue = meta[ metaKey ];
-			const attrValue = attributes[ attrKey ];
-	
-			if ( ( !metaValue || (
-				typeof metaValue === 'object' &&
-				'length' in metaValue &&
-				metaValue.length === 0
-			) ) && attrValue ) {
-				setMeta( metaKey, attrValue );
-			}
-		}
+		copyLegacyAttributes( attributes, legacyAttributes, meta, updateMeta );
 	}, [] );
 
 	return (
@@ -76,10 +53,10 @@ export default function Edit( {
 				<ImageUpload
 					image={ meta.page_image }
 					callback={ ( { id, url, sizes, width, height, alt } ) => {
-						setMeta('page_image', { id, url, sizes, width, height, alt });
+						setMeta('page_image', { id, url, sizes, width, height, alt }, meta, updateMeta);
 					} }
 					deleteCallback={ () => {
-						setMeta( 'page_image', null );
+						setMeta( 'page_image', null, meta, updateMeta );
 					} }
 				/>
 			</div>
@@ -90,6 +67,16 @@ export default function Edit( {
 				</PanelBody>
 				<PanelBody title='Background'>
 					<BackgroundGradientPicker meta={ meta } setMeta={ setMeta } />
+					<ImageUpload
+						label='Image'
+						image={ meta.background_image }
+						callback={ ( { id, url, sizes, width, height, alt } ) => {
+							setMeta('background_image', { id, url, sizes, width, height, alt }, meta, updateMeta);
+						} }
+						deleteCallback={ () => {
+							setMeta( 'background_image', null, meta, updateMeta );
+						} }
+					/>
 				</PanelBody>
 			</InspectorControls>
 		</div>

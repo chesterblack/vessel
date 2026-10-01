@@ -14,20 +14,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shared/components/ImageUpload */ "./src/shared/components/ImageUpload.tsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
-
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__);
 
 
 function BackgroundGradientPicker({
   meta,
   setMeta
 }) {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
       className: "background-gradient-picker",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.GradientPicker, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.GradientPicker, {
         onChange: gradient => {
           setMeta('background_gradient', gradient);
         },
@@ -46,30 +44,7 @@ function BackgroundGradientPicker({
           slug: 'flashback-sepia'
         }]
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_1__["default"], {
-      label: "Image",
-      image: meta.background_image,
-      callback: ({
-        id,
-        url,
-        sizes,
-        width,
-        height,
-        alt
-      }) => {
-        setMeta('background_image', {
-          id,
-          url,
-          sizes,
-          width,
-          height,
-          alt
-        });
-      },
-      deleteCallback: () => {
-        setMeta('background_image', null);
-      }
-    })]
+    })
   });
 }
 
@@ -107,8 +82,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _shared_utilities__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../shared/utilities */ "./src/shared/utilities.ts");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__);
+
 
 
 
@@ -120,40 +97,24 @@ __webpack_require__.r(__webpack_exports__);
 
 function Edit({
   attributes,
-  setAttributes,
   context: {
     postType,
     postId
   }
 }) {
   const [meta, updateMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_6__.useEntityProp)('postType', postType, 'meta', postId);
-  function setMeta(key, data) {
-    const newValue = {
-      ...meta
-    };
-    newValue[key] = data;
-    updateMeta({
-      ...newValue
-    });
-  }
+  console.log('findme: meta: ', meta);
   (0,react__WEBPACK_IMPORTED_MODULE_7__.useEffect)(() => {
     const legacyAttributes = [['characters', 'characters'], ['page_image', 'pageImage'], ['background_gradient', 'backgroundGradient'], ['background_image', 'backgroundImage']];
-    for (const keys of legacyAttributes) {
-      const [metaKey, attrKey] = keys;
-      const metaValue = meta[metaKey];
-      const attrValue = attributes[attrKey];
-      if ((!metaValue || typeof metaValue === 'object' && 'length' in metaValue && metaValue.length === 0) && attrValue) {
-        setMeta(metaKey, attrValue);
-      }
-    }
+    (0,_shared_utilities__WEBPACK_IMPORTED_MODULE_8__.copyLegacyAttributes)(attributes, legacyAttributes, meta, updateMeta);
   }, []);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)(),
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
       className: "inner",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("label", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("label", {
         children: "Comic Page"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_3__["default"], {
         image: meta.page_image,
         callback: ({
           id,
@@ -163,32 +124,55 @@ function Edit({
           height,
           alt
         }) => {
-          setMeta('page_image', {
+          (0,_shared_utilities__WEBPACK_IMPORTED_MODULE_8__.setMeta)('page_image', {
             id,
             url,
             sizes,
             width,
             height,
             alt
-          });
+          }, meta, updateMeta);
         },
         deleteCallback: () => {
-          setMeta('page_image', null);
+          (0,_shared_utilities__WEBPACK_IMPORTED_MODULE_8__.setMeta)('page_image', null, meta, updateMeta);
         }
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
         title: "Characters",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_shared_components_CharacterTags__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_shared_components_CharacterTags__WEBPACK_IMPORTED_MODULE_4__["default"], {
           meta: meta,
           updateMeta: updateMeta
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
         title: "Background",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_BackgroundGradientPicker__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_BackgroundGradientPicker__WEBPACK_IMPORTED_MODULE_5__["default"], {
           meta: meta,
-          setMeta: setMeta
-        })
+          setMeta: _shared_utilities__WEBPACK_IMPORTED_MODULE_8__.setMeta
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          label: "Image",
+          image: meta.background_image,
+          callback: ({
+            id,
+            url,
+            sizes,
+            width,
+            height,
+            alt
+          }) => {
+            (0,_shared_utilities__WEBPACK_IMPORTED_MODULE_8__.setMeta)('background_image', {
+              id,
+              url,
+              sizes,
+              width,
+              height,
+              alt
+            }, meta, updateMeta);
+          },
+          deleteCallback: () => {
+            (0,_shared_utilities__WEBPACK_IMPORTED_MODULE_8__.setMeta)('background_image', null, meta, updateMeta);
+          }
+        })]
       })]
     }, 'inspector')]
   });
@@ -330,6 +314,41 @@ function ImageUpload({
       })
     })]
   });
+}
+
+/***/ }),
+
+/***/ "./src/shared/utilities.ts":
+/*!*********************************!*\
+  !*** ./src/shared/utilities.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   copyLegacyAttributes: () => (/* binding */ copyLegacyAttributes),
+/* harmony export */   setMeta: () => (/* binding */ setMeta)
+/* harmony export */ });
+function setMeta(key, data, meta, updateMeta) {
+  console.log('setMeta: ', meta, key, data);
+  const newValue = {
+    ...meta
+  };
+  newValue[key] = data;
+  console.log('findme: newValue: ', newValue);
+  updateMeta({
+    ...newValue
+  });
+}
+function copyLegacyAttributes(attributes, keyMap, meta, updateMeta) {
+  for (const keys of keyMap) {
+    const [metaKey, attrKey] = keys;
+    const metaValue = meta[metaKey];
+    const attrValue = attributes[attrKey];
+    if ((!metaValue || typeof metaValue === 'object' && 'length' in metaValue && metaValue.length === 0) && attrValue) {
+      setMeta(metaKey, attrValue, meta, updateMeta);
+    }
+  }
 }
 
 /***/ }),

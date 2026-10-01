@@ -1,11 +1,8 @@
 import { GradientPicker } from '@wordpress/components';
-import ImageUpload from '../shared/components/ImageUpload';
-import { Image } from '../types';
 
 type Props = {
 	meta: {
 		background_gradient: string
-		background_image: Image
 	}
 	setMeta: Function
 }
@@ -38,16 +35,6 @@ export default function BackgroundGradientPicker( { meta, setMeta }: Props ) {
 					] }
 				/>
 			</div>
-			<ImageUpload
-				label='Image'
-				image={ meta.background_image }
-				callback={ ( { id, url, sizes, width, height, alt } ) => {
-					setMeta('background_image', { id, url, sizes, width, height, alt });
-				} }
-				deleteCallback={ () => {
-					setMeta( 'background_image', null );
-				} }
-			/>
 		</>
 	);
 }

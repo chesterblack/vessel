@@ -94,6 +94,38 @@ function setup_meta_fields() {
 			],
 		],
 	);
+
+	register_post_meta(
+		'character',
+		'chapters',
+		[
+			'single' => true,
+			'type' => 'array',
+			'show_in_rest' => [
+				'schema' => [
+					'type' => 'array',
+					'items' => [
+						'type' => 'object',
+						'properties' => [
+							'chapter' => [ 'type' => 'string' ],
+							'name' => [ 'type' => 'string' ],
+							'description' => [ 'type' => 'string' ],
+							'portrait' => [
+								'type' => 'object',
+								'properties' => [
+									'url' => [ 'type' => 'string' ],
+									'width' => [ 'type' => 'number' ],
+									'height' => [ 'type' => 'number' ],
+									'alt' => [ 'type' => 'string' ],
+								],
+							],
+							'pronouns' => [ 'type' => 'string' ],
+						],
+					],
+				],
+			],
+		],
+	);
 };
 
 add_action( 'init', 'setup_meta_fields' );
