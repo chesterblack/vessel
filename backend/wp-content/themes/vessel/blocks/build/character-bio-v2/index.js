@@ -55,7 +55,6 @@ function Edit({
   var _thisChapterBio$name, _thisChapterBio$prono, _thisChapterBio$descr, _thisChapterBio$portr;
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
   const [meta, updateMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.useEntityProp)('postType', postType, 'meta', postId);
-  console.log('findme: meta: ', meta);
   const {
     hasResolved,
     records: chapters
@@ -278,12 +277,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   setMeta: () => (/* binding */ setMeta)
 /* harmony export */ });
 function setMeta(key, data, meta, updateMeta) {
-  console.log('setMeta: ', meta, key, data);
   const newValue = {
     ...meta
   };
   newValue[key] = data;
-  console.log('findme: newValue: ', newValue);
   updateMeta({
     ...newValue
   });

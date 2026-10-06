@@ -33,8 +33,6 @@ export default function Edit( {
 }: Props ) {
 	const [ meta, updateMeta ] = useEntityProp( 'postType', postType, 'meta', postId );
 
-	console.log( 'findme: meta: ', meta );
-
 	useEffect( () => {
 		const legacyAttributes: KeyMap<typeof meta, typeof attributes> = [
 			['characters', 'characters'],

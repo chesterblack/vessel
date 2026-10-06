@@ -103,7 +103,6 @@ function Edit({
   }
 }) {
   const [meta, updateMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_6__.useEntityProp)('postType', postType, 'meta', postId);
-  console.log('findme: meta: ', meta);
   (0,react__WEBPACK_IMPORTED_MODULE_7__.useEffect)(() => {
     const legacyAttributes = [['characters', 'characters'], ['page_image', 'pageImage'], ['background_gradient', 'backgroundGradient'], ['background_image', 'backgroundImage']];
     (0,_shared_utilities__WEBPACK_IMPORTED_MODULE_8__.copyLegacyAttributes)(attributes, legacyAttributes, meta, updateMeta);
@@ -241,17 +240,10 @@ function CharacterTags({
       label: "Who is on this page?",
       value: meta.characters,
       options: characters,
-      onChange: c => {
-        console.log({
-          ...meta,
-          characters: c
-        });
-        const response = updateMeta({
-          ...meta,
-          characters: c
-        });
-        console.log('findme: response: ', response);
-      }
+      onChange: c => updateMeta({
+        ...meta,
+        characters: c
+      })
     })
   });
 }
@@ -330,12 +322,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   setMeta: () => (/* binding */ setMeta)
 /* harmony export */ });
 function setMeta(key, data, meta, updateMeta) {
-  console.log('setMeta: ', meta, key, data);
   const newValue = {
     ...meta
   };
   newValue[key] = data;
-  console.log('findme: newValue: ', newValue);
   updateMeta({
     ...newValue
   });

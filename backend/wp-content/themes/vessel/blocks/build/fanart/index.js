@@ -8,13 +8,13 @@
   \*******************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"vessel/fanart","version":"0.1.0","title":"Fanart","category":"widgets","icon":"admin-customizer","description":"Fanart.","example":{},"supports":{"html":false},"textdomain":"fanart","editorScript":"file:./index.js","editorStyle":"file:./index.css","attributes":{"pageImage":{"type":"object"},"creditName":{"type":"string"},"creditLink":{"type":"string"},"characters":{"type":"array"}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"vessel/fanart","version":"0.1.0","title":"Fanart","category":"widgets","icon":"admin-customizer","description":"Fanart.","example":{},"supports":{"html":false},"textdomain":"fanart","editorScript":"file:./index.js","editorStyle":"file:./index.css","attributes":{"pageImage":{"type":"object"},"creditName":{"type":"string"},"creditLink":{"type":"string"},"characters":{"type":"array"}},"usesContext":["postId","postType"]}');
 
 /***/ }),
 
-/***/ "./src/fanart/edit.jsx":
+/***/ "./src/fanart/edit.tsx":
 /*!*****************************!*\
-  !*** ./src/fanart/edit.jsx ***!
+  !*** ./src/fanart/edit.tsx ***!
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -27,8 +27,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shared/components/ImageUpload */ "./src/shared/components/ImageUpload.tsx");
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./editor.scss */ "./src/fanart/editor.scss");
 /* harmony import */ var _shared_components_CharacterTags__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/components/CharacterTags */ "./src/shared/components/CharacterTags.tsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _shared_utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/utilities */ "./src/shared/utilities.ts");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__);
+
+
+
+
 
 
 
@@ -36,56 +47,62 @@ __webpack_require__.r(__webpack_exports__);
 
 function Edit({
   attributes,
-  setAttributes
+  context: {
+    postType,
+    postId
+  }
 }) {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+  const [meta, updateMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__.useEntityProp)('postType', postType, 'meta', postId);
+  (0,react__WEBPACK_IMPORTED_MODULE_7__.useEffect)(() => {
+    const legacyAttributes = [['credit_name', 'creditName'], ['credit_link', 'creditLink'], ['characters', 'characters']];
+    (0,_shared_utilities__WEBPACK_IMPORTED_MODULE_5__.copyLegacyAttributes)(attributes, legacyAttributes, meta, updateMeta);
+  }, []);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps)(),
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
       className: "inner",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("label", {
         children: "Fanart"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        image: attributes.pageImage,
-        callback: media => {
-          setAttributes({
-            pageImage: {
-              url: media.url,
-              sizes: media.sizes,
-              width: media.width,
-              height: media.height,
-              alt: media.alt
-            }
-          });
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_shared_components_ImageUpload__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        image: meta.page_image,
+        callback: ({
+          id,
+          url,
+          sizes,
+          width,
+          height,
+          alt
+        }) => {
+          (0,_shared_utilities__WEBPACK_IMPORTED_MODULE_5__.setMeta)('page_image', {
+            id,
+            url,
+            sizes,
+            width,
+            height,
+            alt
+          }, meta, updateMeta);
         },
         deleteCallback: () => {
-          setAttributes({
-            pageImage: null
-          });
+          (0,_shared_utilities__WEBPACK_IMPORTED_MODULE_5__.setMeta)('page_image', null, meta, updateMeta);
         }
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "info",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
           className: "credit",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("label", {
             children: "Credit"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
-            type: "text",
-            value: attributes.creditName,
-            onChange: e => setAttributes({
-              creditName: e.target.value
-            }),
-            placeholder: "Name"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
-            type: "text",
-            value: attributes.creditLink,
-            onChange: e => setAttributes({
-              creditLink: e.target.value
-            }),
-            placeholder: "URL"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextControl, {
+            label: "Credit",
+            value: meta.credit_name,
+            onChange: value => (0,_shared_utilities__WEBPACK_IMPORTED_MODULE_5__.setMeta)('credit_name', value, meta, updateMeta)
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.TextControl, {
+            label: "Credit Link",
+            value: meta.credit_link,
+            onChange: value => (0,_shared_utilities__WEBPACK_IMPORTED_MODULE_5__.setMeta)('credit_link', value, meta, updateMeta)
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_shared_components_CharacterTags__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          attributes: attributes,
-          setAttributes: setAttributes
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_shared_components_CharacterTags__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          meta: meta,
+          updateMeta: updateMeta
         })]
       })]
     })
@@ -155,17 +172,10 @@ function CharacterTags({
       label: "Who is on this page?",
       value: meta.characters,
       options: characters,
-      onChange: c => {
-        console.log({
-          ...meta,
-          characters: c
-        });
-        const response = updateMeta({
-          ...meta,
-          characters: c
-        });
-        console.log('findme: response: ', response);
-      }
+      onChange: c => updateMeta({
+        ...meta,
+        characters: c
+      })
     })
   });
 }
@@ -232,6 +242,39 @@ function ImageUpload({
 
 /***/ }),
 
+/***/ "./src/shared/utilities.ts":
+/*!*********************************!*\
+  !*** ./src/shared/utilities.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   copyLegacyAttributes: () => (/* binding */ copyLegacyAttributes),
+/* harmony export */   setMeta: () => (/* binding */ setMeta)
+/* harmony export */ });
+function setMeta(key, data, meta, updateMeta) {
+  const newValue = {
+    ...meta
+  };
+  newValue[key] = data;
+  updateMeta({
+    ...newValue
+  });
+}
+function copyLegacyAttributes(attributes, keyMap, meta, updateMeta) {
+  for (const keys of keyMap) {
+    const [metaKey, attrKey] = keys;
+    const metaValue = meta[metaKey];
+    const attrValue = attributes[attrKey];
+    if ((!metaValue || typeof metaValue === 'object' && 'length' in metaValue && metaValue.length === 0) && attrValue) {
+      setMeta(metaKey, attrValue, meta, updateMeta);
+    }
+  }
+}
+
+/***/ }),
+
 /***/ "@wordpress/api-fetch":
 /*!**********************************!*\
   !*** external ["wp","apiFetch"] ***!
@@ -269,6 +312,16 @@ module.exports = window["wp"]["blocks"];
 /***/ ((module) => {
 
 module.exports = window["wp"]["components"];
+
+/***/ }),
+
+/***/ "@wordpress/core-data":
+/*!**********************************!*\
+  !*** external ["wp","coreData"] ***!
+  \**********************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["coreData"];
 
 /***/ }),
 
@@ -369,7 +422,7 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./src/fanart/edit.jsx");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./src/fanart/edit.tsx");
 /* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./block.json */ "./src/fanart/block.json");
 
 

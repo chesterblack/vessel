@@ -52,7 +52,6 @@ export default function Edit( {
 	const [ meta, updateMeta ] = useEntityProp(
 		'postType', postType, 'meta', postId
 	);
-	console.log( 'findme: meta: ', meta );
 	const { hasResolved, records: chapters } = useEntityRecords<Chapter>(
 		'taxonomy', 'chapters', { per_page: 40 }
 	);
@@ -177,14 +176,13 @@ export default function Edit( {
 								onChange={ value => setChapterAttribute('name', value) }
 							/>
 						</div>
-						
+
 						<TextControl
 							className='pronouns'
 							label='Pronouns'
 							value={ pronouns }
 							onChange={ value => setChapterAttribute( 'pronouns', value ) }
 						/>
-						
 					</div>
 
 					<label>Description</label>

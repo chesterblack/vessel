@@ -126,6 +126,55 @@ function setup_meta_fields() {
 			],
 		],
 	);
+
+	register_post_meta(
+		'fanart',
+		'page_image',
+		[
+			'single' => true,
+			'type' => 'object',
+			'show_in_rest' => [
+				'schema' => $image_schema
+			],
+		],
+	);
+
+	register_post_meta(
+		'fanart',
+		'credit_name',
+		[
+			'single' => true,
+			'type' => 'string',
+			'show_in_rest' => true,
+		],
+	);
+
+	register_post_meta(
+		'fanart',
+		'credit_link',
+		[
+			'single' => true,
+			'type' => 'string',
+			'show_in_rest' => true,
+		],
+	);
+
+	register_post_meta(
+		'comic_page',
+		'characters',
+		[
+			'single' => true,
+			'type' => 'array',
+			'show_in_rest' => [
+				'schema' => [
+					'type' => 'array',
+					'items' => [
+						'type' => 'integer',
+					],
+				],
+			],
+		],
+	);
 };
 
 add_action( 'init', 'setup_meta_fields' );

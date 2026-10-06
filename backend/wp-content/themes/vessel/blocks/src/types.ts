@@ -13,7 +13,7 @@ export type Image = {
 }
 
 export type ImageWithSizes = {
-	id: number
+	id?: number
 	alt: string
 	height: number
 	sizes: Record<string, ImageSize>

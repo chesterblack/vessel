@@ -6,12 +6,9 @@ export function setMeta<M, K extends keyof M>(
 	meta: M,
 	updateMeta: Function
 ) {
-	console.log('setMeta: ', meta, key, data);
-
 	const newValue = {...meta};
 	newValue[key] = data;
 
-	console.log( 'findme: newValue: ', newValue );
 	updateMeta({...newValue});
 }
 

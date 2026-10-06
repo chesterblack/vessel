@@ -27,5 +27,9 @@
     "characters": {
       "type": "array"
     }
-  }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ]
 }

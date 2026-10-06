@@ -39,18 +39,10 @@ export default function CharacterTags( {
 				label="Who is on this page?"
 				value={ meta.characters }
 				options={ characters }
-				onChange={ c => {
-					console.log(
-						{...meta, characters: c}
-					)
-
-					const response = updateMeta({
-						...meta,
-						characters: c
-					});
-
-					console.log( 'findme: response: ', response );
-				} }
+				onChange={ c => updateMeta({ 
+					...meta,
+					characters: c
+				} ) }
 			/>
 		</>
 	);

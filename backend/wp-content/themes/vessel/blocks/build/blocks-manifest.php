@@ -98,6 +98,10 @@ return array(
 			'characters' => array(
 				'type' => 'array'
 			)
+		),
+		'usesContext' => array(
+			'postId',
+			'postType'
 		)
 	)
 );
