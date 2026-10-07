@@ -6,10 +6,12 @@ export function setMeta<M, K extends keyof M>(
 	meta: M,
 	updateMeta: Function
 ) {
-	const newValue = {...meta};
+	const newValue = structuredClone( meta );
 	newValue[key] = data;
 
-	updateMeta({...newValue});
+	updateMeta( newValue );
+
+	return newValue;
 }
 
 export function copyLegacyAttributes(
@@ -28,7 +30,7 @@ export function copyLegacyAttributes(
 			'length' in metaValue &&
 			metaValue.length === 0
 		) ) && attrValue ) {
-			setMeta( metaKey, attrValue, meta, updateMeta );
+			meta = setMeta( metaKey, attrValue, meta, updateMeta );
 		}
 	}
 }

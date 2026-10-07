@@ -277,13 +277,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   setMeta: () => (/* binding */ setMeta)
 /* harmony export */ });
 function setMeta(key, data, meta, updateMeta) {
-  const newValue = {
-    ...meta
-  };
+  const newValue = structuredClone(meta);
   newValue[key] = data;
-  updateMeta({
-    ...newValue
-  });
+  updateMeta(newValue);
+  return newValue;
 }
 function copyLegacyAttributes(attributes, keyMap, meta, updateMeta) {
   for (const keys of keyMap) {
@@ -291,7 +288,7 @@ function copyLegacyAttributes(attributes, keyMap, meta, updateMeta) {
     const metaValue = meta[metaKey];
     const attrValue = attributes[attrKey];
     if ((!metaValue || typeof metaValue === 'object' && 'length' in metaValue && metaValue.length === 0) && attrValue) {
-      setMeta(metaKey, attrValue, meta, updateMeta);
+      meta = setMeta(metaKey, attrValue, meta, updateMeta);
     }
   }
 }
