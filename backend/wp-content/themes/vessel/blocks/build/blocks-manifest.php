@@ -23,6 +23,10 @@ return array(
 			'chapters' => array(
 				'type' => 'string'
 			)
+		),
+		'usesContext' => array(
+			'postId',
+			'postType'
 		)
 	),
 	'comic-page' => array(
@@ -38,7 +42,8 @@ return array(
 			
 		),
 		'supports' => array(
-			'html' => false
+			'html' => false,
+			'multiple' => false
 		),
 		'textdomain' => 'comic-page',
 		'editorScript' => 'file:./index.js',
@@ -56,6 +61,10 @@ return array(
 			'backgroundImage' => array(
 				'type' => 'object'
 			)
+		),
+		'usesContext' => array(
+			'postId',
+			'postType'
 		)
 	),
 	'fanart' => array(
@@ -89,6 +98,10 @@ return array(
 			'characters' => array(
 				'type' => 'array'
 			)
+		),
+		'usesContext' => array(
+			'postId',
+			'postType'
 		)
 	)
 );

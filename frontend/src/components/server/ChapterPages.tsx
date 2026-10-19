@@ -1,11 +1,12 @@
 import { getUser } from "@/lib/users";
-import { applyLockedAttribute } from "@/lib/utilities";
+import { applyLockedAttribute, getImageProps } from "@/lib/utilities";
 import { ComicPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import LockIcon from "./svg/LockIcon";
 import Button from "./Button";
 import { HeadingLevel } from "@/types/types";
 import Heading from "@/components/server/Heading";
+import Image from "next/image";
 
 
 type Props = {
@@ -27,21 +28,40 @@ export default async function ChapterPages( { chapter, pages, headingLevel = 2 }
 
 	return (
 		<div className="chapter">
-			<Heading level={ headingLevel }>
+			<Heading level={ headingLevel } id={ chapter.slug }>
 				{ chapter.name }
 			</Heading>
 			<p>{ chapter.description }</p>
 
-			{ pages.map( page => (
-				<Button
-					href={ `/page/${ page.meta.comic_page_number }` }
-					key={ page.id }
-					classes='page-link'
-				>
-					{ page.locked && <LockIcon width={ 25 } height={ 25 } /> }
-					{ page.title.rendered }
-				</Button>
-			) ) }
+			<div className="archive-pages">
+				{ pages.map( page => {
+					const {src, width, height, alt} = getImageProps( page );
+					const date = new Date( page.date );
+
+					return (
+						<Button
+							href={`/page/${page.meta.comic_page_number}`}
+							key={page.id}
+							classes='page-link'
+						>
+							<div className={`preview-image-container ${page.locked ? 'preview-image-container--locked' : ''}`}>
+								{page.locked && <LockIcon width={25} height={25} />}
+								<Image
+									className={`preview-image`}
+									src={ src }
+									width={ width }
+									height={ height }
+									alt={ alt }
+									priority={ true }
+									fetchPriority='high'
+								/>
+							</div>
+							<div className="date">{ `${ date.toDateString() }` }</div>
+							{page.title.rendered}
+						</Button>
+					);
+				} ) }
+			</div>
 		</div>
 	);
 }

@@ -15,6 +15,7 @@
 		"start": "wp-scripts start --blocks-manifest"
 	},
 	"devDependencies": {
+		"@types/wordpress__block-editor": "^15.0.6",
 		"@wordpress/scripts": "^30.15.0"
 	},
 	"dependencies": {

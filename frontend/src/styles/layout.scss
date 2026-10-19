@@ -41,7 +41,7 @@ header {
 			width: auto;
 		}
 
-		a {
+		.nav-item {
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -65,7 +65,38 @@ header {
 				background: colors.$ice-blue;
 				color: colors.$deep-dark;
 			}
+		}
 
+		.subnav-parent {
+			position: relative;
+		}
+
+		.subnav-children {
+			opacity: 0;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			padding-block: 25px;
+		}
+
+		.subnav-label {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.subnav-parent:hover {
+			background-color: colors.$deep-dark;
+
+			.subnav-label {
+				display: none;
+			}
+
+			.subnav-children {
+				opacity: 1;
+			}
 		}
 	}
 

@@ -1,13 +1,12 @@
-import { ComicIndex, PageNumber } from "@/types/types";
+import { PageNumber } from "@/types/types";
 import { CharacterBioData, CharacterBioDatum } from "@/types/wp-blocks";
-import { Character, ComicPage, Post, WebPage } from "@/types/wp-post-types";
+import { Character, ComicPage, Post } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { Metadata } from "next";
 
 import { WP_Term } from "wp-types";
 
 import { getComicPages } from "@/lib/data-fetching";
-import { User } from "next-auth";
 
 /**
  * Send a request to the backend API, include the wp/v2/

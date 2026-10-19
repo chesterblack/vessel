@@ -18,5 +18,9 @@
     "chapters": {
       "type": "string"
     }
-  }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ]
 }
