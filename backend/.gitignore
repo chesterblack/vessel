@@ -8,3 +8,6 @@ wp-content/languages/*
 wp-content/plugins/*
 
 .DS_Store
+
+.env
+vendor
