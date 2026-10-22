@@ -1,4 +1,6 @@
 <?php
+require ABSPATH . '/vendor/autoload.php';
+
 // Allows comic_pages to be sorted by the comic_page_number meta
 add_filter(
 	'rest_comic_page_collection_params',
@@ -290,7 +292,7 @@ function check_unlocks( WP_REST_Request $request ) {
 	] );
 	$early_reader_role = get_term_by( 'slug', '1447593084727726282', 'role_locks' );
 
-	$response = [];
+	$response = [ 'pages_unlocked' => [] ];
 
 	$a_month_ago = new DateTime( '1 month ago' );
 	foreach ( $posts as $post ) {
@@ -299,9 +301,48 @@ function check_unlocks( WP_REST_Request $request ) {
 			has_term( $early_reader_role->term_id, 'role_locks', $post->ID )
 		) {
 			wp_remove_object_terms( $post->ID, $early_reader_role->term_id, 'role_locks' );
-			$response[] = "Removed $post->ID from Early Readers";
+			$response[ 'pages_unlocked' ][] = $post->ID;
 		}
 	}
+
+	if ( count( $response['pages_unlocked'] ) > 0 ) {
+		$response['cache_response'] = invalidate_cache( $response['pages_unlocked'] );
+	}
+
+	return $response;
+}
+
+// Bust the cloudflare cache for the newly unlocked
+// page(s) and the homepage
+function invalidate_cache( array $post_ids ) {
+	$dotenv = Dotenv\Dotenv::createImmutable( ABSPATH );
+	$dotenv->load();
+
+	$zone_id = get_env( 'CLOUDFLARE_ZONE_ID' ) ?? $_ENV[ 'CLOUDFLARE_ZONE_ID' ];
+	$api_key = get_env( 'CLOUDFLARE_CACHE_BUSTA_API_KEY' ) ?? $_ENV[ 'CLOUDFLARE_CACHE_BUSTA_API_KEY' ];
+
+	$cache_purge_url = 'https://api.cloudflare.com/client/v4/zones/' . $zone_id . '/invalidate_cache';
+
+	$posts = get_posts( [
+		'post_type' => 'comic_page',
+		'include' => $post_ids,
+	] );
+
+	$page_urls = array_map( function( WP_Post $post ) {
+		return 'https://www.vesselcomic.com/page/' . $post->comic_page_number;
+	}, $posts );
+
+	$post_data = [ 'files' => [ 'https://www.vesselcomic.com', ...$page_urls ] ];
+
+	$ch = curl_init( $cache_purge_url );
+	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+	curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $post_data ) );
+	curl_setopt( $ch, CURLOPT_HTTPHEADER, [
+		'Content-Type: application/json',
+		'Authorization: Bearer ' . $api_key
+	] );
+	$response = curl_exec( $ch );
+	curl_close( $ch );
 
 	return $response;
 }
