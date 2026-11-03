@@ -1,4 +1,4 @@
-name: Deploy to DigitalOcean Droplet
+name: Deploy theme to DigitalOcean Droplet
 'on':
   push:
     branches:
@@ -17,7 +17,7 @@ jobs:
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
-            echo "Deploying themes folder..."
+            echo "Pulling from github into temp folder"
             cd /var/www/admin.vesselcomic.com
             git clone -n --depth=1 --filter=tree:0 \
               git@github.com:chesterblack/vessel temp-vessel
@@ -25,8 +25,10 @@ jobs:
             git sparse-checkout set --no-cone /backend/wp-content/themes/vessel
             git checkout
             cd ../
-            rm -rf /var/www/admin.vesselcomic.com/wp-content/themes/vessel
-            mv /var/www/admin.vesselcomic.com/temp-vessel/backend/wp-content/themes/vessel /var/www/admin.vesselcomic.com/wp-content/themes/vessel
-            rm -rf temp-vessel
+            echo "Copying theme from temp folder"
+            cp -r /var/www/admin.vesselcomic.com/temp-vessel/backend/wp-content/themes/vessel/* /var/www/admin.vesselcomic.com/wp-content/themes/vessel/
+            echo "Removing temp folder"
+            rm -rf /var/www/admin.vesselcomic.com/temp-vessel
+            echo "Running composer install"
             composer install
             echo "Done"

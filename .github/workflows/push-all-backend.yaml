@@ -1,0 +1,31 @@
+name: Deploy all to DigitalOcean Droplet
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to DigitalOcean Droplet
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.HOST}}
+          username: ${{secrets.USERNAME}}
+          key: ${{secrets.KEY}}
+          script: |
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            echo "Pulling from github into temp folder"
+            cd /var/www
+            git clone -n --depth=1 --filter=tree:0 \
+              git@github.com:chesterblack/vessel temp-vessel
+            cd temp-vessel
+            git sparse-checkout set --no-cone /backend
+            git checkout
+            cd ../
+            echo "Copying files from temp folder"
+            cp -r /var/www/temp-vessel/backend/* /var/www/admin.vesselcomic.com/
+            echo "Removing temp folder"
+            rm -rf /var/www/temp-vessel
+            cd /var/www/admin.vesselcomic.com
+            echo "Running composer install"
+            composer install
+            echo "Done"
