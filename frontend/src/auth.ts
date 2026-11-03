@@ -21,6 +21,7 @@ declare module "next-auth/providers/discord" {
 export const { handlers, signIn, signOut, auth } = NextAuth({
 	providers: [
 		Discord( {
+			issuer: "https://discord.com",
 			authorization: {
 				params: { scope: "identify email guilds guilds.members.read" }
 			},
