@@ -126,10 +126,14 @@ export const getComicReaderData = cache(
 	async ( pageNumber?: number, unlockedOnly?: boolean ) => {
 		const url = pageNumber ?
 			`vessel/v1/read-page/${pageNumber}` :
-			`vessel/v1/read-page?unlocked_only=${unlockedOnly}`;
-		return await sendApiRequest( 'GET', url ) as ComicReaderData;
+			`vessel/v1/read-page`;
+
+		const urlParams = pageNumber ? null : { unlocked_only: unlockedOnly };
+
+		return await sendApiRequest( 'GET', url, urlParams ) as ComicReaderData;
 	}
 )
+
 
 export const getLatestPageNumber = cache(
 	async () => {
