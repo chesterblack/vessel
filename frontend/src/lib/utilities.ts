@@ -548,6 +548,6 @@ export function getAttribute<T extends any>(
 		return object.content_blocks[0].attrs[attributeKey];
 	}
 
-	console.error( `getAttribute: Could not find ${attributeKey} on `, object );
+	console.warn( `getAttribute: Could not find ${attributeKey} on `, object );
 	return null;
 }

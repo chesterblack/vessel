@@ -17,7 +17,7 @@ export default function CharacterPortrait( { portrait, characterName, size = 150
 		className='character-portrait'
 		src={ '/fallback-image-500.png' }
 		fill
-		objectFit="cover"
+		sizes="150px"
 		alt={ characterName ?? 'Portrait' }
 	/>;
 
@@ -26,7 +26,7 @@ export default function CharacterPortrait( { portrait, characterName, size = 150
 			className='character-portrait'
 			src={ portrait.url }
 			fill
-			objectFit="cover"
+			sizes="150px"
 			alt={ portrait.alt ?? characterName }
 		/>
 	}
