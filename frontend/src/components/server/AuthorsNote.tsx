@@ -16,7 +16,7 @@ export default function AuthorsNote( { page }: Props ) {
 		return null;
 	}
 
-	const date = new Date( page.modified );
+	const date = new Date( page.date );
 
 	return (
 		<div className="authors-note">

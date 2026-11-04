@@ -1,9 +1,8 @@
-import { ImageSize } from "@/types/types";
 import Image from "next/image";
 
 type Props = {
 	author: { slug: 'kip'|'chester', name: string }
-	size: ImageSize
+	size: [ number, number ] | number;
 }
 
 export default function AuthorImage( { author, size }: Props ) {

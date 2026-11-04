@@ -13,13 +13,13 @@ interface Props {
  */
 export default function ChapterSelector( { chapters, currentChapter, selectCallback }: Props ) {
 	function onChange( e: ChangeEvent<HTMLSelectElement> ) {
-		setCookie( 'last-read-chapter', e.target.value );
+		// setCookie( 'last-read-chapter', e.target.value );
 		selectCallback( e.target.value );
 	}
 
 	return (
 		<div className="how-far">
-			<h2>How far have you read?</h2>
+			<span>How far have you read?</span>
 
 			<div className="chapter-selector">
 				<select value={ currentChapter } onChange={ onChange }>

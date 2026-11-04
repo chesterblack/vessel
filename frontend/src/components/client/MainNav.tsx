@@ -17,31 +17,31 @@ export default function MainNav() {
 	return (
 		<>
 			<nav className={ `main-nav ${ showNav ? 'show' : '' }` }>
-				<Link href='/' onClick={ () => setShowNav( false ) }>
+				<Link className="nav-item" href='/' onClick={ () => setShowNav( false ) }>
 					Read
 				</Link>
-				<Link href='/archive' onClick={ () => setShowNav( false ) }>
+				<Link className="nav-item" href='/archive' onClick={ () => setShowNav( false ) }>
 					Archive
 				</Link>
-				{/* <Link href='/characters' onClick={ () => setShowNav( false ) }>
-					Characters
-				</Link> */}
-				<Link href='/blog' onClick={ () => setShowNav( false ) }>
-					Blog
-				</Link>
-				{/* <Link href='/fanart' onClick={ () => setShowNav( false ) }>
-					Fanart
-				</Link> */}
-				<Link href='/about' onClick={ () => setShowNav( false ) }>
+				<Link className="nav-item" href='/about' onClick={ () => setShowNav( false ) }>
 					About
 				</Link>
+				<Link className="nav-item" href='/characters' onClick={ () => setShowNav( false ) }>
+					Cast
+				</Link>
+				<Link className="nav-item" href='/blog' onClick={ () => setShowNav( false ) }>
+					Blog
+				</Link>
+				<Link className="nav-item" href='/fanart' onClick={ () => setShowNav( false ) }>
+					Fanart
+				</Link>
 				{ user &&
-					<Link href='/login'>
+					<Link className="nav-item" href='/login'>
 						<Image src={ user.image } width={ 50 } height={ 50 } alt={ `Logged in as ${ user.name }` } />
 					</Link>
 				}
 				{ ! user &&
-					<Link href='/login' className="ko-fi">
+					<Link className="nav-item ko-fi" href='/login'>
 						<Image src={ KofiLogo } alt="Ko-fi" width={ 50 } height={ 50 } />
 						<div className="hover">
 							Subscribe to the Ko-fi for early access!

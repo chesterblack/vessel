@@ -273,6 +273,7 @@ function add_auto_unlock_endpoint() {
 		[
 			'methods' => 'GET',
 			'callback' => 'check_unlocks',
+			'permission_callback' => '__return_true',
 		]
 	);
 }

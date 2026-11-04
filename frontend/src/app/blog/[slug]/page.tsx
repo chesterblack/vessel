@@ -37,7 +37,7 @@ export default async function BlogPostPage( { params }: Props ) {
 	const content = parse( blogPost.content.rendered );
 	const schema  = blogPost.yoast_head_json.schema;
 	const author  = blogPost._embedded.author[0] as Author;
-	const date    = new Date( blogPost.modified );
+	const date    = new Date( blogPost.date );
 
 	return (
 		<>

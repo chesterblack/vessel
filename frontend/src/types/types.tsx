@@ -9,9 +9,23 @@ export type NumericalString = `${ number }` | number;
 
 export type PageNumber = number | NumericalString | 'latest';
 
-export type ImageSize = [ number, number ] | number;
 
 export type SluggedPageProps = { params: Promise<{ slug: string }> };
+
+export type ImageSize = {
+	height: number
+	width: number
+	url: string
+	orientation: 'portrait'|'landscape'
+};
+
+export type Image = {
+	url: string
+	alt: string
+	width: number
+	height: number
+	sizes: Record<string, ImageSize>
+}
 
 export type YoastHead = {
 	title: string,

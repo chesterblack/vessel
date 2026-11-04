@@ -19,5 +19,6 @@
 		"creditName": { "type": "string" },
 		"creditLink": { "type": "string" },
 		"characters": { "type": "array" }
-	}
+	},
+	"usesContext": ["postId", "postType"]
 }

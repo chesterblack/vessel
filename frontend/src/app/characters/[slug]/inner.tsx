@@ -27,6 +27,7 @@ export default function Inner( { character, chapters, defaultChapter }: Props ) 
 					character={ character }
 					chapters={ chapters }
 					currentChapter={ currentChapter }
+					showFallback={ true }
 				/>
 			</div>
 		</>

@@ -9,7 +9,8 @@
   "description": "A comic page.",
   "example": {},
   "supports": {
-    "html": false
+    "html": false,
+    "multiple": false
   },
   "textdomain": "comic-page",
   "editorScript": "file:./index.js",
@@ -27,5 +28,9 @@
     "backgroundImage": {
       "type": "object"
     }
-  }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ]
 }
