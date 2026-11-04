@@ -2,11 +2,11 @@ import { Metadata } from "next";
 import { Chapter } from "@/types/wp-taxonomies";
 import { ComicPage } from "@/types/wp-post-types";
 
-import '@/styles/archive.scss';
 import { getChapterPages } from "@/lib/utilities";
 import { getChapters } from "@/lib/data-fetching";
 import ChapterPages from "@/components/server/ChapterPages";
 import Link from "next/link";
+import { getUser } from "@/lib/users";
 
 
 export const metadata: Metadata = {
@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 }
 
 export default async function ArchivePage() {
+	const user = await getUser();
 	const chapters = await getChapters() ?? [];
 
 	let pageData: {
@@ -53,7 +54,7 @@ export default async function ArchivePage() {
 					return;
 				}
 
-				return <ChapterPages pages={ pages } chapter={ chapter } key={ chapter.id } />;
+				return <ChapterPages pages={ pages } chapter={ chapter } user={ user } key={ chapter.id } />;
 			} ) }
 		</main>
 	);

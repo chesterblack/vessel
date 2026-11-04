@@ -18,6 +18,9 @@ export type WebPage = WP_REST_API_Page & {
 export type Character = Post & {
 	content_blocks: CharacterBioBlock[]
 	description?: string
+	meta: {
+		comic_pages: number[]
+	}
 }
 
 export type ComicPage = Post & {

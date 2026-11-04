@@ -373,6 +373,16 @@ export function isNumeric( number: number|string ) {
 	return typeof number === 'number' || ! isNaN( parseInt( number.toString() ) );
 }
 
+export function getArrayOverlap<T extends any>(
+	array1: T[],
+	array2: T[]
+) {
+	const set1 = new Set( array1 );
+	const set2 = new Set( array2 );
+
+	return Array.from( set1.intersection( set2 ) );
+}
+
 export function arraysHaveOverlap(
 	array1: any[],
 	array2: any[]
