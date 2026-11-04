@@ -13,17 +13,20 @@
 }
 
 .how-far {
-	display: flex;
+	justify-content: space-between;
 	align-items: center;
-	justify-content: center;
-	flex-direction: column;
 	gap: 20px;
-	background-color: colors.$med-light;
-	border-radius: 15px;
-	padding: 25px;
+	padding-block: 15px;
+	display: flex;
+	border-block: 2px solid #e9eeef;
 
-	h2 {
-		margin: 0;
+	span {
+		font-size: 1.5rem;
+		font-style: italic;
+	}
+
+	select {
+		background-color: #e9eeef;
 	}
 }
 

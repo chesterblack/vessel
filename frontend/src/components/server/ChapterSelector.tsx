@@ -19,7 +19,7 @@ export default function ChapterSelector( { chapters, currentChapter, selectCallb
 
 	return (
 		<div className="how-far">
-			<h2>How far have you read?</h2>
+			<span>How far have you read?</span>
 
 			<div className="chapter-selector">
 				<select value={ currentChapter } onChange={ onChange }>
