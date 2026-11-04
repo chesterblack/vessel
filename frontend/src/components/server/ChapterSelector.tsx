@@ -13,7 +13,7 @@ interface Props {
  */
 export default function ChapterSelector( { chapters, currentChapter, selectCallback }: Props ) {
 	function onChange( e: ChangeEvent<HTMLSelectElement> ) {
-		setCookie( 'last-read-chapter', e.target.value );
+		// setCookie( 'last-read-chapter', e.target.value );
 		selectCallback( e.target.value );
 	}
 

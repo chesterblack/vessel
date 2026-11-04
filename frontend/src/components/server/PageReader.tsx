@@ -1,8 +1,8 @@
-import { ComicIndexWithLock, ComicReaderData } from "@/types/types";
+import { ComicIndexWithLock, ComicReaderData, Image } from "@/types/types";
 
 import { notFound } from "next/navigation";
 import '@/styles/page-reader.scss';
-import { arraysHaveOverlap, getEmbeddedChapters,applyLockedAttribute, isLocked, isContentEmpty } from "@/lib/utilities";
+import { arraysHaveOverlap, getEmbeddedChapters,applyLockedAttribute, isLocked, isContentEmpty, getAttribute } from "@/lib/utilities";
 import PageReaderNav from "@/components/server/PageReaderNav";
 import JsonLdSchema from "./JsonLdSchema";
 import JumpToTop from "../client/JumpToTop";
@@ -26,9 +26,11 @@ type Props = {
  the page itself and the navigation
  */
 export default async function PageReader( { comicReaderData, user }: Props ) {
-	const {current, latest, indexes} = comicReaderData;
+	const { current, latest, indexes } = comicReaderData;
 
-	if (!current || !latest || !indexes) {
+	console.log( 'findme: current: ', current );
+
+	if ( !current || !latest || !indexes ) {
 		notFound();
 	}
 
@@ -68,7 +70,8 @@ export default async function PageReader( { comicReaderData, user }: Props ) {
 	}
 
 	const schema = pageData.yoast_head_json.schema;
-	const { backgroundGradient, backgroundImage } = pageData.content_blocks[0].attrs;
+	const backgroundGradient = getAttribute<string>( pageData, 'backgroundGradient' );
+	const backgroundImage = getAttribute<Image>( pageData, 'backgroundImage' );
 
 	const canGoBack = pageNumber > 1;
 	const canGoForward = pageNumber < latestPageNumber;
@@ -77,7 +80,7 @@ export default async function PageReader( { comicReaderData, user }: Props ) {
 
 	return (
 		<SessionProvider>
-			<SetPageCookies chapter={chapters[0].slug} />
+			{/* <SetPageCookies chapter={chapters[0].slug} /> */}
 			{ !user && <SubscribeBanner /> }
 			<JsonLdSchema schema={ schema } />
 			<main className={`page-reader ${ pageData.class_list.join(' ') }`}>
@@ -97,7 +100,7 @@ export default async function PageReader( { comicReaderData, user }: Props ) {
 				{ ! secret &&
 					<>
 						<CharacterTags
-							characters={ pageData.content_blocks[0].attrs.characters }
+							characters={ getAttribute<number[]>( pageData, 'characters' ) }
 							chapter={ chapters[0].slug }
 						/>
 						<AuthorsNote page={ pageData } />

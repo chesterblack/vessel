@@ -3,6 +3,8 @@ import { getPosts } from "@/lib/data-fetching";
 import { Post } from "@/types/wp-post-types";
 import Image from "next/image";
 import Link from "next/link";
+import { getAttribute } from '@/lib/utilities';
+import { Image as ImageType } from '@/types/types';
 
 import '@/styles/fanart.scss';
 
@@ -18,13 +20,12 @@ export default async function FanartArchivePage() {
 			</p>
 			<div className="fanart-grid">
 				{ allFanart.map( ( fanart, i ) => {
-					const attributes = fanart.content_blocks?.[0]?.attrs;
+					const pageImage = getAttribute<ImageType>( fanart, 'pageImage' );
+					const creditName = getAttribute<string>( fanart, 'creditName' );
 
-					if ( ! attributes ) {
+					if ( ! pageImage ) {
 						return null;
 					}
-
-					const { pageImage, creditName } = attributes;
 
 					return (
 						<Link key={ fanart.id } href={ `/fanart/${ fanart.slug }` } className="fanart-piece">

@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
 	const user = await getUser();
-	const unlockedOnly = !user || !user.roles.includes(VESSEL_EARLY_READER);
+	const unlockedOnly = !user || !user.roles.includes( VESSEL_EARLY_READER );
 	const comicReaderData = await getComicReaderData( undefined, unlockedOnly );
 
 	return <PageReader comicReaderData={ comicReaderData } user={ user } />;

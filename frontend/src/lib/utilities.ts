@@ -1,4 +1,4 @@
-import { PageNumber } from "@/types/types";
+import { PageNumber, Image } from "@/types/types";
 import { CharacterBioData, CharacterBioDatum } from "@/types/wp-blocks";
 import { Character, ComicPage, Post } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
@@ -30,8 +30,6 @@ export async function sendApiRequest(
 	}
 
 	const url = `${ process.env.NEXT_PUBLIC_BACKEND_API_BASE }/${ endpoint }?${ urlParams }`;
-
-	console.log( 'findme: url: ', url );
 
 	return await fetch( url, options )
 		.then( res => res.json() )
@@ -151,16 +149,17 @@ export function getImageProps(
 	height: number
 	alt: string
 } {
-	const attrs = page.content_blocks[0].attrs;
+
+	const pageImage = getAttribute<Image>( page, 'pageImage' );
 	let alt = '';
 	let image: { url: any; width: any; height: any; };
 
-	if ( ! attrs ) {
+	if ( ! pageImage ) {
 		return;
 	}
 
-	alt = attrs.pageImage?.alt ?? '';
-	image = attrs.pageImage?.sizes?.[ size ] ?? attrs.pageImage;
+	alt = pageImage?.alt ?? '';
+	image = pageImage?.sizes?.[ size ] ?? pageImage;
 
 	if ( ! image ) {
 		return;
@@ -344,13 +343,28 @@ export function getEmbeddedChapters(
  * character block
  */
 export function getCharacterBioData( character: Character ) {
-	if ( ! character.content_blocks[0].attrs?.chapters ) {
+	const chapters = getAttribute<string|CharacterBioDatum & { chapter: string }>( character, 'chapters' );
+
+	if ( isFalsyOrEmpty( chapters ) ) {
 		return;
 	}
-	
-	const characterBlockData: CharacterBioData = JSON.parse(
-		character.content_blocks[0].attrs.chapters
-	);
+
+	let characterBlockData: CharacterBioData = {};
+
+	if ( typeof chapters === 'string' ) {
+		characterBlockData = JSON.parse(
+			character.content_blocks[0].attrs.chapters
+		);
+	} else {
+		for ( const key in chapters ) {
+			const chapter = chapters[key];
+
+			const newChapter = structuredClone( chapter );
+			delete newChapter.chapter;
+
+			characterBlockData[chapter.chapter] = newChapter;
+		}
+	}
 
 	return characterBlockData;
 }
@@ -490,4 +504,50 @@ export function isLocked(
 		post?.role_locks ?? [],
 		user?.roles ?? []
 	);
+}
+
+/**
+ * Is the given value falsy or an empty array or object
+ */
+export function isFalsyOrEmpty( value: unknown ) {
+	return !value || (
+		typeof value === 'object' &&
+		Object.keys(value).length === 0
+	);
+}
+
+/**
+ * Gets the given value from the meta if it exists,
+ * otherwise from the first content_block attributes
+ */
+export function getAttribute<T extends any>(
+	object: {
+		meta?: unknown,
+		content_blocks: {
+			attrs: unknown
+		}[]
+	},
+	attributeKey: string
+): T {
+	const keyMap = {
+		pageImage: 'page_image',
+		backgroundGradient: 'background_gradient',
+		backgroundImage: 'background_image',
+		creditName: 'credit_name',
+		creditLink: 'credit_link',
+	};
+
+	const metaKey = keyMap[attributeKey] ?? attributeKey;
+
+	const objectMeta = object.meta[metaKey];
+	if ( !isFalsyOrEmpty( objectMeta ) ) {
+		return object.meta[metaKey];
+	}
+	
+	if ( object.content_blocks[0].attrs[attributeKey] ) {
+		return object.content_blocks[0].attrs[attributeKey];
+	}
+
+	console.error( `getAttribute: Could not find ${attributeKey} on `, object );
+	return null;
 }

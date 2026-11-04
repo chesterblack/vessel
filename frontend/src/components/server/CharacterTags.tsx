@@ -5,7 +5,7 @@ import '@/styles/character-tags.scss';
 import { cookies } from "next/headers";
 
 type Props = {
-	characters: string[] // Character ids
+	characters: string[]|number[] // Character ids
 	chapter?: string // Chapter slug
 }
 

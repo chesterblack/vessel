@@ -1,5 +1,5 @@
 import { getPost } from "@/lib/data-fetching";
-import { SluggedPageProps } from "@/types/types";
+import { Image as ImageType, SluggedPageProps } from "@/types/types";
 import { Post } from "@/types/wp-post-types";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -7,6 +7,7 @@ import parse from 'html-react-parser';
 
 import '@/styles/fanart.scss';
 import CharacterTags from "@/components/server/CharacterTags";
+import { getAttribute } from "@/lib/utilities";
 
 
 export default async function FanartPage( { params }: SluggedPageProps ) {
@@ -17,13 +18,14 @@ export default async function FanartPage( { params }: SluggedPageProps ) {
 		notFound();
 	}
 
-	const attributes = pageData.content_blocks?.[0]?.attrs;
+	const pageImage  = getAttribute<ImageType>( pageData, 'pageImage' );
+	const creditName = getAttribute<string>( pageData, 'creditName' );
+	const creditLink = getAttribute<string>( pageData, 'creditLink' );
+	const characters = getAttribute<number[]>( pageData, 'characters' );
 
-	if ( ! attributes ) {
+	if ( ! pageImage ) {
 		notFound();
 	}
-
-	const { pageImage, creditName, creditLink, characters } = attributes;
 
 	return (
 		<main className="fanart-page">
