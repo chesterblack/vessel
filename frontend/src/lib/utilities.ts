@@ -353,7 +353,7 @@ export function getCharacterBioData( character: Character ) {
 
 	if ( typeof chapters === 'string' ) {
 		characterBlockData = JSON.parse(
-			character.content_blocks[0].attrs.chapters
+			getAttribute( character, 'chapters' )
 		);
 	} else {
 		for ( const key in chapters ) {

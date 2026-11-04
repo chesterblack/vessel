@@ -14,12 +14,20 @@ type Props = {
 	currentChapter: string
 	headingLevel?: HeadingLevel
 	link?: boolean
+	showFallback?: boolean
 }
 
 /**
  * A bio (name, picture, description) of a single given character during the given chapter.
  */
-export default function CharacterBio( { character, chapters, currentChapter, headingLevel = 1, link = false }: Props ) {
+export default function CharacterBio( {
+	character,
+	chapters,
+	currentChapter,
+	headingLevel = 1,
+	link = false,
+	showFallback = false
+}: Props ) {
 	const characterBlockData = getCharacterBioData( character );
 
 	const characterBio = getLatestCharacterBioData(
@@ -28,11 +36,27 @@ export default function CharacterBio( { character, chapters, currentChapter, hea
 		characterBlockData
 	);
 
-	if ( ! characterBio.description ) { return null }
+	if ( ! characterBio.description ) {
+		if ( showFallback ) {
+			return (
+			<>
+				<CharacterPortrait />
+				<div>
+					<Heading level={ headingLevel }>
+						Unknown character
+					</Heading>
+					<p>Read on to find out more about them!</p>
+				</div>
+			</>
+			);
+		} else {
+			return null
+		}
+	}
 
 	const { portrait, name, description, pronouns } = characterBio;
 
-	const parsedDescription = parse( description ?? description ?? 'Read on to find out more about this character' );
+	const parsedDescription = parse( description ?? 'Read on to find out more about this character' );
 
 	const inner = (
 		<>
@@ -50,14 +74,14 @@ export default function CharacterBio( { character, chapters, currentChapter, hea
 		</>
 	);
 
-	if (link) {
+	if ( link ) {
 		return (
 			<Link
 				href={`/characters/${ character.slug }`}
 				className='character-bio'
 				key={ character.id }
 			>
-				{inner}
+				{ inner }
 			</Link>
 		)
 	}

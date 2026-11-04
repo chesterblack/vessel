@@ -16,7 +16,7 @@ export default async function FanartArchivePage() {
 		<main className="fanart-archive">
 			<h1>Fanart</h1>
 			<p>
-				Here&apos;s a selection of all the amazing fanart you&apos;ve done for Vessel! If you&apos;d like to be added to this page, send it in <a href="https://discord.gg/djwnBvFEd" target='_blank'>the Discord</a>!
+				Here&apos;s a selection of all the amazing fanart you&apos;ve done for Vessel! If you&apos;d like to be added to this page, send it in the Discord <a href="https://discord.com/channels/830103888190242876/1128294898269954128" target='_blank'>fanart channel</a>, or DM it to Chester or Kip!
 			</p>
 			<div className="fanart-grid">
 				{ allFanart.map( ( fanart, i ) => {
