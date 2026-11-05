@@ -23,6 +23,7 @@ const VESSEL_IMAGE_SCHEMA = [
 				'large' => VESSEL_IMAGE_SIZE_SCHEMA,
 				'comic_page_mobile' => VESSEL_IMAGE_SIZE_SCHEMA,
 				'comic_page_desktop' => VESSEL_IMAGE_SIZE_SCHEMA,
+				'comic_page_archive' => VESSEL_IMAGE_SIZE_SCHEMA,
 				'full' => VESSEL_IMAGE_SIZE_SCHEMA,
 			],
 		],
