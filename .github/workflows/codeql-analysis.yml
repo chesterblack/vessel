@@ -1,0 +1,4 @@
+name: "Theme only CodeQL config"
+
+paths:
+  - backend/wp-content/themes/vessel/*

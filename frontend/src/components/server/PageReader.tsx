@@ -70,8 +70,8 @@ export default async function PageReader( { comicReaderData, user }: Props ) {
 	}
 
 	const schema = pageData.yoast_head_json.schema;
-	const backgroundGradient = getAttribute<string>( pageData, 'backgroundGradient' );
-	const backgroundImage = getAttribute<Image>( pageData, 'backgroundImage' );
+	const backgroundGradient = getAttribute( pageData, 'background_gradient' );
+	const backgroundImage = getAttribute( pageData, 'background_image' );
 
 	const canGoBack = pageNumber > 1;
 	const canGoForward = pageNumber < latestPageNumber;
@@ -100,7 +100,7 @@ export default async function PageReader( { comicReaderData, user }: Props ) {
 				{ ! secret &&
 					<>
 						<CharacterTags
-							characters={ getAttribute<number[]>( pageData, 'characters' ) }
+							characters={ getAttribute( pageData, 'characters' ) }
 							chapter={ chapters[0].slug }
 						/>
 						<AuthorsNote page={ pageData } />

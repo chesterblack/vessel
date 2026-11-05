@@ -89,6 +89,23 @@ main.character {
 	max-height: 100%;
 }
 
+.character .chapter {
+	border-radius: 15px;
+	background-color: colors.$med-light;
+	padding: 10px 20px;
+	margin-block: 15px;
+
+	summary {
+		cursor: pointer;
+
+		h3 {
+			display: inline-block;
+			margin: 0;
+		}
+	}
+}
+
+
 @media screen and ( max-width: 600px ) {
 	.character-bio,
 	.character-profile {

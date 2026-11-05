@@ -1,7 +1,9 @@
 import { Robots } from "next/dist/lib/metadata/types/metadata-types";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { Graph } from "schema-dts";
-import { ComicPage } from "./wp-post-types";
+import { Character, ComicPage } from "./wp-post-types";
+import { User } from "next-auth";
+import { Chapter } from "./wp-taxonomies";
 
 export type Children = ReactElement | string | ( string | ReactElement )[];
 
@@ -24,7 +26,7 @@ export type Image = {
 	alt: string
 	width: number
 	height: number
-	sizes: Record<string, ImageSize>
+	sizes?: Record<string, ImageSize>
 }
 
 export type YoastHead = {
@@ -73,4 +75,14 @@ export type ComicReaderData = {
 	current: ComicPage
 	latest: ComicIndex
 	indexes: ComicIndex[]
+}
+
+export type UserWithRoles = {
+	roles: string[];
+} & User
+
+
+export type ChapterPageData = {
+	chapter: Chapter,
+	pages: ComicPage[]
 }

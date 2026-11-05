@@ -5,14 +5,17 @@ import { Character } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { useState } from "react";
 import CharacterBio from "@/components/server/CharacterBio";
+import CharacterAppearances from "@/components/client/CharacterAppearances";
+import { UserWithRoles } from "@/types/types";
 
 interface Props {
 	character: Character
 	chapters: Chapter[]
 	defaultChapter: string
+	user: UserWithRoles
 }
 
-export default function Inner( { character, chapters, defaultChapter }: Props ) {
+export default function Inner( { character, chapters, defaultChapter, user }: Props ) {
 	const [ currentChapter, setCurrentChapter ] = useState( defaultChapter );
 
 	return (
@@ -30,6 +33,7 @@ export default function Inner( { character, chapters, defaultChapter }: Props ) 
 					showFallback={ true }
 				/>
 			</div>
+			<CharacterAppearances character={ character } user={ user } chapter={ currentChapter } />
 		</>
 	)
 }

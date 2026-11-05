@@ -1,36 +1,43 @@
-import { getUser } from "@/lib/users";
 import { applyLockedAttribute, getImageProps } from "@/lib/utilities";
 import { ComicPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import LockIcon from "./svg/LockIcon";
 import Button from "./Button";
-import { HeadingLevel } from "@/types/types";
+import { HeadingLevel, UserWithRoles } from "@/types/types";
 import Heading from "@/components/server/Heading";
 import Image from "next/image";
+import { ElementType } from "react";
 
 
 type Props = {
 	chapter: Chapter
 	pages: ComicPage[]
+	user: UserWithRoles
 	headingLevel?: HeadingLevel
+	accordion?: boolean
 }
 
 /**
  * Creates a list of links to every comic page in a chapter, along with the chapter name as a title and the chapter description if it exists.
  */
-export default async function ChapterPages( { chapter, pages, headingLevel = 2 }: Props ) {
-	const user = await getUser();
+export default function ChapterPages( { chapter, pages, user, headingLevel = 2, accordion = false }: Props ) {
 	pages = applyLockedAttribute( user?.roles, pages );
 
 	if ( pages.length < 1 ) {
 		return null;
 	}
 
+	const WrapperTag = accordion ? 'details' : 'div' as ElementType;
+	const heading = <Heading level={ headingLevel } id={ chapter.slug }>{ chapter.name }</Heading>;
+
 	return (
-		<div className="chapter">
-			<Heading level={ headingLevel } id={ chapter.slug }>
-				{ chapter.name }
-			</Heading>
+		<WrapperTag className="chapter">
+			{ accordion &&
+				<summary>
+					{ heading }
+				</summary>
+			}
+			{ !accordion && heading }
 			<p>{ chapter.description }</p>
 
 			<div className="archive-pages">
@@ -62,6 +69,6 @@ export default async function ChapterPages( { chapter, pages, headingLevel = 2 }
 					);
 				} ) }
 			</div>
-		</div>
+		</WrapperTag>
 	);
 }

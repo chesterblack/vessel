@@ -12,8 +12,9 @@ require_once( __DIR__ . '/blocks/blocks.php' );
 
 
 function register_image_sizes() {
-	add_image_size( 'comic_page_desktop', 1600, 9999 );
-	add_image_size( 'comic_page_mobile', 800, 9999 );
+	add_image_size( 'comic_page_desktop', 860, 9999 );
+	add_image_size( 'comic_page_mobile', 660, 9999 );
+	add_image_size( 'comic_page_archive', 200, 9999 );
 }
 add_action( 'after_setup_theme', 'register_image_sizes' );
 
@@ -22,6 +23,7 @@ function register_image_size_nicenames( $sizes ) {
 	return array_merge( $sizes, [
 		'comic_page_desktop' => __( 'Desktop Comic Page' ),
 		'comic_page_mobile' => __( 'Mobile Comic Page' ),
+		'comic_page_archive' => __( 'Comic Page Archive Thumbnail' ),
 	] );
 }
 add_filter( 'image_size_names_choose', 'register_image_size_nicenames' );

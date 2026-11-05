@@ -8,9 +8,10 @@ import Inner from "./inner";
 import { getCharacter } from "@/lib/data-fetching";
 import "@/styles/characters.scss";
 import { cookies } from "next/headers";
+import { getUser } from "@/lib/users";
 
 export async function generateMetadata( { params }: SluggedPageProps ): Promise<Metadata> {
-	const { slug }      = await params;
+	const { slug } = await params;
 	const characterData = await getCharacter( slug );
 
 	if ( ! characterData ) {
@@ -21,9 +22,12 @@ export async function generateMetadata( { params }: SluggedPageProps ): Promise<
 }
 
 export default async function CharacterProfilePage( { params }: SluggedPageProps ) {
-	const { slug }      = await params;
+	const { slug } = await params;
 	const characterData = await getCharacter( slug );
 	const cookieStore = await cookies();
+	const user = await getUser();
+
+	console.log( 'findme: characterData: ', characterData );
 
 	if ( ! characterData ) {
 		notFound();
@@ -44,6 +48,7 @@ export default async function CharacterProfilePage( { params }: SluggedPageProps
 				character={ characterData }
 				chapters={ chapterData }
 				defaultChapter={ defaultChapter }
+				user={ user }
 			/>
 		</main>
 	);

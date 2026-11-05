@@ -1,6 +1,6 @@
 import { PageNumber, Image } from "@/types/types";
 import { CharacterBioData, CharacterBioDatum } from "@/types/wp-blocks";
-import { Character, ComicPage, Post } from "@/types/wp-post-types";
+import { Character, ComicPage, Post, WebPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { Metadata } from "next";
 
@@ -150,7 +150,7 @@ export function getImageProps(
 	alt: string
 } {
 
-	const pageImage = getAttribute<Image>( page, 'pageImage' );
+	const pageImage = getAttribute( page, 'page_image' );
 	let alt = '';
 	let image: { url: any; width: any; height: any; };
 
@@ -343,7 +343,7 @@ export function getEmbeddedChapters(
  * character block
  */
 export function getCharacterBioData( character: Character ) {
-	const chapters = getAttribute<string|CharacterBioDatum & { chapter: string }>( character, 'chapters' );
+	const chapters = getAttribute( character, 'chapters' );
 
 	if ( isFalsyOrEmpty( chapters ) ) {
 		return;
@@ -351,19 +351,13 @@ export function getCharacterBioData( character: Character ) {
 
 	let characterBlockData: CharacterBioData = {};
 
-	if ( typeof chapters === 'string' ) {
-		characterBlockData = JSON.parse(
-			getAttribute( character, 'chapters' )
-		);
-	} else {
-		for ( const key in chapters ) {
-			const chapter = chapters[key];
+	for ( const key in chapters ) {
+		const chapter = chapters[key];
 
-			const newChapter = structuredClone( chapter );
-			delete newChapter.chapter;
+		const newChapter = structuredClone( chapter );
+		delete newChapter.chapter;
 
-			characterBlockData[chapter.chapter] = newChapter;
-		}
+		characterBlockData[chapter.chapter] = newChapter;
 	}
 
 	return characterBlockData;
@@ -371,6 +365,16 @@ export function getCharacterBioData( character: Character ) {
 
 export function isNumeric( number: number|string ) {
 	return typeof number === 'number' || ! isNaN( parseInt( number.toString() ) );
+}
+
+export function getArrayOverlap<T extends any>(
+	array1: T[],
+	array2: T[]
+) {
+	const set1 = new Set( array1 );
+	const set2 = new Set( array2 );
+
+	return Array.from( set1.intersection( set2 ) );
 }
 
 export function arraysHaveOverlap(
@@ -520,16 +524,11 @@ export function isFalsyOrEmpty( value: unknown ) {
  * Gets the given value from the meta if it exists,
  * otherwise from the first content_block attributes
  */
-export function getAttribute<T extends any>(
-	object: {
-		meta?: unknown,
-		content_blocks: {
-			attrs: unknown
-		}[]
-	},
-	attributeKey: string
-): T {
-	const keyMap = {
+export function getAttribute<
+	T extends Post | WebPage,
+	K extends keyof T["meta"]
+>( object: T, attributeKey: K ): T["meta"][K] {
+	const keyMap: Record<string, string> = {
 		pageImage: 'page_image',
 		backgroundGradient: 'background_gradient',
 		backgroundImage: 'background_image',
@@ -537,17 +536,18 @@ export function getAttribute<T extends any>(
 		creditLink: 'credit_link',
 	};
 
-	const metaKey = keyMap[attributeKey] ?? attributeKey;
+	const metaKey = keyMap[attributeKey as string] ?? attributeKey;
 
 	const objectMeta = object.meta[metaKey];
 	if ( !isFalsyOrEmpty( objectMeta ) ) {
 		return object.meta[metaKey];
 	}
-	
+
 	if ( object.content_blocks[0].attrs[attributeKey] ) {
 		return object.content_blocks[0].attrs[attributeKey];
 	}
 
-	console.warn( `getAttribute: Could not find ${attributeKey} on `, object );
+	console.warn( `getAttribute: Could not find ${ String( attributeKey ) } on `, object );
+
 	return null;
 }

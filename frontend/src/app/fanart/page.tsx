@@ -1,5 +1,5 @@
 import parse from 'html-react-parser';
-import { getPosts } from "@/lib/data-fetching";
+import { getFanarts, getPosts } from "@/lib/data-fetching";
 import { Post } from "@/types/wp-post-types";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,7 +10,7 @@ import '@/styles/fanart.scss';
 
 
 export default async function FanartArchivePage() {
-	const allFanart = await getPosts( 'fanart', { _embed: true } ) as Post[];
+	const allFanart = await getFanarts();
 
 	return (
 		<main className="fanart-archive">
@@ -20,8 +20,8 @@ export default async function FanartArchivePage() {
 			</p>
 			<div className="fanart-grid">
 				{ allFanart.map( ( fanart, i ) => {
-					const pageImage = getAttribute<ImageType>( fanart, 'pageImage' );
-					const creditName = getAttribute<string>( fanart, 'creditName' );
+					const pageImage = getAttribute( fanart, 'pageImage' );
+					const creditName = getAttribute( fanart, 'creditName' );
 
 					if ( ! pageImage ) {
 						return null;
