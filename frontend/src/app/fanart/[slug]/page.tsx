@@ -1,6 +1,6 @@
-import { getPost } from "@/lib/data-fetching";
+import { getFanart, getPost } from "@/lib/data-fetching";
 import { Image as ImageType, SluggedPageProps } from "@/types/types";
-import { Post } from "@/types/wp-post-types";
+import { Post, Fanart } from "@/types/wp-post-types";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import parse from 'html-react-parser';
@@ -12,16 +12,16 @@ import { getAttribute } from "@/lib/utilities";
 
 export default async function FanartPage( { params }: SluggedPageProps ) {
 	const { slug } = await params;
-	const pageData = await getPost( 'fanart', slug ) as Post;
+	const pageData = await getFanart( slug );
 
 	if ( ! pageData ) {
 		notFound();
 	}
 
-	const pageImage  = getAttribute<ImageType>( pageData, 'pageImage' );
-	const creditName = getAttribute<string>( pageData, 'creditName' );
-	const creditLink = getAttribute<string>( pageData, 'creditLink' );
-	const characters = getAttribute<number[]>( pageData, 'characters' );
+	const pageImage  = getAttribute( pageData, 'pageImage' );
+	const creditName = getAttribute( pageData, 'creditName' );
+	const creditLink = getAttribute( pageData, 'creditLink' );
+	const characters = getAttribute( pageData, 'characters' );
 
 	if ( ! pageImage ) {
 		notFound();

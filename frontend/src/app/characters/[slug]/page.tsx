@@ -27,6 +27,8 @@ export default async function CharacterProfilePage( { params }: SluggedPageProps
 	const cookieStore = await cookies();
 	const user = await getUser();
 
+	console.log( 'findme: characterData: ', characterData );
+
 	if ( ! characterData ) {
 		notFound();
 	}

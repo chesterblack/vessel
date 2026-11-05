@@ -26,7 +26,7 @@ export type Image = {
 	alt: string
 	width: number
 	height: number
-	sizes: Record<string, ImageSize>
+	sizes?: Record<string, ImageSize>
 }
 
 export type YoastHead = {

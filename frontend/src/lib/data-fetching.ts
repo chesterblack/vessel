@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { applyLockedAttribute, arraysHaveOverlap, isNumeric, sendApiRequest } from "./utilities";
-import { Character, ComicPage, Post, WebPage } from "@/types/wp-post-types";
+import { Character, ComicPage, Fanart, Post, WebPage } from "@/types/wp-post-types";
 import { Chapter } from "@/types/wp-taxonomies";
 import { WP_REST_API_Post, WP_REST_API_Taxonomy } from "wp-types";
 import { ComicIndex, ComicReaderData } from "@/types/types";
@@ -116,6 +116,10 @@ export const getBlogPosts = cache( () => (
 	getPosts( 'posts', { _embed: true } ) as Promise<Post[]>
 ) );
 
+export const getFanarts = cache( () => (
+	getPosts( 'fanart', { _embed: true } ) as Promise<Fanart[]>
+) );
+
 export const getChapter = cache(
 	( identifier: number|string, params?: any ) => (
 		getPost( 'chapters', identifier, params ) as Promise<Chapter>
@@ -191,5 +195,11 @@ export const getWebPage = cache(
 export const getBlogPost = cache(
 	( identifier: number|string, params?: any ) => (
 		getPost( 'posts', identifier, { _embed: true, ...params } ) as Promise<Post>
+	)
+);
+
+export const getFanart = cache(
+	( identifier: number|string, params?: any ) => (
+		getPost( 'fanart', identifier, { _embed: true, ...params } ) as Promise<Fanart>
 	)
 );
