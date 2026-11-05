@@ -19,7 +19,7 @@ export type Character = Post & {
 	content_blocks: CharacterBioBlock[]
 	description?: string
 	meta: {
-		comic_pages: number[]
+		comic_pages?: number[]
 	}
 }
 

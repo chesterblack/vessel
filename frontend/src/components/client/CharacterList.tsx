@@ -20,6 +20,8 @@ interface Props {
 export default function CharacterList( { chapters, characters, defaultChapter }: Props ) {
 	const [ currentChapter, setCurrentChapter ] = useState( defaultChapter );
 
+	characters.sort( ( a, b ) => b.meta.comic_pages.length - a.meta.comic_pages.length );
+
 	return (
 		<>
 			<ChapterSelector
