@@ -12,8 +12,8 @@ require_once( __DIR__ . '/blocks/blocks.php' );
 
 
 function register_image_sizes() {
-	add_image_size( 'comic_page_desktop', 860, 9999 );
-	add_image_size( 'comic_page_mobile', 660, 9999 );
+	add_image_size( 'comic_page_desktop', 1020, 9999 );
+	add_image_size( 'comic_page_mobile', 860, 9999 );
 	add_image_size( 'comic_page_archive', 200, 9999 );
 }
 add_action( 'after_setup_theme', 'register_image_sizes' );

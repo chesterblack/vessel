@@ -136,8 +136,7 @@ export const getComicReaderData = cache(
 
 		return await sendApiRequest( 'GET', url, urlParams ) as ComicReaderData;
 	}
-)
-
+);
 
 export const getLatestPageNumber = cache(
 	async () => {

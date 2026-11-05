@@ -28,8 +28,6 @@ type Props = {
 export default async function PageReader( { comicReaderData, user }: Props ) {
 	const { current, latest, indexes } = comicReaderData;
 
-	console.log( 'findme: current: ', current );
-
 	if ( !current || !latest || !indexes ) {
 		notFound();
 	}
