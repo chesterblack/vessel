@@ -27,8 +27,7 @@ export default function PageArea( { pageData, pageNumber, canGoBack, canGoForwar
 				width={ width }
 				height={ height }
 				alt={ alt }
-				priority={ true }
-				fetchPriority='high'
+				preload={ true }
 			/>
 
 			{ canGoForward &&

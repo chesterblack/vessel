@@ -42,7 +42,7 @@ export default function ChapterPages( { chapter, pages, user, headingLevel = 2, 
 
 			<div className="archive-pages">
 				{ pages.map( page => {
-					const {src, width, height, alt} = getImageProps( page );
+					const { src, width, height, alt } = getImageProps( page, 'comic_page_archive' );
 					const date = new Date( page.date );
 
 					return (

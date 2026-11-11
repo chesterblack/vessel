@@ -2,6 +2,7 @@
 const nextConfig = {
 	productionBrowserSourceMaps: true,
 	images: {
+		dangerouslyAllowLocalIP: process.env.NODE_ENV === 'development' ? true : false,
 		remotePatterns: [
 			new URL( `${ process.env.BACKEND_URL }/**` ),
 			{

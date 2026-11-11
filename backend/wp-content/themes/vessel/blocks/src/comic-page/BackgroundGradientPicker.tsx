@@ -15,7 +15,7 @@ export default function BackgroundGradientPicker( { meta, setMeta }: Props ) {
 					onChange={ gradient => {
 						setMeta('background_gradient', gradient);
 					} }
-					value={ meta.background_gradient }
+					value={ meta.background_gradient !== '' ? meta.background_gradient : null }
 					gradients={ [
 						{
 							gradient: 'linear-gradient( 0deg, #b2e2f4 0%, #51596C 100%)',

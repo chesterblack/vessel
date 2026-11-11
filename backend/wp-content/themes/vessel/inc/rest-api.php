@@ -168,21 +168,23 @@ function get_comic_page_indexes( int $page_number, string $chapter = null ) {
 }
 
 function get_current_comic_page(int $page_number) {
-	$url = "https://admin.vesselcomic.com/wp-json/wp/v2/comic_page?meta_key=comic_page_number&meta_value=$page_number&_embed=wp%3Aterm";
+	$request = new WP_REST_Request( 'GET', '/wp/v2/comic_page' );
+	$request->set_param( 'meta_key', 'comic_page_number' );
+	$request->set_param( 'meta_value', $page_number );
+	$request->set_param( '_embed', 'wp:term' );
 
-	$current_response = wp_remote_get( $url );
+	$current_response = rest_do_request( $request );
+	$data = rest_get_server()->response_to_data( $current_response, [ 'wp:term' ] );
 
 	if (
 		is_wp_error( $current_response ) ||
-		$current_response['response']['code'] !== 200 ||
-		$current_response['body'] === '[]'
+		$current_response->status !== 200 ||
+		count( $data ) < 1
 	) {
 		return [];
 	}
 
-	$current = json_decode($current_response['body']);
-
-	return $current[0];
+	return $data[0];
 }
 
 function get_page_indexes( $data ) {

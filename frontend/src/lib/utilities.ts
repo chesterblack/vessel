@@ -292,7 +292,7 @@ export async function getComicPageMetadata(
 ): Promise<Metadata> {
 	const metadata: Metadata = {};
 
-	const imageProps = getImageProps( pageData );
+	const imageProps = getImageProps( pageData, 'comic_page_desktop' );
 
 	metadata.description = `Read page ${ pageData.meta.comic_page_number } of Vessel here!`;
 	metadata.title = `Vessel | ${pageData.title.rendered}`;

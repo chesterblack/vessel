@@ -5,13 +5,17 @@ type Props = {
 	image?: {
 		url: string
 		id?: number
-	}
+	}|null
 	callback: MediaUpload.Props<false>['onSelect']
 	label?: string
 	deleteCallback: () => void
 }
 
 export default function ImageUpload( { image, callback, label, deleteCallback }: Props ) {
+	if ( !image?.id ) {
+		image = null;
+	}
+
 	return (
 		<div className='image-upload'>
 			{ label && <label>{ label }</label> }
