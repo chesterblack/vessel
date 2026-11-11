@@ -12,10 +12,6 @@ type Props = {
 }
 
 export default function ImageUpload( { image, callback, label, deleteCallback }: Props ) {
-	if ( !image?.id ) {
-		image = null;
-	}
-
 	return (
 		<div className='image-upload'>
 			{ label && <label>{ label }</label> }
