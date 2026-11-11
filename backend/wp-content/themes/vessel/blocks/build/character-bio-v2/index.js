@@ -231,6 +231,9 @@ function ImageUpload({
   label,
   deleteCallback
 }) {
+  if (!image?.id) {
+    image = null;
+  }
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
     className: "image-upload",
     children: [label && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
